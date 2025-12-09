@@ -2,8 +2,11 @@ from modules import app_obj, main_window
 
 
 def main():
-    main_window.show()
-    app_obj.exec()
+    try:
+        main_window.show()
+        app_obj.exec()
+    except Exception as error:
+        print("\n", f"Помилка під час запуску проєкту: {error}", "\n")
 
 
 if __name__ == '__main__':
