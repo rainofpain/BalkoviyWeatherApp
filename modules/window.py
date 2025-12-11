@@ -1,5 +1,10 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as widgets
+import PyQt6.QtGui as qt_gui
+
+from PIL import Image
+from PIL.ImageQt import ImageQt
+from PIL import ImageFilter
 
 from .app import app_obj
 
@@ -38,26 +43,33 @@ class MainWindow(widgets.QMainWindow):
         self.CENTRAL_WIDGET_LAYOUT = widgets.QVBoxLayout()
         self.CENTRAL_WIDGET_LAYOUT.setSpacing(10)
         self.CENTRAL_WIDGET_LAYOUT.setContentsMargins(0, 0, 0, 0)
-        self.CENTRAL_WIDGET_LAYOUT.setAlignment(core.Qt.AlignmentFlag.AlignRight)
+        self.CENTRAL_WIDGET_LAYOUT.setAlignment(core.Qt.AlignmentFlag.AlignCenter)
         
         self.CENTRAL_WIDGET.setLayout(self.CENTRAL_WIDGET_LAYOUT)
         
-        self.FRAME1 = widgets.QFrame(parent = self.CENTRAL_WIDGET)
-        self.FRAME1.setStyleSheet('background-color: green; ')
-        self.FRAME1.setFixedSize(core.QSize(100, 200))
-        # self.FRAME1.setSizePolicy(widgets.QSizePolicy.Policy.Expanding, widgets.QSizePolicy.Policy.Fixed)
         
-        self.FRAME2 = widgets.QFrame(parent = self.CENTRAL_WIDGET)
-        self.FRAME2.setStyleSheet('background-color: red; ')
-        self.FRAME2.setFixedSize(core.QSize(100, 200))
+        cat_image = Image.open("media/cat.png")
+        cat_image = cat_image.rotate(90)
         
-        self.FRAME3 = widgets.QFrame(parent = self.CENTRAL_WIDGET)
-        self.FRAME3.setStyleSheet('background-color: blue; ')
-        self.FRAME3.setFixedSize(core.QSize(100, 200))
+        # Фільтри зображення
+        cat_image = cat_image.filter(ImageFilter.BLUR)
         
-        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.FRAME1)
-        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.FRAME2)
-        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.FRAME3)
+        qt_image = ImageQt(cat_image)
+        
+        self.TEXT_LABEL = widgets.QLabel(parent = self.CENTRAL_WIDGET, text = "HEllo world")
+        
+        image_widget = qt_gui.QImage(qt_image)
+        pixmap = qt_gui.QPixmap(image_widget)
+        
+        pixmap = pixmap.scaled(200, 200)
+        self.TEXT_LABEL.setPixmap(pixmap)
+        
+        self.TEXT_LABEL.setStyleSheet("""
+            font-size: 36px;
+            font-weight: 500;
+            font-style: italic;
+        """)
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.TEXT_LABEL)
 
 main_window = MainWindow()
 
