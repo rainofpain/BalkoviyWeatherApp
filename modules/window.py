@@ -70,6 +70,41 @@ class MainWindow(widgets.QMainWindow):
             font-style: italic;
         """)
         self.CENTRAL_WIDGET_LAYOUT.addWidget(self.TEXT_LABEL)
+        
+        button = widgets.QPushButton(parent = self.CENTRAL_WIDGET, text = "Push!")
+        button.setStyleSheet("""
+            border: 3px solid rgba(1, 2, 3, 0.5); 
+            border-radius: 5px; 
+        """)
+        button.clicked.connect(self.button_clicked)
+        
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(button)
+        
+        
+        # self.INPUT1 = widgets.QLineEdit(parent = self.CENTRAL_WIDGET)
+        # self.INPUT1.setPlaceholderText("Placeholder")
+        # self.CENTRAL_WIDGET_LAYOUT.addWidget(self.INPUT1)
+        
+        # self.INPUT1.textChanged.connect(self.input_text_changed)
+        
+        
+        self.DROPDOWN_MENU = widgets.QComboBox(parent = self.CENTRAL_WIDGET)
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.DROPDOWN_MENU)
+        
+        self.DROPDOWN_MENU.addItem("OPtion1")
+        self.DROPDOWN_MENU.addItem("OPtion2")
+        self.DROPDOWN_MENU.addItem(qt_gui.QIcon("media/cat.png"), "12345")
+        
+    
+    
+    def button_clicked(self):
+        print("CLICK")
+    
+    
+    def input_text_changed(self):
+        print(123)
+        
+
 
 main_window = MainWindow()
 
