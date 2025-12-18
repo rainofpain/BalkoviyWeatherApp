@@ -95,10 +95,59 @@ class MainWindow(widgets.QMainWindow):
         self.DROPDOWN_MENU.addItem("OPtion2")
         self.DROPDOWN_MENU.addItem(qt_gui.QIcon("media/cat.png"), "12345")
         
+        self.DROPDOWN_MENU.currentTextChanged.connect(self.button_clicked)
+        
+        
+        # Radio button
+        self.BUTTON_GROUP = widgets.QButtonGroup(parent = self.CENTRAL_WIDGET)
+        
+        radio_button1 = widgets.QRadioButton(parent = self.CENTRAL_WIDGET, text = "Another")
+        radio_button2 = widgets.QRadioButton(parent = self.CENTRAL_WIDGET, text = "Hello")
+        radio_button3 = widgets.QRadioButton(parent = self.CENTRAL_WIDGET, text = "123")
+        
+        self.BUTTON_GROUP.addButton(radio_button1)
+        self.BUTTON_GROUP.addButton(radio_button2)
+        self.BUTTON_GROUP.addButton(radio_button3)
+        
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(radio_button1)
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(radio_button2)
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(radio_button3)
+        
+        
+        # Checkbox
+        self.CHECKBOX_BUTTON_GROUP = widgets.QButtonGroup(parent = self.CENTRAL_WIDGET)
+        self.CHECKBOX_BUTTON_GROUP.setExclusive(False)
+
+        self.CHECKBOX1 = widgets.QCheckBox(parent = self.CENTRAL_WIDGET, text = "Main")
+        checkbox2 = widgets.QCheckBox(parent = self.CENTRAL_WIDGET, text = "Additional1")
+        checkbox3 = widgets.QCheckBox(parent = self.CENTRAL_WIDGET, text = "Additional2")
+        
+        print(self.CHECKBOX1.checkState())
+        
+        self.CHECKBOX_BUTTON_GROUP.addButton(checkbox2)
+        self.CHECKBOX_BUTTON_GROUP.addButton(checkbox3)
+        
+        
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.CHECKBOX1)
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(checkbox2)
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(checkbox3)
+        
+        self.CHECKBOX1.toggled.connect(self.checkbox_toggled)
+    
+    
+    def checkbox_toggled(self, state: bool):
+        
+        button_list = self.CHECKBOX_BUTTON_GROUP.buttons()
+        
+        for button in button_list:
+            button: widgets.QCheckBox
+            
+            print(button.checkState())
+            button.setChecked(state)
     
     
     def button_clicked(self):
-        print("CLICK")
+        print(self.DROPDOWN_MENU.currentText())
     
     
     def input_text_changed(self):
