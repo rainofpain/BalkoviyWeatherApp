@@ -76,7 +76,6 @@ class MainWindow(widgets.QMainWindow):
             border: 3px solid rgba(1, 2, 3, 0.5); 
             border-radius: 5px; 
         """)
-        button.clicked.connect(self.button_clicked)
         
         self.CENTRAL_WIDGET_LAYOUT.addWidget(button)
         
@@ -94,8 +93,6 @@ class MainWindow(widgets.QMainWindow):
         self.DROPDOWN_MENU.addItem("OPtion1")
         self.DROPDOWN_MENU.addItem("OPtion2")
         self.DROPDOWN_MENU.addItem(qt_gui.QIcon("media/cat.png"), "12345")
-        
-        self.DROPDOWN_MENU.currentTextChanged.connect(self.button_clicked)
         
         
         # Radio button
@@ -122,8 +119,6 @@ class MainWindow(widgets.QMainWindow):
         checkbox2 = widgets.QCheckBox(parent = self.CENTRAL_WIDGET, text = "Additional1")
         checkbox3 = widgets.QCheckBox(parent = self.CENTRAL_WIDGET, text = "Additional2")
         
-        print(self.CHECKBOX1.checkState())
-        
         self.CHECKBOX_BUTTON_GROUP.addButton(checkbox2)
         self.CHECKBOX_BUTTON_GROUP.addButton(checkbox3)
         
@@ -131,29 +126,34 @@ class MainWindow(widgets.QMainWindow):
         self.CENTRAL_WIDGET_LAYOUT.addWidget(self.CHECKBOX1)
         self.CENTRAL_WIDGET_LAYOUT.addWidget(checkbox2)
         self.CENTRAL_WIDGET_LAYOUT.addWidget(checkbox3)
+    
+    
+    def mousePressEvent(self, event: qt_gui.QMouseEvent):
         
-        self.CHECKBOX1.toggled.connect(self.checkbox_toggled)
+        if event.button() == core.Qt.MouseButton.LeftButton:
+            print("Left button clicked")
     
     
-    def checkbox_toggled(self, state: bool):
+    def mouseMoveEvent(self, event: qt_gui.QMouseEvent):
         
-        button_list = self.CHECKBOX_BUTTON_GROUP.buttons()
+        self.setMouseTracking(False)
         
-        for button in button_list:
-            button: widgets.QCheckBox
-            
-            print(button.checkState())
-            button.setChecked(state)
+        print(event.position().toPoint())
     
     
-    def button_clicked(self):
-        print(self.DROPDOWN_MENU.currentText())
-    
-    
-    def input_text_changed(self):
-        print(123)
+    def mouseReleaseEvent(self, event: qt_gui.QMouseEvent):
         
-
+        if event.button() == core.Qt.MouseButton.LeftButton:
+            print("Left button released")
+    
+    
+    def keyPressEvent(self, event: qt_gui.QKeyEvent):
+        key = event.key()
+        text = event.text()
+        print(text, key)
+        
+        if key == core.Qt.Key.Key_Return or key == core.Qt.Key.Key_Enter:
+            print("Enter")
 
 main_window = MainWindow()
 
