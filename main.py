@@ -1,5 +1,7 @@
 from modules import app_obj, main_window
+from utils import api_request
 
+api_request("Dnipro")
 
 def main():
     try:

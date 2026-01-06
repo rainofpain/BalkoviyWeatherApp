@@ -114,7 +114,7 @@ class MainWindow(widgets.QMainWindow):
         # Checkbox
         self.CHECKBOX_BUTTON_GROUP = widgets.QButtonGroup(parent = self.CENTRAL_WIDGET)
         self.CHECKBOX_BUTTON_GROUP.setExclusive(False)
-
+        
         self.CHECKBOX1 = widgets.QCheckBox(parent = self.CENTRAL_WIDGET, text = "Main")
         checkbox2 = widgets.QCheckBox(parent = self.CENTRAL_WIDGET, text = "Additional1")
         checkbox3 = widgets.QCheckBox(parent = self.CENTRAL_WIDGET, text = "Additional2")
