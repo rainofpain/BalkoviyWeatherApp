@@ -11,7 +11,7 @@ from utils import *
 
 
 class MainWindow(qt_widgets.QMainWindow):
-    def __init__(self):
+    def __init__(self, w, h):
         super().__init__()
         
         
@@ -19,7 +19,9 @@ class MainWindow(qt_widgets.QMainWindow):
         
         # write_json(data_dict, "static/json/city_data.json")
         data_dict = read_json("static/json/city_data.json")
-
+        
+        self.WINDOW_WIDTH = w
+        self.WINDOW_HEIGHT = h
         
         
         screen = app_obj.primaryScreen()
@@ -30,15 +32,15 @@ class MainWindow(qt_widgets.QMainWindow):
         
         self.MAIN_WINDOW_SIZE = core.QSize(self.SCREEN_WIDTH // 2, self.SCREEN_HEIGHT // 2)
         
-        self.CENTER_X = (self.SCREEN_WIDTH // 2) - (self.SCREEN_WIDTH // 4)
-        self.CENTER_Y = (self.SCREEN_HEIGHT // 2) - (self.SCREEN_HEIGHT // 4)
+        self.CENTER_X = (self.SCREEN_WIDTH // 2) - (self.WINDOW_WIDTH // 2)
+        self.CENTER_Y = (self.SCREEN_HEIGHT // 2) - (self.WINDOW_HEIGHT // 2)
         
         
         self.setGeometry(
             self.CENTER_X, 
             self.CENTER_Y, 
-            self.SCREEN_WIDTH // 2, 
-            self.SCREEN_HEIGHT // 2
+            self.WINDOW_WIDTH,
+            self.WINDOW_HEIGHT
         )
         self.setWindowTitle("Weather forecast")
         self.setStyleSheet("background-color: transparent; ")
@@ -87,13 +89,14 @@ class MainWindow(qt_widgets.QMainWindow):
         self.CENTRAL_WIDGET_LAYOUT.addWidget(self.PRINT_JSON_LABEL)
         self.CENTRAL_WIDGET_LAYOUT.addWidget(self.TEXT_LABEL)
         
-        button = qt_widgets.QPushButton(parent = self.CENTRAL_WIDGET, text = "Push!")
-        button.setStyleSheet("""
+        self.BUTTON = qt_widgets.QPushButton(parent = self.CENTRAL_WIDGET, text = "Push!")
+        self.BUTTON.setStyleSheet("""
             border: 3px solid rgba(1, 2, 3, 0.5); 
             border-radius: 5px; 
         """)
+        self.BUTTON.clicked.connect(self.button_click)
         
-        self.CENTRAL_WIDGET_LAYOUT.addWidget(button)
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.BUTTON)
         
         
         # self.INPUT1 = qt_widgets.QLineEdit(parent = self.CENTRAL_WIDGET)
@@ -144,6 +147,74 @@ class MainWindow(qt_widgets.QMainWindow):
         self.CENTRAL_WIDGET_LAYOUT.addWidget(checkbox3)
     
     
+    def button_click(self):
+        
+        self.MODAL = qt_widgets.QWidget(parent = self)
+        
+        self.MODAL.setGeometry(
+            (self.WINDOW_WIDTH // 2) - 395, 
+            (self.WINDOW_HEIGHT // 2) - 344, 
+            790, 
+            688
+        )
+        self.MODAL.setStyleSheet("background-color: #FFF; border-radius: 10px; ")
+        self.MODAL.show()
+        
+        self.MODAL_LAYOUT = create_layout(
+            orientation = "v",
+            spacing = 34,
+            content_margins = (24, 24, 24, 24),
+            alignment = core.Qt.AlignmentFlag.AlignCenter
+        )
+        
+        self.MODAL.setLayout(self.MODAL_LAYOUT)
+        
+        self.HEADER = qt_widgets.QFrame(parent = self.MODAL)
+        self.HEADER.setFixedSize(core.QSize(742, 28))
+        self.HEADER_LAYOUT = create_layout(
+            orientation = "h",
+            spacing = 0,
+            content_margins = (0, 0, 0, 0),
+            alignment = core.Qt.AlignmentFlag.AlignRight
+        )
+        self.HEADER.setLayout(self.HEADER_LAYOUT)
+        
+        self.CROSS_BUTTON = qt_widgets.QPushButton(parent = self.HEADER)
+        
+        cross_icon = qt_gui.QIcon()
+        cross_icon.addFile("media/cross.svg")
+        self.CROSS_BUTTON.setIcon(cross_icon)
+        self.CROSS_BUTTON.clicked.connect(self.MODAL.hide)
+        
+        self.HEADER_LAYOUT.addWidget(self.CROSS_BUTTON)
+        
+        
+        self.MAIN = qt_widgets.QFrame(parent = self.MODAL)
+        self.MAIN.setFixedSize(core.QSize(742, 578))
+        self.MAIN_LAYOUT = create_layout(
+            orientation = "h",
+            spacing = 24,
+            content_margins = (0, 0, 0, 0),
+            alignment = core.Qt.AlignmentFlag.AlignCenter
+        )
+        self.MAIN.setLayout(self.MAIN_LAYOUT)
+        
+        self.MODAL_LAYOUT.addWidget(self.HEADER)
+        self.MODAL_LAYOUT.addWidget(self.MAIN)
+        
+        
+        shadow = qt_widgets.QGraphicsDropShadowEffect()
+        
+        shadow.setXOffset(0)
+        shadow.setYOffset(0)
+        
+        shadow.setBlurRadius(25)
+        
+        shadow.setColor(qt_gui.QColor(0, 0, 0))
+        
+        self.MODAL.setGraphicsEffect(shadow)
+        
+    
     def mousePressEvent(self, event: qt_gui.QMouseEvent):
         
         if event.button() == core.Qt.MouseButton.LeftButton:
@@ -171,5 +242,5 @@ class MainWindow(qt_widgets.QMainWindow):
         if key == core.Qt.Key.Key_Return or key == core.Qt.Key.Key_Enter:
             print("Enter")
 
-main_window = MainWindow()
+main_window = MainWindow(w = 1280, h = 800)
 
