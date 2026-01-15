@@ -1,10 +1,14 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
+import PyQt6.QtWebEngineWidgets as web_engine
 
 from PIL import Image
 from PIL.ImageQt import ImageQt
 from PIL import ImageFilter
+
+import folium
+import io
 
 from .app import app_obj
 from utils import *
@@ -149,8 +153,32 @@ class MainWindow(qt_widgets.QMainWindow):
     
     def button_click(self):
         
-        self.MODAL = qt_widgets.QWidget(parent = self)
+        # Shadow modal
+        self.SHADOW_MODAL = qt_widgets.QWidget(parent = self)
+        self.SHADOW_MODAL.setGeometry(
+            (self.WINDOW_WIDTH // 2) - 395, 
+            (self.WINDOW_HEIGHT // 2) - 344, 
+            790, 
+            688
+        )
+        self.SHADOW_MODAL.setStyleSheet("background-color: #FFF; border-radius: 10px; ")
         
+        # Shadow
+        shadow = qt_widgets.QGraphicsDropShadowEffect()
+        
+        shadow.setXOffset(0)
+        shadow.setYOffset(0)
+        
+        shadow.setBlurRadius(25)
+        
+        shadow.setColor(qt_gui.QColor(0, 0, 0))
+        
+        self.SHADOW_MODAL.setGraphicsEffect(shadow)
+        
+        self.SHADOW_MODAL.show()
+        
+        # Main modal
+        self.MODAL = qt_widgets.QWidget(parent = self)
         self.MODAL.setGeometry(
             (self.WINDOW_WIDTH // 2) - 395, 
             (self.WINDOW_HEIGHT // 2) - 344, 
@@ -179,12 +207,14 @@ class MainWindow(qt_widgets.QMainWindow):
         )
         self.HEADER.setLayout(self.HEADER_LAYOUT)
         
+        self.MODAL_LAYOUT.addWidget(self.HEADER)
+        
         self.CROSS_BUTTON = qt_widgets.QPushButton(parent = self.HEADER)
         
         cross_icon = qt_gui.QIcon()
         cross_icon.addFile("media/cross.svg")
         self.CROSS_BUTTON.setIcon(cross_icon)
-        self.CROSS_BUTTON.clicked.connect(self.MODAL.hide)
+        self.CROSS_BUTTON.clicked.connect(self.close_modal)
         
         self.HEADER_LAYOUT.addWidget(self.CROSS_BUTTON)
         
@@ -199,21 +229,27 @@ class MainWindow(qt_widgets.QMainWindow):
         )
         self.MAIN.setLayout(self.MAIN_LAYOUT)
         
-        self.MODAL_LAYOUT.addWidget(self.HEADER)
         self.MODAL_LAYOUT.addWidget(self.MAIN)
         
+        # Minimap
+        map = folium.Map(location = (50.45205145776175, 30.50042416456522))
         
-        shadow = qt_widgets.QGraphicsDropShadowEffect()
+        web_view = web_engine.QWebEngineView(parent = self.MAIN)
+        web_view.setFixedSize(289, 256)
+        self.MAIN_LAYOUT.addWidget(web_view)
         
-        shadow.setXOffset(0)
-        shadow.setYOffset(0)
+        data = io.BytesIO()
+        map.save(data, close_file = False)
         
-        shadow.setBlurRadius(25)
+        data_value = data.getvalue()
         
-        shadow.setColor(qt_gui.QColor(0, 0, 0))
-        
-        self.MODAL.setGraphicsEffect(shadow)
-        
+        web_view.setHtml(data_value.decode())
+    
+    
+    def close_modal(self):
+        self.MODAL.hide()
+        self.SHADOW_MODAL.hide()
+    
     
     def mousePressEvent(self, event: qt_gui.QMouseEvent):
         
