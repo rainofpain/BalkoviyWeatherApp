@@ -14,5 +14,5 @@ class FooterContainer(qt_widgets.QFrame):
             content_margins = (0, 0, 0, 0), 
             alignment = core.Qt.AlignmentFlag.AlignCenter
         )
-        self.setStyleSheet('background-color: yellow')
+        self.setStyleSheet('background-color: gray')
         self.setLayout(self.LAYOUT)
