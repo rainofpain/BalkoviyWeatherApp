@@ -81,17 +81,41 @@ class FooterContainer(qt_widgets.QFrame):
         self.LEFT_FRAME_LAYOUT = create_layout(
             orientation = "h",
             content_margins = (0, 0, 0, 0),
-            spacing = 3,
+            spacing = 5,
             alignment = core.Qt.AlignmentFlag.AlignLeft
         )
         self.LEFT_FRAME.setLayout(self.LEFT_FRAME_LAYOUT)
         self.GRAPH_FRAME_LAYOUT.addWidget(self.LEFT_FRAME)
         
-        data_dict = api_request("Dnipro")
+        data_dict = api_request("Rome")
         
-        for col in data_dict["list"]:
+        for col in data_dict["list"]: # for col in data_dict["list"][:4]:
             temp = int(col["main"]["temp"])
-        
+            
+            print(temp)
+            if temp < 0:
+                height = 30 - ((temp * - 1) * 3)
+                
+                if temp < -10 or height < 15:
+                    height = 15
+            elif temp == 0:
+                height = 30
+            elif temp > 0:
+                height = temp * 3 + 30
+                if temp > 25:
+                    height = 105
+            # for i in range(3):
+            graph_frame = qt_widgets.QFrame(parent = self.LEFT_FRAME)
+            graph_frame.setStyleSheet("""
+                background: qlineargradient(
+                    x1: 0 y1: 0,
+                    x2: 0 y2: 1,
+                    stop:0 rgba(255, 223, 86, 1), stop:1 rgba(135, 206, 250, 1)
+                ); 
+            """)
+            graph_frame.setFixedSize(8, height)
+            self.LEFT_FRAME_LAYOUT.addWidget(graph_frame, alignment = core.Qt.AlignmentFlag.AlignBottom)
+            
         
         self.RIGHT_FRAME = qt_widgets.QFrame(parent = self.GRAPH_FRAME)
         self.RIGHT_FRAME.setFixedSize(22, 106)
