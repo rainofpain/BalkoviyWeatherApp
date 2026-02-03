@@ -9,13 +9,14 @@ import io
 from .app import app_obj
 from utils import *
 from .containers import LeftContainer, ContentContainer
+from .title_bar import TitleBar
 
 
 class MainWindow(qt_widgets.QMainWindow):
     def __init__(self, w, h):
         super().__init__()
         
-        
+        self.setWindowFlags(core.Qt.WindowType.FramelessWindowHint)
         #data_dict = api_request("Dnipro")
         
         # write_json(data_dict, "static/json/city_data.json")
@@ -47,21 +48,37 @@ class MainWindow(qt_widgets.QMainWindow):
         
         self.CENTRAL_WIDGET = qt_widgets.QWidget(parent = self)
         self.CENTRAL_WIDGET.setStyleSheet('background-color: transparent; ')
-        self.CENTRAL_WIDGET.setFixedSize(self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+        self.CENTRAL_WIDGET.setFixedSize(self.WINDOW_WIDTH, self.WINDOW_HEIGHT + 40)
         
         self.CENTRAL_WIDGET_LAYOUT = create_layout(
-            orientation = "h", 
+            orientation = "v", 
             spacing = 0, 
             content_margins = (0, 0, 0, 0), 
             alignment = core.Qt.AlignmentFlag.AlignCenter
         )
         self.CENTRAL_WIDGET.setLayout(self.CENTRAL_WIDGET_LAYOUT)
         
-        self.LEFT_CONTAINER = LeftContainer(parent = self.CENTRAL_WIDGET)
-        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.LEFT_CONTAINER)
+        self.TITLE_BAR = TitleBar(parent = self.CENTRAL_WIDGET, window_width = self.WINDOW_WIDTH)
+
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.TITLE_BAR)
+
+        self.CONTENT_FRAME = qt_widgets.QFrame(parent= self.CENTRAL_WIDGET)
         
-        self.CONTENT_CONTAINER = ContentContainer(parent = self.CENTRAL_WIDGET)
-        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.CONTENT_CONTAINER)
+        self.CONTENT_FRAME_LAYOUT = create_layout(
+            orientation = "h", 
+            spacing = 0, 
+            content_margins = (0, 0, 0, 0), 
+            alignment = core.Qt.AlignmentFlag.AlignCenter
+        )
+        self.CONTENT_FRAME.setLayout(self.CONTENT_FRAME_LAYOUT)
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.CONTENT_FRAME)
+
+        
+        self.LEFT_CONTAINER = LeftContainer(parent = self.CONTENT_FRAME)
+        self.CONTENT_FRAME_LAYOUT.addWidget(self.LEFT_CONTAINER)
+        
+        self.CONTENT_CONTAINER = ContentContainer(parent = self.CONTENT_FRAME)
+        self.CONTENT_FRAME_LAYOUT.addWidget(self.CONTENT_CONTAINER)
         
         
         # self.BUTTON = qt_widgets.QPushButton(parent = self.CENTRAL_WIDGET, text = "Push!")
