@@ -191,32 +191,6 @@ class MainWindow(qt_widgets.QMainWindow):
         self.SHADOW_MODAL.hide()
     
     
-    def mousePressEvent(self, event: qt_gui.QMouseEvent):
-        
-        if event.button() == core.Qt.MouseButton.LeftButton:
-            print("Left button clicked")
-    
-    
-    def mouseMoveEvent(self, event: qt_gui.QMouseEvent):
-        
-        self.setMouseTracking(False)
-        
-        print(event.position().toPoint())
-    
-    
-    def mouseReleaseEvent(self, event: qt_gui.QMouseEvent):
-        
-        if event.button() == core.Qt.MouseButton.LeftButton:
-            print("Left button released")
-    
-    
-    def keyPressEvent(self, event: qt_gui.QKeyEvent):
-        key = event.key()
-        text = event.text()
-        print(text, key)
-        
-        if key == core.Qt.Key.Key_Return or key == core.Qt.Key.Key_Enter:
-            print("Enter")
 
 main_window = MainWindow(w = 1200, h = 800)
 

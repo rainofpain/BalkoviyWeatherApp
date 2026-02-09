@@ -1,5 +1,7 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
+from .info_card import InfoCard
+from .header import LeftContainerHeader
 
 from utils import *
 
@@ -11,13 +13,18 @@ class LeftContainer(qt_widgets.QFrame):
         self.LAYOUT = create_layout(
             orientation = "v", 
             spacing = 0, 
-            content_margins = (0, 0, 0, 0), 
+            content_margins = (15, 0, 15, 0), 
             alignment = core.Qt.AlignmentFlag.AlignCenter
         )
         self.setStyleSheet('background-color: gray')
         self.setLayout(self.LAYOUT)
-        
+
+        self.HEADER = LeftContainerHeader(parent = self)
+
+        self.LAYOUT.addWidget(self.HEADER)
+
         self.SCROLL_AREA = qt_widgets.QScrollArea(parent = self)
+        self.SCROLL_AREA.setFixedWidth(330)
         self.SCROLL_AREA.setWidgetResizable(True)
         self.SCROLL_AREA.setVerticalScrollBarPolicy(core.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         
@@ -38,9 +45,16 @@ class LeftContainer(qt_widgets.QFrame):
         self.SCROLL_FRAME.setLayout(self.SCROLL_FRAME_LAYOUT)
         
         for index in range(20):
-            card = qt_widgets.QFrame(parent = self.SCROLL_FRAME)
-            card.setFixedSize(330, 90)
-            card.setStyleSheet("background-color: green; ")
+
+            card = InfoCard(
+                parent = self.SCROLL_FRAME, 
+                city_name = "City", 
+                time = "15:24", 
+                temp = "14°",
+                weather = "Сонячно",
+                min_temp = "0°",
+                max_temp = "15°"
+                )
             
             self.SCROLL_FRAME_LAYOUT.addWidget(card)
 
