@@ -24,7 +24,6 @@ class LeftContainer(qt_widgets.QFrame):
         self.LAYOUT.addWidget(self.HEADER)
 
         self.SCROLL_AREA = qt_widgets.QScrollArea(parent = self)
-        self.SCROLL_AREA.setFixedWidth(330)
         self.SCROLL_AREA.setWidgetResizable(True)
         self.SCROLL_AREA.setVerticalScrollBarPolicy(core.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         
@@ -32,6 +31,8 @@ class LeftContainer(qt_widgets.QFrame):
         
         self.SCROLL_FRAME = qt_widgets.QFrame(parent = self.SCROLL_AREA)
         
+        self.SCROLL_FRAME.setFixedWidth(330)
+
         self.LAYOUT.addWidget(self.SCROLL_FRAME)
         
         self.SCROLL_AREA.setWidget(self.SCROLL_FRAME)

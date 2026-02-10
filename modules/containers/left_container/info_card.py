@@ -1,5 +1,7 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
+import PyQt6.QtGui as qt_gui
+
 
 from utils import *
 
@@ -43,16 +45,38 @@ class InfoCard(qt_widgets.QFrame):
         )
         self.CITY_FRAME.setLayout(self.CITY_FRAME_LAYOUT)
 
-        self.CITY_NAME = qt_widgets.QLabel(text = city_name, parent = self.CITY_FRAME)
-        self.CITY_NAME.setFixedSize(247, 28)
+        self.CITY_NAME_FRAME = qt_widgets.QFrame(parent = self.CITY_FRAME)
+
+        self.CITY_NAME_FRAME_LAYOUT = create_layout(
+            orientation = "h", 
+            spacing = 10, 
+            content_margins = (0, 0, 0, 0), 
+            alignment = core.Qt.AlignmentFlag.AlignLeft
+        )
+        self.CITY_NAME_FRAME.setFixedSize(247, 28)
+        self.CITY_NAME_FRAME.setLayout(self.CITY_NAME_FRAME_LAYOUT)
+
+        
+        # arrow_picture = qt_gui.QPixmap("media/navigation.svg")
+        # scaled_arrow = arrow_picture.scaled(16, 16)
+
+        # self.ARROW = qt_widgets.QLabel(parent = self.CITY_NAME_FRAME)
+        # self.ARROW.setPixmap(scaled_arrow)
+        
+
+        self.CITY_NAME_FRAME_LAYOUT.addWidget(self.ARROW)
+
+        self.CITY_NAME = qt_widgets.QLabel(text = city_name, parent = self.CITY_NAME_FRAME)
         self.CITY_NAME.setStyleSheet("""
                                      color: white;
                                      font-size: 24px;
                                      font-weight: 500;
                                      """)
 
-        self.CITY_FRAME_LAYOUT.addWidget(self.CITY_NAME)
+        self.CITY_NAME_FRAME_LAYOUT.addWidget(self.CITY_NAME)
 
+        self.CITY_FRAME_LAYOUT.addWidget(self.CITY_NAME_FRAME)
+        
         self.TIME = qt_widgets.QLabel(text = time, parent = self.CITY_FRAME)
         self.TIME.setFixedSize(247, 18)
         self.TIME.setStyleSheet("""
@@ -62,6 +86,7 @@ class InfoCard(qt_widgets.QFrame):
                                      """)
 
         self.CITY_FRAME_LAYOUT.addWidget(self.TIME)
+
 
         self.TOP_FRAME_LAYOUT.addWidget(self.CITY_FRAME)
 
