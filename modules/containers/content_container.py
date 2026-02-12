@@ -9,6 +9,7 @@ class ContentContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
+        self.setObjectName("ContentContainer")
         self.setFixedSize(828, 800)
         self.LAYOUT = create_layout(
             orientation = "v", 
@@ -16,15 +17,17 @@ class ContentContainer(qt_widgets.QFrame):
             content_margins = (0, 0, 0, 0), 
             alignment = core.Qt.AlignmentFlag.AlignCenter
         )
-        self.setStyleSheet('background-color: red')
         self.setLayout(self.LAYOUT)
 
         self.HEADER = HeaderContainer(parent = self)
+        self.HEADER.setObjectName("Header")
         self.LAYOUT.addWidget(self.HEADER)
 
         self.MAIN = MainContainer(parent = self)
+        self.MAIN.setObjectName("Main")
         self.LAYOUT.addWidget(self.MAIN)
 
-        self.FOOTER = FooterContainer(parent = self) 
+        self.FOOTER = FooterContainer(parent = self)
+        self.FOOTER.setObjectName("Footer") 
         self.LAYOUT.addWidget(self.FOOTER)
 

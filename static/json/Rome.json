@@ -1,0 +1,46 @@
+{
+    "coord": {
+        "lon": -85.1647,
+        "lat": 34.257
+    },
+    "weather": [
+        {
+            "id": 802,
+            "main": "Clouds",
+            "description": "уривчасті хмари",
+            "icon": "03d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 5.69,
+        "feels_like": 4.39,
+        "temp_min": 4.58,
+        "temp_max": 6.65,
+        "pressure": 1025,
+        "humidity": 57,
+        "sea_level": 1025,
+        "grnd_level": 997
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.79,
+        "deg": 34,
+        "gust": 1.79
+    },
+    "clouds": {
+        "all": 48
+    },
+    "dt": 1770906556,
+    "sys": {
+        "type": 2,
+        "id": 2009938,
+        "country": "US",
+        "sunrise": 1770899330,
+        "sunset": 1770938468
+    },
+    "timezone": -18000,
+    "id": 4219762,
+    "name": "Rome",
+    "cod": 200
+}

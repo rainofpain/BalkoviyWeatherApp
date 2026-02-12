@@ -67,17 +67,18 @@ class InfoCard(qt_widgets.QFrame):
         self.CITY_NAME_FRAME.setLayout(self.CITY_NAME_FRAME_LAYOUT)
 
        
-        self.ARROW = qt_svg.QSvgWidget("media/navigation.svg", parent = self.CITY_NAME_FRAME)
+        self.ARROW = qt_widgets.QFrame(parent = self.CITY_NAME_FRAME)
         self.ARROW.setFixedSize(16, 16)
+        self.ARROW.setObjectName("Arrow")
+        
         self.CITY_NAME_FRAME_LAYOUT.addWidget(self.ARROW)
         self.ARROW.hide()
 
         self.CITY_NAME = qt_widgets.QLabel(text = self.NAME, parent = self.CITY_NAME_FRAME)
-        self.CITY_NAME.setStyleSheet("""
-                                     color: white;
-                                     font-size: 24px;
-                                     font-weight: 500;
-                                     """)
+        self.CITY_NAME.setStyleSheet("font-size: 24px")
+                                      
+                                     
+                                     
 
         self.CITY_NAME_FRAME_LAYOUT.addWidget(self.CITY_NAME)
 
@@ -85,11 +86,7 @@ class InfoCard(qt_widgets.QFrame):
         
         self.CITY_TIME = qt_widgets.QLabel(text = self.TIME, parent = self.CITY_FRAME)
         self.CITY_TIME.setFixedSize(247, 18)
-        self.CITY_TIME.setStyleSheet("""
-                                     color: white;
-                                     font-size: 12px;
-                                     font-weight: 500;
-                                     """)
+        self.CITY_TIME.setStyleSheet("font-size: 12px;")
 
         self.CITY_FRAME_LAYOUT.addWidget(self.CITY_TIME)
 
@@ -109,11 +106,7 @@ class InfoCard(qt_widgets.QFrame):
 
         self.CITY_TEMP_LABEL = qt_widgets.QLabel(text = self.TEMP, parent = self.CITY_TEMP_FRAME)
         self.CITY_TEMP_LABEL.setFixedSize(67, 44)
-        self.CITY_TEMP_LABEL.setStyleSheet("""
-                                     color: white;
-                                     font-size: 44px;
-                                     font-weight: 500;
-                                     """)
+        self.CITY_TEMP_LABEL.setStyleSheet("font-size: 44px;")
 
         self.CITY_TEMP_FRAME_LAYOUT.addWidget(self.CITY_TEMP_LABEL)
 
@@ -135,11 +128,7 @@ class InfoCard(qt_widgets.QFrame):
 
         self.CITY_WEATHER = qt_widgets.QLabel(text = self.WEATHER, parent = self.BOT_FRAME)
         self.CITY_WEATHER.setFixedSize(216, 14)
-        self.CITY_WEATHER.setStyleSheet("""
-                                     color: white;
-                                     font-size: 12px;
-                                     font-weight: 500;
-                                     """)
+        self.CITY_WEATHER.setStyleSheet("font-size: 12px;")
 
         self.BOT_FRAME_LAYOUT.addWidget(self.CITY_WEATHER)
 
@@ -149,11 +138,7 @@ class InfoCard(qt_widgets.QFrame):
             )
         
         self.MIN_AND_MAX_TEMP.setFixedSize(98, 14)
-        self.MIN_AND_MAX_TEMP.setStyleSheet("""
-                                     color: white;
-                                     font-size: 12px;
-                                     font-weight: 500;
-                                     """)
+        self.MIN_AND_MAX_TEMP.setStyleSheet("font-size: 12px;")
 
         self.BOT_FRAME_LAYOUT.addWidget(self.MIN_AND_MAX_TEMP)
 

@@ -17,10 +17,11 @@ class MainWindow(qt_widgets.QMainWindow):
         super().__init__()
         
         self.setWindowFlags(core.Qt.WindowType.FramelessWindowHint)
+        
         #data_dict = api_request("Dnipro")
         
         # write_json(data_dict, "static/json/city_data.json")
-        data_dict = read_json("static/json/city_data.json")
+        
         
         self.WINDOW_WIDTH = w
         self.WINDOW_HEIGHT = h
@@ -43,11 +44,9 @@ class MainWindow(qt_widgets.QMainWindow):
             self.WINDOW_HEIGHT
         )
         self.setWindowTitle("Weather forecast")
-        self.setStyleSheet("background-color: transparent; ")
-        
         
         self.CENTRAL_WIDGET = qt_widgets.QWidget(parent = self)
-        self.CENTRAL_WIDGET.setStyleSheet('background-color: transparent; ')
+
         self.CENTRAL_WIDGET.setFixedSize(self.WINDOW_WIDTH, self.WINDOW_HEIGHT + 40)
         
         self.CENTRAL_WIDGET_LAYOUT = create_layout(
@@ -63,6 +62,8 @@ class MainWindow(qt_widgets.QMainWindow):
         self.CENTRAL_WIDGET_LAYOUT.addWidget(self.TITLE_BAR)
 
         self.CONTENT_FRAME = qt_widgets.QFrame(parent= self.CENTRAL_WIDGET)
+
+        self.CONTENT_FRAME.setObjectName("ContentFrame")
         
         self.CONTENT_FRAME_LAYOUT = create_layout(
             orientation = "h", 
@@ -75,6 +76,7 @@ class MainWindow(qt_widgets.QMainWindow):
 
         
         self.LEFT_CONTAINER = LeftContainer(parent = self.CONTENT_FRAME)
+        self.LEFT_CONTAINER.setObjectName("LeftContainer")
         self.CONTENT_FRAME_LAYOUT.addWidget(self.LEFT_CONTAINER)
         
         self.CONTENT_CONTAINER = ContentContainer(parent = self.CONTENT_FRAME)

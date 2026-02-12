@@ -1,6 +1,5 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
-import PyQt6.QtGui as qt_gui
 
 from .info_card import InfoCard
 from .header import LeftContainerHeader
@@ -19,12 +18,7 @@ class LeftContainer(qt_widgets.QFrame):
             content_margins = (15, 0, 15, 0), 
             alignment = core.Qt.AlignmentFlag.AlignCenter
         )
-        self.setStyleSheet(
-            """
-            background-color: gray;
-            border: none;
-            """
-            )
+        self.setStyleSheet("border: none")
         
         self.setLayout(self.LAYOUT)
 

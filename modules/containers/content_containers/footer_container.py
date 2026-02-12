@@ -14,7 +14,6 @@ class FooterContainer(qt_widgets.QFrame):
             content_margins = (0, 0, 0, 0), 
             alignment = core.Qt.AlignmentFlag.AlignCenter
         )
-        self.setStyleSheet('background-color: gray; ')
         self.setLayout(self.LAYOUT)
         
         self.TOP_FRAME = qt_widgets.QFrame(parent = self)
@@ -22,7 +21,7 @@ class FooterContainer(qt_widgets.QFrame):
         self.LAYOUT.addWidget(self.TOP_FRAME)
         
         self.DOWN_FRAME = qt_widgets.QFrame(parent = self)
-        self.DOWN_FRAME.setStyleSheet("background-color: green; ")
+
         self.DOWN_FRAME.setFixedSize(788, 197)
         self.DOWN_FRAME_LAYOUT = create_layout(
             orientation = "v",
@@ -76,7 +75,7 @@ class FooterContainer(qt_widgets.QFrame):
         
         self.LEFT_FRAME = qt_widgets.QFrame(parent = self.GRAPH_FRAME)
         graph_bg_path = create_abspath("media/graph_bg.svg")
-        self.LEFT_FRAME.setStyleSheet(f"background: url({graph_bg_path}); ")
+        # self.LEFT_FRAME.setStyleSheet(f"background: url({graph_bg_path}); ")
         self.LEFT_FRAME.setFixedSize(755, 106)
         self.LEFT_FRAME_LAYOUT = create_layout(
             orientation = "h",
