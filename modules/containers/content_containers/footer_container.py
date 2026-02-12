@@ -87,12 +87,11 @@ class FooterContainer(qt_widgets.QFrame):
         self.LEFT_FRAME.setLayout(self.LEFT_FRAME_LAYOUT)
         self.GRAPH_FRAME_LAYOUT.addWidget(self.LEFT_FRAME)
         
-        data_dict = api_request("Rome")
+        data_dict = api_forecast_request("Kyiv", "ua")
         
         for col in data_dict["list"]: # for col in data_dict["list"][:4]:
             temp = int(col["main"]["temp"])
-            
-            print(temp)
+    
             if temp < 0:
                 height = 30 - ((temp * - 1) * 3)
                 

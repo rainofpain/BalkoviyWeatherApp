@@ -1,9 +1,12 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
+import PyQt6.QtGui as qt_gui
+
 from .info_card import InfoCard
 from .header import LeftContainerHeader
 
 from utils import *
+
 
 class LeftContainer(qt_widgets.QFrame):
     def __init__(self, parent):
@@ -16,7 +19,13 @@ class LeftContainer(qt_widgets.QFrame):
             content_margins = (15, 0, 15, 0), 
             alignment = core.Qt.AlignmentFlag.AlignCenter
         )
-        self.setStyleSheet('background-color: gray')
+        self.setStyleSheet(
+            """
+            background-color: gray;
+            border: none;
+            """
+            )
+        
         self.setLayout(self.LAYOUT)
 
         self.HEADER = LeftContainerHeader(parent = self)
@@ -41,22 +50,40 @@ class LeftContainer(qt_widgets.QFrame):
             orientation = "v", 
             spacing = 10, 
             content_margins = (0, 0, 0, 0), 
-            alignment = core.Qt.AlignmentFlag.AlignCenter
+            alignment = core.Qt.AlignmentFlag.AlignTop
         )
         self.SCROLL_FRAME.setLayout(self.SCROLL_FRAME_LAYOUT)
         
-        for index in range(20):
+
+        for city in city_name_list:
+
+            city_data = create_city_dict(city)
 
             card = InfoCard(
-                parent = self.SCROLL_FRAME, 
-                city_name = "City", 
-                time = "15:24", 
-                temp = "14°",
-                weather = "Сонячно",
-                min_temp = "0°",
-                max_temp = "15°"
+                parent = self.SCROLL_FRAME,
+                search_city_name = city_data["search_name"],
+                city_name = city_data["name"], 
+                time = city_data["time"], 
+                temp = city_data["temp"],
+                weather = city_data["weather"].capitalize(),
+                min_temp = city_data["min_temp"],
+                max_temp = city_data["max_temp"]
                 )
-            
+                
             self.SCROLL_FRAME_LAYOUT.addWidget(card)
+
+    def reset_card_click(self):
+        for index in range(self.SCROLL_FRAME_LAYOUT.count()):
+            item = self.SCROLL_FRAME_LAYOUT.itemAt(index)
+            widget = item.widget()
+            widget.CLICKED = False
+            widget.ARROW.hide()
+            widget.setStyleSheet("background-color: transparent; ")
+        
+
+    
+        
+            
+
 
 

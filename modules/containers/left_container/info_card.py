@@ -1,21 +1,31 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
+import PyQt6.QtSvgWidgets as qt_svg
 import PyQt6.QtGui as qt_gui
-
 
 from utils import *
 
 class InfoCard(qt_widgets.QFrame):
-    def __init__(self, parent, city_name: str, time: str, temp: str, weather: str, min_temp: str, max_temp: str):
+    def __init__(self, parent, search_city_name: str, city_name: str, time: str, temp: str, weather: str, min_temp: str, max_temp: str):
         super().__init__(parent = parent)
 
+        self.CLICKED = False
+        self.SEARCH_NAME = search_city_name
+        self.NAME = city_name
+        self.TIME = time
+        self.TEMP = temp
+        self.WEATHER = weather
+        self.MIN_TEMP = min_temp
+        self.MAX_TEMP = max_temp
+        
+        self.setObjectName("Card")
         self.setFixedSize(330, 90)
         self.setStyleSheet("background-color: transparent; ")
 
         self.LAYOUT = create_layout(
             orientation = "v", 
-            spacing = 8, 
-            content_margins = (0, 0, 0, 0), 
+            spacing = 0, 
+            content_margins = (8, 8, 8, 8), 
             alignment = core.Qt.AlignmentFlag.AlignLeft
         )
 
@@ -56,17 +66,13 @@ class InfoCard(qt_widgets.QFrame):
         self.CITY_NAME_FRAME.setFixedSize(247, 28)
         self.CITY_NAME_FRAME.setLayout(self.CITY_NAME_FRAME_LAYOUT)
 
-        
-        # arrow_picture = qt_gui.QPixmap("media/navigation.svg")
-        # scaled_arrow = arrow_picture.scaled(16, 16)
-
-        # self.ARROW = qt_widgets.QLabel(parent = self.CITY_NAME_FRAME)
-        # self.ARROW.setPixmap(scaled_arrow)
-        
-
+       
+        self.ARROW = qt_svg.QSvgWidget("media/navigation.svg", parent = self.CITY_NAME_FRAME)
+        self.ARROW.setFixedSize(16, 16)
         self.CITY_NAME_FRAME_LAYOUT.addWidget(self.ARROW)
+        self.ARROW.hide()
 
-        self.CITY_NAME = qt_widgets.QLabel(text = city_name, parent = self.CITY_NAME_FRAME)
+        self.CITY_NAME = qt_widgets.QLabel(text = self.NAME, parent = self.CITY_NAME_FRAME)
         self.CITY_NAME.setStyleSheet("""
                                      color: white;
                                      font-size: 24px;
@@ -77,41 +83,41 @@ class InfoCard(qt_widgets.QFrame):
 
         self.CITY_FRAME_LAYOUT.addWidget(self.CITY_NAME_FRAME)
         
-        self.TIME = qt_widgets.QLabel(text = time, parent = self.CITY_FRAME)
-        self.TIME.setFixedSize(247, 18)
-        self.TIME.setStyleSheet("""
+        self.CITY_TIME = qt_widgets.QLabel(text = self.TIME, parent = self.CITY_FRAME)
+        self.CITY_TIME.setFixedSize(247, 18)
+        self.CITY_TIME.setStyleSheet("""
                                      color: white;
                                      font-size: 12px;
                                      font-weight: 500;
                                      """)
 
-        self.CITY_FRAME_LAYOUT.addWidget(self.TIME)
+        self.CITY_FRAME_LAYOUT.addWidget(self.CITY_TIME)
 
 
         self.TOP_FRAME_LAYOUT.addWidget(self.CITY_FRAME)
 
-        self.TEMP_FRAME = qt_widgets.QFrame(parent = self.TOP_FRAME)
-        self.TEMP_FRAME.setFixedSize(67, 52)
+        self.CITY_TEMP_FRAME = qt_widgets.QFrame(parent = self.TOP_FRAME)
+        self.CITY_TEMP_FRAME.setFixedSize(67, 52)
 
-        self.TEMP_FRAME_LAYOUT = create_layout(
+        self.CITY_TEMP_FRAME_LAYOUT = create_layout(
             orientation = "v", 
             spacing = 0, 
             content_margins = (0, 0, 0, 0), 
             alignment = core.Qt.AlignmentFlag.AlignTop
         )
-        self.TEMP_FRAME.setLayout(self.TEMP_FRAME_LAYOUT)
+        self.CITY_TEMP_FRAME.setLayout(self.CITY_TEMP_FRAME_LAYOUT)
 
-        self.TEMP = qt_widgets.QLabel(text = temp, parent = self.TEMP_FRAME)
-        self.TEMP.setFixedSize(67, 44)
-        self.TEMP.setStyleSheet("""
+        self.CITY_TEMP_LABEL = qt_widgets.QLabel(text = self.TEMP, parent = self.CITY_TEMP_FRAME)
+        self.CITY_TEMP_LABEL.setFixedSize(67, 44)
+        self.CITY_TEMP_LABEL.setStyleSheet("""
                                      color: white;
                                      font-size: 44px;
                                      font-weight: 500;
                                      """)
 
-        self.TEMP_FRAME_LAYOUT.addWidget(self.TEMP)
+        self.CITY_TEMP_FRAME_LAYOUT.addWidget(self.CITY_TEMP_LABEL)
 
-        self.TOP_FRAME_LAYOUT.addWidget(self.TEMP_FRAME)
+        self.TOP_FRAME_LAYOUT.addWidget(self.CITY_TEMP_FRAME)
 
         self.LAYOUT.addWidget(self.TOP_FRAME)
 
@@ -127,18 +133,18 @@ class InfoCard(qt_widgets.QFrame):
 
         self.BOT_FRAME.setLayout(self.BOT_FRAME_LAYOUT)
 
-        self.WEATHER = qt_widgets.QLabel(text = weather, parent = self.BOT_FRAME)
-        self.WEATHER.setFixedSize(216, 14)
-        self.WEATHER.setStyleSheet("""
+        self.CITY_WEATHER = qt_widgets.QLabel(text = self.WEATHER, parent = self.BOT_FRAME)
+        self.CITY_WEATHER.setFixedSize(216, 14)
+        self.CITY_WEATHER.setStyleSheet("""
                                      color: white;
                                      font-size: 12px;
                                      font-weight: 500;
                                      """)
 
-        self.BOT_FRAME_LAYOUT.addWidget(self.WEATHER)
+        self.BOT_FRAME_LAYOUT.addWidget(self.CITY_WEATHER)
 
         self.MIN_AND_MAX_TEMP = qt_widgets.QLabel(
-            text = f"Макс.:{max_temp}, мін.:{min_temp}",
+            text = f"Макс.:{self.MAX_TEMP}, мін.:{self.MIN_TEMP}",
             parent = self.BOT_FRAME
             )
         
@@ -158,3 +164,39 @@ class InfoCard(qt_widgets.QFrame):
         self.LINE_FRAME.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")
 
         self.LAYOUT.addWidget(self.LINE_FRAME)
+
+    def mousePressEvent(self, event: qt_gui.QMouseEvent):
+
+        button = event.button()
+    
+        if button == core.Qt.MouseButton.LeftButton:
+
+            if self.CLICKED == False:
+
+                left_container = self.parent().parent().parent().parent()
+                left_container.reset_card_click()
+                self.CLICKED = True
+                self.ARROW.show()
+                self.setStyleSheet(
+                    """
+                    *{
+                    background-color: transparent;
+                    }
+
+                    #Card {
+                    background-color: rgba(0, 0, 0, 0.2); 
+                    border-radius: 8px;
+                    }
+                    """
+                    )
+                new_data = create_city_dict(self.SEARCH_NAME)
+                self.CITY_TIME.setText(f"{new_data["time"]}")
+                self.CITY_TEMP_LABEL.setText(new_data["temp"])
+                self.CITY_WEATHER.setText(new_data["weather"].capitalize())
+                self.MIN_AND_MAX_TEMP.setText(f"Макс.:{new_data["max_temp"]}, мін.:{new_data["min_temp"]}")
+                
+            elif self.CLICKED == True:
+
+                self.CLICKED = False
+                self.ARROW.hide()
+                self.setStyleSheet("background-color: transparent; ")

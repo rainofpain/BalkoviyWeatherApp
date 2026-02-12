@@ -81,14 +81,7 @@ class MainWindow(qt_widgets.QMainWindow):
         self.CONTENT_FRAME_LAYOUT.addWidget(self.CONTENT_CONTAINER)
         
         
-        # self.BUTTON = qt_widgets.QPushButton(parent = self.CENTRAL_WIDGET, text = "Push!")
-        # self.BUTTON.setStyleSheet("""
-        #     border: 3px solid rgba(1, 2, 3, 0.5); 
-        #     border-radius: 5px; 
-        # """)
-        # self.BUTTON.clicked.connect(self.button_click)
-        
-        # self.CENTRAL_WIDGET_LAYOUT.addWidget(self.BUTTON)
+       
     
     
     def button_click(self):
