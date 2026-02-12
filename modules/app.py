@@ -21,6 +21,10 @@ app_obj.setStyleSheet(
     background: rgba(0, 0, 0, 0.4);
     }
 
+    #Arrow{
+    background-image: url('media/navigation/navigation_light.svg');
+    }
+
     #ContentContainer #Main{
         background: rgba(0, 0, 0, 0.2);
         border-radius: 10px;
