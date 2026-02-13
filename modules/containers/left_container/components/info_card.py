@@ -8,19 +8,12 @@ from utils import *
 
 
 class InfoCard(qt_widgets.QFrame):
-    def __init__(self, parent, search_city_name: str, city_name: str = "", time: str = "", 
-                 temp: str = "", weather: str = "", min_temp: str = "", max_temp: str = ""):
+    def __init__(self, parent, search_city_name: str):
         super().__init__(parent = parent)
 
         self.LEFT_CONTAINER = self.parent().parent().parent().parent()
         self.CLICKED = False
         self.SEARCH_NAME = search_city_name
-        self.NAME = city_name
-        self.TIME = time
-        self.TEMP = temp
-        self.WEATHER = weather
-        self.MIN_TEMP = min_temp
-        self.MAX_TEMP = max_temp
         
         self.setObjectName("Card")
         self.setFixedSize(330, 90)
@@ -78,7 +71,7 @@ class InfoCard(qt_widgets.QFrame):
         self.CITY_NAME_FRAME_LAYOUT.addWidget(self.ARROW)
         self.ARROW.hide()
 
-        self.CITY_NAME = qt_widgets.QLabel(text = self.NAME, parent = self.CITY_NAME_FRAME)
+        self.CITY_NAME = qt_widgets.QLabel(parent = self.CITY_NAME_FRAME)
         self.CITY_NAME.setStyleSheet("font-size: 24px")
                                       
                                      
@@ -88,7 +81,7 @@ class InfoCard(qt_widgets.QFrame):
 
         self.CITY_FRAME_LAYOUT.addWidget(self.CITY_NAME_FRAME)
         
-        self.CITY_TIME = qt_widgets.QLabel(text = self.TIME, parent = self.CITY_FRAME)
+        self.CITY_TIME = qt_widgets.QLabel(parent = self.CITY_FRAME)
         self.CITY_TIME.setFixedSize(247, 18)
         self.CITY_TIME.setStyleSheet("font-size: 12px;")
 
@@ -108,7 +101,7 @@ class InfoCard(qt_widgets.QFrame):
         )
         self.CITY_TEMP_FRAME.setLayout(self.CITY_TEMP_FRAME_LAYOUT)
 
-        self.CITY_TEMP_LABEL = qt_widgets.QLabel(text = self.TEMP, parent = self.CITY_TEMP_FRAME)
+        self.CITY_TEMP_LABEL = qt_widgets.QLabel(parent = self.CITY_TEMP_FRAME)
         self.CITY_TEMP_LABEL.setFixedSize(67, 44)
         self.CITY_TEMP_LABEL.setStyleSheet("font-size: 44px;")
 
@@ -130,16 +123,13 @@ class InfoCard(qt_widgets.QFrame):
 
         self.BOT_FRAME.setLayout(self.BOT_FRAME_LAYOUT)
 
-        self.CITY_WEATHER = qt_widgets.QLabel(text = self.WEATHER, parent = self.BOT_FRAME)
+        self.CITY_WEATHER = qt_widgets.QLabel(parent = self.BOT_FRAME)
         self.CITY_WEATHER.setFixedSize(216, 14)
         self.CITY_WEATHER.setStyleSheet("font-size: 12px;")
 
         self.BOT_FRAME_LAYOUT.addWidget(self.CITY_WEATHER)
 
-        self.MIN_AND_MAX_TEMP = qt_widgets.QLabel(
-            text = f"Макс.:{self.MAX_TEMP}, мін.:{self.MIN_TEMP}",
-            parent = self.BOT_FRAME
-            )
+        self.MIN_AND_MAX_TEMP = qt_widgets.QLabel( parent = self.BOT_FRAME)
         
         self.MIN_AND_MAX_TEMP.setFixedSize(98, 14)
         self.MIN_AND_MAX_TEMP.setStyleSheet("font-size: 12px;")
@@ -155,6 +145,7 @@ class InfoCard(qt_widgets.QFrame):
         self.LAYOUT.addWidget(self.LINE_FRAME)
     
     def update_ui(self, new_data: dict):
+        self.CITY_NAME.setText(new_data["name"])
         self.CITY_TIME.setText(f"{new_data['time']}")
         self.CITY_TEMP_LABEL.setText(new_data["temp"])
         self.CITY_WEATHER.setText(new_data["weather"].capitalize())
