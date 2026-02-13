@@ -1,8 +1,8 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
-from .info_card import InfoCard
-from .header import LeftContainerHeader
+from .components.info_card import InfoCard
+from .components.header import LeftContainerHeader
 
 from utils import *
 
@@ -51,18 +51,11 @@ class LeftContainer(qt_widgets.QFrame):
 
         for city in city_name_list:
 
-            city_data = create_city_dict(city)
-
             card = InfoCard(
                 parent = self.SCROLL_FRAME,
-                search_city_name = city_data["search_name"],
-                city_name = city_data["name"], 
-                time = city_data["time"], 
-                temp = city_data["temp"],
-                weather = city_data["weather"].capitalize(),
-                min_temp = city_data["min_temp"],
-                max_temp = city_data["max_temp"]
+                search_city_name = city
                 )
+            card.load_weather()
                 
             self.SCROLL_FRAME_LAYOUT.addWidget(card)
 

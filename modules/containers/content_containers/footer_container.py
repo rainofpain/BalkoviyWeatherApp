@@ -1,5 +1,6 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
+from config import API_KEY
 
 from utils import *
 
@@ -86,7 +87,7 @@ class FooterContainer(qt_widgets.QFrame):
         self.LEFT_FRAME.setLayout(self.LEFT_FRAME_LAYOUT)
         self.GRAPH_FRAME_LAYOUT.addWidget(self.LEFT_FRAME)
         
-        data_dict = api_forecast_request("Kyiv", "ua")
+        data_dict = api_request(f"https://api.openweathermap.org/data/2.5/forecast?units=metric&q=Kyiv&appid={API_KEY}&lang=ua")
         
         for col in data_dict["list"]: # for col in data_dict["list"][:4]:
             temp = int(col["main"]["temp"])

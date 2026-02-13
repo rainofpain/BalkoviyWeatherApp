@@ -3,12 +3,16 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
 import PyQt6.QtGui as qt_gui
 
+from ...weather_loader import WeatherLoader
 from utils import *
 
+
 class InfoCard(qt_widgets.QFrame):
-    def __init__(self, parent, search_city_name: str, city_name: str, time: str, temp: str, weather: str, min_temp: str, max_temp: str):
+    def __init__(self, parent, search_city_name: str, city_name: str = "", time: str = "", 
+                 temp: str = "", weather: str = "", min_temp: str = "", max_temp: str = ""):
         super().__init__(parent = parent)
 
+        self.LEFT_CONTAINER = self.parent().parent().parent().parent()
         self.CLICKED = False
         self.SEARCH_NAME = search_city_name
         self.NAME = city_name
@@ -149,6 +153,17 @@ class InfoCard(qt_widgets.QFrame):
         self.LINE_FRAME.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")
 
         self.LAYOUT.addWidget(self.LINE_FRAME)
+    
+    def update_ui(self, new_data: dict):
+        self.CITY_TIME.setText(f"{new_data['time']}")
+        self.CITY_TEMP_LABEL.setText(new_data["temp"])
+        self.CITY_WEATHER.setText(new_data["weather"].capitalize())
+        self.MIN_AND_MAX_TEMP.setText(f"Макс.:{new_data['max_temp']}, мін.:{new_data['min_temp']}")
+    
+    def load_weather(self):
+        self.WEATHER_LOADER = WeatherLoader(self.SEARCH_NAME)
+        self.WEATHER_LOADER.finished.connect(self.update_ui) 
+        self.WEATHER_LOADER.start()
 
     def mousePressEvent(self, event: qt_gui.QMouseEvent):
 
@@ -158,8 +173,8 @@ class InfoCard(qt_widgets.QFrame):
 
             if self.CLICKED == False:
 
-                left_container = self.parent().parent().parent().parent()
-                left_container.reset_card_click()
+                
+                self.LEFT_CONTAINER.reset_card_click()
                 self.CLICKED = True
                 self.ARROW.show()
                 self.setStyleSheet(
@@ -174,11 +189,8 @@ class InfoCard(qt_widgets.QFrame):
                     }
                     """
                     )
-                new_data = create_city_dict(self.SEARCH_NAME)
-                self.CITY_TIME.setText(f"{new_data["time"]}")
-                self.CITY_TEMP_LABEL.setText(new_data["temp"])
-                self.CITY_WEATHER.setText(new_data["weather"].capitalize())
-                self.MIN_AND_MAX_TEMP.setText(f"Макс.:{new_data["max_temp"]}, мін.:{new_data["min_temp"]}")
+                self.load_weather()
+                
                 
             elif self.CLICKED == True:
 
