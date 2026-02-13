@@ -9,20 +9,25 @@ app_obj = widgets.QApplication(sys.argv)
 
 app_obj.setStyleSheet(
     """
-    #ContentFrame{
-            background: qlineargradient(
-                x1: 0 y1: 0,
-                x2: 0 y2: 1,
-                stop:0 rgba(255, 223, 86, 1), stop:1 rgba(135, 206, 250, 1)
-            ); 
+   
+    #CentralWidget{
+    background: qlineargradient(
+        x1: 0 y1: 0,
+        x2: 0 y2: 1,
+        stop:0 rgba(128, 128, 128, 1), stop:1 rgba(93, 173, 226, 1)
+    ); 
+    border-radius: 16px;
+    }
+
+    #TitleBar{
+    background-color: rgba(0, 0, 0, 0.6); 
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
     }
 
     #LeftContainer{
     background: rgba(0, 0, 0, 0.4);
-    }
-
-    #Arrow{
-    background-image: url('media/navigation/navigation_light.svg');
+    border-bottom-left-radius: 16px;
     }
 
     #ContentContainer #Main{

@@ -8,6 +8,8 @@ from utils import *
 class TitleBar(qt_widgets.QFrame):
     def __init__(self, parent, window_width: int):
         super().__init__(parent = parent)
+
+        self.setObjectName("TitleBar")
         
         self.setFixedSize(window_width, 40)
         
@@ -19,7 +21,7 @@ class TitleBar(qt_widgets.QFrame):
         )
         self.setLayout(self.LAYOUT)
         
-        self.setStyleSheet("background-color: #FFF; ")
+        
         
         
         self.WINDOW = self.window()

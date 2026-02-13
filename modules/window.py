@@ -17,11 +17,7 @@ class MainWindow(qt_widgets.QMainWindow):
         super().__init__()
         
         self.setWindowFlags(core.Qt.WindowType.FramelessWindowHint)
-        
-        #data_dict = api_request("Dnipro")
-        
-        # write_json(data_dict, "static/json/city_data.json")
-        
+        self.setAttribute(core.Qt.WidgetAttribute.WA_TranslucentBackground)
         
         self.WINDOW_WIDTH = w
         self.WINDOW_HEIGHT = h
@@ -41,11 +37,12 @@ class MainWindow(qt_widgets.QMainWindow):
             self.CENTER_X, 
             self.CENTER_Y, 
             self.WINDOW_WIDTH,
-            self.WINDOW_HEIGHT
+            self.WINDOW_HEIGHT + 40
         )
         self.setWindowTitle("Weather forecast")
         
         self.CENTRAL_WIDGET = qt_widgets.QWidget(parent = self)
+        self.CENTRAL_WIDGET.setObjectName("CentralWidget")
 
         self.CENTRAL_WIDGET.setFixedSize(self.WINDOW_WIDTH, self.WINDOW_HEIGHT + 40)
         

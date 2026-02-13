@@ -11,7 +11,7 @@ class LeftContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
-        self.setFixedSize(370, 800)
+        self.setFixedSize(375, 800)
         self.LAYOUT = create_layout(
             orientation = "v", 
             spacing = 0, 

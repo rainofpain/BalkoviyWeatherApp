@@ -71,7 +71,7 @@ class InfoCard(qt_widgets.QFrame):
         self.CITY_NAME_FRAME.setLayout(self.CITY_NAME_FRAME_LAYOUT)
 
        
-        self.ARROW = qt_widgets.QFrame(parent = self.CITY_NAME_FRAME)
+        self.ARROW = qt_svg.QSvgWidget("media/navigation.svg",parent = self.CITY_NAME_FRAME)
         self.ARROW.setFixedSize(16, 16)
         self.ARROW.setObjectName("Arrow")
         
