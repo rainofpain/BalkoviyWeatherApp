@@ -30,10 +30,16 @@ app_obj.setStyleSheet(
     border-bottom-left-radius: 16px;
     }
 
-    #ContentContainer #Main{
+    #ContentContainer #Main #WeatherWidget{
         background: rgba(0, 0, 0, 0.2);
         border-radius: 10px;
     }
+
+    #ContentContainer #Main #ClockWidget{
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    }
+    
     #ContentContainer #Footer{
         background: rgba(0, 0, 0, 0.2);
         border-radius: 10px;

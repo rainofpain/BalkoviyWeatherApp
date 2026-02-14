@@ -64,10 +64,16 @@ class LeftContainerHeader(qt_widgets.QFrame):
                 border-bottom-left-radius: 16px;
                 }
 
-                #ContentContainer #Main{
-                    background: rgba(0, 0, 0, 0.2);
-                    border-radius: 10px;
+                #ContentContainer #Main #WeatherWidget{
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
                 }
+
+                #ContentContainer #Main #ClockWidget{
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
+                }
+
                 #ContentContainer #Footer{
                     background: rgba(0, 0, 0, 0.2);
                     border-radius: 10px;
@@ -107,10 +113,16 @@ class LeftContainerHeader(qt_widgets.QFrame):
                 border-bottom-left-radius: 16px;
                 }
 
-                #ContentContainer #Main{
-                    background: rgba(0, 0, 0, 0.2);
-                    border-radius: 10px;
+                #ContentContainer #Main #WeatherWidget{
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
                 }
+
+                #ContentContainer #Main #ClockWidget{
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
+                }
+
                 #ContentContainer #Footer{
                     background: rgba(0, 0, 0, 0.2);
                     border-radius: 10px;
