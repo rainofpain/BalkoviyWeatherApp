@@ -165,7 +165,7 @@ class MainContainer(qt_widgets.QFrame):
     def show_data(self, data):
         self.CITY_NAME_LABEL.setText(data["name"])
         self.TEMP_FRAME_LABEL.setText(f"{data["temp"]}")
-        # self.TEMP_FRAME_ICON.load(f"media/weather_icons/{data["weather_icon"]}.svg")
+        self.TEMP_FRAME_ICON.load(f"media/weather_icons/{data["weather_icon"]}.svg")
         self.WEATHER_DESCRIPTION_LABEL.setText(data["weather"].capitalize())
         self.MIN_MAX_TEMP_LABEL.setText(f"Макс.:{data["max_temp"]}, мін.:{data["min_temp"]}")
         self.DAY_LABEL.setText(data["day"])
