@@ -4,6 +4,7 @@ import PyQt6.QtSvgWidgets as qt_svg
 import PyQt6.QtGui as qt_gui
 
 from ...weather_loader import WeatherLoader
+from ...city_name_message import city_name_message
 from utils import *
 
 
@@ -152,7 +153,7 @@ class InfoCard(qt_widgets.QFrame):
         self.MIN_AND_MAX_TEMP.setText(f"Макс.:{new_data['max_temp']}, мін.:{new_data['min_temp']}")
     
     def load_weather(self):
-        self.WEATHER_LOADER = WeatherLoader(self.SEARCH_NAME)
+        self.WEATHER_LOADER = WeatherLoader(city_name = self.SEARCH_NAME)
         self.WEATHER_LOADER.finished.connect(self.update_ui) 
         self.WEATHER_LOADER.start()
 
@@ -164,7 +165,6 @@ class InfoCard(qt_widgets.QFrame):
 
             if self.CLICKED == False:
 
-                
                 self.LEFT_CONTAINER.reset_card_click()
                 self.CLICKED = True
                 self.ARROW.show()
@@ -181,6 +181,7 @@ class InfoCard(qt_widgets.QFrame):
                     """
                     )
                 self.load_weather()
+                city_name_message.message.emit(self.SEARCH_NAME)
                 
                 
             elif self.CLICKED == True:

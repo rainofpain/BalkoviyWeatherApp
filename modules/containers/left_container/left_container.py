@@ -59,6 +59,7 @@ class LeftContainer(qt_widgets.QFrame):
                 
             self.SCROLL_FRAME_LAYOUT.addWidget(card)
 
+
     def reset_card_click(self):
         for index in range(self.SCROLL_FRAME_LAYOUT.count()):
             item = self.SCROLL_FRAME_LAYOUT.itemAt(index)
