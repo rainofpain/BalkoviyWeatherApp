@@ -35,7 +35,7 @@ class MainWindow(qt_widgets.QMainWindow):
         
         self.setGeometry(
             self.CENTER_X, 
-            self.CENTER_Y, 
+            0, 
             self.WINDOW_WIDTH,
             self.WINDOW_HEIGHT + 40
         )

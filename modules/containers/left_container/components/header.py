@@ -74,9 +74,9 @@ class LeftContainerHeader(qt_widgets.QFrame):
                 border-radius: 10px;
                 }
 
-                #ContentContainer #Footer{
-                    background: rgba(0, 0, 0, 0.2);
-                    border-radius: 10px;
+                #ContentContainer #Footer #TopFrame,#BottomFrame{
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
                 }
 
                 *{
@@ -123,9 +123,9 @@ class LeftContainerHeader(qt_widgets.QFrame):
                 border-radius: 10px;
                 }
 
-                #ContentContainer #Footer{
-                    background: rgba(0, 0, 0, 0.2);
-                    border-radius: 10px;
+                #ContentContainer #Footer #TopFrame,#BottomFrame{
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
                 }
 
                 *{

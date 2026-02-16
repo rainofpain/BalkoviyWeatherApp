@@ -40,7 +40,7 @@ app_obj.setStyleSheet(
         border-radius: 10px;
     }
     
-    #ContentContainer #Footer{
+    #ContentContainer #Footer #TopFrame,#BottomFrame{
         background: rgba(0, 0, 0, 0.2);
         border-radius: 10px;
     }

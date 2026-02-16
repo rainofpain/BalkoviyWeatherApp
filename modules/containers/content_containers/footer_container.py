@@ -11,35 +11,39 @@ class FooterContainer(qt_widgets.QFrame):
         self.setFixedSize(788, 364)
         self.LAYOUT = create_layout(
             orientation = "v", 
-            spacing = 0, 
+            spacing = 10, 
             content_margins = (0, 0, 0, 0), 
             alignment = core.Qt.AlignmentFlag.AlignCenter
         )
         self.setLayout(self.LAYOUT)
         
         self.TOP_FRAME = qt_widgets.QFrame(parent = self)
+        self.TOP_FRAME.setObjectName("TopFrame")
+        
         self.TOP_FRAME.setFixedSize(788, 157)
         self.LAYOUT.addWidget(self.TOP_FRAME)
         
-        self.DOWN_FRAME = qt_widgets.QFrame(parent = self)
+        self.BOTTOM_FRAME = qt_widgets.QFrame(parent = self)
 
-        self.DOWN_FRAME.setFixedSize(788, 197)
-        self.DOWN_FRAME_LAYOUT = create_layout(
+        self.BOTTOM_FRAME.setFixedSize(788, 197)
+        self.BOTTOM_FRAME.setObjectName("BottomFrame")
+        
+        self.BOTTOM_FRAME_LAYOUT = create_layout(
             orientation = "v",
             content_margins = (16, 16, 16, 16),
             spacing = 16,
             alignment = core.Qt.AlignmentFlag.AlignLeft
         )
-        self.DOWN_FRAME.setLayout(self.DOWN_FRAME_LAYOUT)
-        self.LAYOUT.addWidget(self.DOWN_FRAME)
+        self.BOTTOM_FRAME.setLayout(self.BOTTOM_FRAME_LAYOUT)
         
         
-        self.FORECAST_LABEL = qt_widgets.QLabel(parent = self.DOWN_FRAME, text = "Прогноз на 12 годин")
-        self.FORECAST_LABEL.setStyleSheet("font-size: 16px; font-weight: 500; color: #FFF; ")
-        self.DOWN_FRAME_LAYOUT.addWidget(self.FORECAST_LABEL)
+        self.FORECAST_LABEL = qt_widgets.QLabel(parent = self.BOTTOM_FRAME, text = "Прогноз на 12 годин")
+        self.FORECAST_LABEL.setStyleSheet("font-size: 16px; font-weight: 500;")
+        self.BOTTOM_FRAME_LAYOUT.addWidget(self.FORECAST_LABEL)
+        self.LAYOUT.addWidget(self.BOTTOM_FRAME)
         
         
-        self.GRAPH_CONTENT_FRAME = qt_widgets.QFrame(parent = self.DOWN_FRAME)
+        self.GRAPH_CONTENT_FRAME = qt_widgets.QFrame(parent = self.BOTTOM_FRAME)
         self.GRAPH_CONTENT_FRAME.setFixedSize(758, 130)
         self.GRAPH_CONTENT_FRAME_LAYOUT = create_layout(
             orientation = "v",
@@ -48,7 +52,7 @@ class FooterContainer(qt_widgets.QFrame):
             alignment = core.Qt.AlignmentFlag.AlignLeft
         )
         self.GRAPH_CONTENT_FRAME.setLayout(self.GRAPH_CONTENT_FRAME_LAYOUT)
-        self.DOWN_FRAME_LAYOUT.addWidget(self.GRAPH_CONTENT_FRAME)
+        self.BOTTOM_FRAME_LAYOUT.addWidget(self.GRAPH_CONTENT_FRAME)
         
         
         self.ICONS_FRAME = qt_widgets.QFrame(parent = self.GRAPH_CONTENT_FRAME)
@@ -76,7 +80,13 @@ class FooterContainer(qt_widgets.QFrame):
         
         self.LEFT_FRAME = qt_widgets.QFrame(parent = self.GRAPH_FRAME)
         graph_bg_path = create_abspath("media/graph_bg.svg")
-        # self.LEFT_FRAME.setStyleSheet(f"background: url({graph_bg_path}); ")
+        self.LEFT_FRAME.setStyleSheet(
+            f"""
+            background-image: url({graph_bg_path.replace('\\', '/')}); 
+            background-repeat: norepeat;
+            """
+            )
+
         self.LEFT_FRAME.setFixedSize(755, 106)
         self.LEFT_FRAME_LAYOUT = create_layout(
             orientation = "h",
