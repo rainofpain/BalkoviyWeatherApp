@@ -3,8 +3,8 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
 import PyQt6.QtGui as qt_gui
 
-from ...weather_loader import WeatherLoader
-from ...city_name_message import city_name_message
+from ...containers_utils import WeatherLoader, city_name_message
+
 from utils import *
 
 
