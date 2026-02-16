@@ -1,8 +1,7 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
-from .components.info_card import InfoCard
-from .components.header import LeftContainerHeader
+from .components import InfoCard, LeftContainerHeader
 
 from utils import *
 
@@ -58,6 +57,7 @@ class LeftContainer(qt_widgets.QFrame):
             card.load_weather()
                 
             self.SCROLL_FRAME_LAYOUT.addWidget(card)
+        
 
 
     def reset_card_click(self):

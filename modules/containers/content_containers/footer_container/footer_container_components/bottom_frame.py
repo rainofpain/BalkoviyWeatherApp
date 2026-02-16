@@ -14,7 +14,7 @@ class BottomFrame(qt_widgets.QFrame):
         self.LAYOUT = create_layout(
             orientation = "v",
             content_margins = (16, 16, 16, 16),
-            spacing = 16,
+            spacing = 8,
             alignment = core.Qt.AlignmentFlag.AlignLeft
         )
         self.setLayout(self.LAYOUT)
@@ -23,6 +23,11 @@ class BottomFrame(qt_widgets.QFrame):
         self.FORECAST_LABEL = qt_widgets.QLabel(parent = self, text = "Прогноз на 12 годин")
         self.FORECAST_LABEL.setStyleSheet("font-size: 16px; font-weight: 500;")
         self.LAYOUT.addWidget(self.FORECAST_LABEL)
+
+        self.LINE_FRAME = qt_widgets.QFrame(parent = self)
+        self.LAYOUT.addWidget(self.LINE_FRAME)
+        self.LINE_FRAME.setFixedSize(756, 1)
+        self.LINE_FRAME.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")
 
         self.GRAPH_CONTENT_FRAME = qt_widgets.QFrame(parent = self)
         self.GRAPH_CONTENT_FRAME.setFixedSize(758, 130)
@@ -68,11 +73,11 @@ class BottomFrame(qt_widgets.QFrame):
             """
             )
 
-        self.LEFT_FRAME.setFixedSize(755, 106)
+        self.LEFT_FRAME.setFixedSize(727, 106)
         self.LEFT_FRAME_LAYOUT = create_layout(
             orientation = "h",
             content_margins = (0, 0, 0, 0),
-            spacing = 5,
+            spacing = 3,
             alignment = core.Qt.AlignmentFlag.AlignLeft
         )
         self.LEFT_FRAME.setLayout(self.LEFT_FRAME_LAYOUT)
@@ -116,4 +121,13 @@ class BottomFrame(qt_widgets.QFrame):
             alignment = core.Qt.AlignmentFlag.AlignLeft
         )
         self.RIGHT_FRAME.setLayout(self.RIGHT_FRAME_LAYOUT)
+
+        temp = 25
+
+        for temp_label in range(8):
+            temp_label = qt_widgets.QLabel(text = f"{temp}°", parent = self.RIGHT_FRAME)
+            temp_label.setStyleSheet("font-size: 12px;")
+            self.RIGHT_FRAME_LAYOUT.addWidget(temp_label)
+            temp -= 5
+
         self.GRAPH_FRAME_LAYOUT.addWidget(self.RIGHT_FRAME)
