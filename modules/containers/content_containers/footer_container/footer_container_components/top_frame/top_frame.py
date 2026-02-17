@@ -58,7 +58,11 @@ class TopFrame(qt_widgets.QFrame):
         self.LEFT_SCROLL_BUTTON.setFixedSize(40, 82)
         self.LEFT_SCROLL_BUTTON.setStyleSheet("padding-right: 24px;")
         self.LEFT_SCROLL_BUTTON.setIcon(qt_gui.QIcon("media/chevrones/chevron_left.svg"))
-        self.LEFT_SCROLL_BUTTON.clicked.connect(self.scroll_left)
+
+        self.LEFT_SCROLL_BUTTON.setAutoRepeat(True)
+        self.LEFT_SCROLL_BUTTON.setAutoRepeatDelay(0)   
+        self.LEFT_SCROLL_BUTTON.setAutoRepeatInterval(15)
+        self.LEFT_SCROLL_BUTTON.clicked.connect(lambda: self.make_scroll(-5))
 
         self.SCROLL_CONTAINER = TopFrameScroll(parent = self.CONTENT_FRAME)
         self.CONTENT_FRAME_LAYOUT.addWidget(self.SCROLL_CONTAINER)
@@ -72,12 +76,12 @@ class TopFrame(qt_widgets.QFrame):
         self.RIGHT_SCROLL_BUTTON.setFixedSize(40, 82)
         self.RIGHT_SCROLL_BUTTON.setStyleSheet("padding-left: 24px;")
         self.RIGHT_SCROLL_BUTTON.setIcon(qt_gui.QIcon("media/chevrones/chevron_right.svg"))
-        self.RIGHT_SCROLL_BUTTON.clicked.connect(self.scroll_right)
 
-    def scroll_left(self):
-        current = self.SCROLL_CONTAINER.SCROLL_AREA.horizontalScrollBar().value()
-        self.SCROLL_CONTAINER.SCROLL_AREA.horizontalScrollBar().setValue(current - 50)
-
-    def scroll_right(self):
-        current = self.SCROLL_CONTAINER.SCROLL_AREA.horizontalScrollBar().value()
-        self.SCROLL_CONTAINER.SCROLL_AREA.horizontalScrollBar().setValue(current + 50)
+        self.RIGHT_SCROLL_BUTTON.setAutoRepeat(True)
+        self.RIGHT_SCROLL_BUTTON.setAutoRepeatDelay(0)  
+        self.RIGHT_SCROLL_BUTTON.setAutoRepeatInterval(15) 
+        self.RIGHT_SCROLL_BUTTON.clicked.connect(lambda: self.make_scroll(5))
+   
+    def make_scroll(self, step):
+        scroll = self.SCROLL_CONTAINER.SCROLL_AREA.horizontalScrollBar()
+        scroll.setValue(scroll.value() + step)
