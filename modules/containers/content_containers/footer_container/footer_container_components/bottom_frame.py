@@ -2,7 +2,7 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 from config import API_KEY
 
-from ....containers_utils import city_name_message
+from ....containers_utils import city_name_message, WeatherLoader
 
 from utils import *
 
@@ -10,7 +10,7 @@ class BottomFrame(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
 
-        city_name_message.city_name.connect(self.get_name)
+        city_name_message.message.connect(self.get_name)
         self.setFixedSize(788, 197)
         self.setObjectName("BottomFrame")
         
@@ -108,10 +108,16 @@ class BottomFrame(qt_widgets.QFrame):
 
     def get_name(self, city_name):
         
-        clear_layout(self.LEFT_FRAME_LAYOUT)
+        self.WEATHER_LOADER = WeatherLoader(
+            api_request_link = f"https://api.openweathermap.org/data/2.5/forecast/hourly?units=metric&q={city_name}&&mode=json&appid={API_KEY}&cnt=64"
+        )
+        self.WEATHER_LOADER.received_dict.connect(self.build_graph) 
+        self.WEATHER_LOADER.start()
 
-        data_dict = api_request(f"https://api.openweathermap.org/data/2.5/forecast/hourly?units=metric&q={city_name}&&mode=json&appid={API_KEY}&cnt=64")
-        
+    def build_graph(self, data_dict):
+
+        clear_layout(self.LEFT_FRAME_LAYOUT)
+    
         for col in data_dict["list"]: 
             temp = int(col["main"]["temp"])
 

@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
 
 from .main_container_components.widget_base import WidgetBase
-from ...containers_utils import WeatherLoader, city_name_message
+from ...containers_utils import WeatherLoader, api_link_message
 
 from utils import *
 
@@ -11,7 +11,7 @@ class MainContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
-        city_name_message.message.connect(self.get_link)
+        api_link_message.message.connect(self.get_link)
 
         self.setFixedSize(788, 303)
         self.LAYOUT = create_layout(

@@ -46,5 +46,5 @@ def create_city_dict(city_data: dict):
         return city_dict
     
     except Exception:
-        print("Not able to load data")
+        print("create_city_dict() not able to load data")
         return None

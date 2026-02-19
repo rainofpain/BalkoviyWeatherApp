@@ -15,7 +15,7 @@ class LeftContainer(qt_widgets.QFrame):
         self.LAYOUT = create_layout(
             orientation = "v", 
             spacing = 0, 
-            content_margins = (15, 0, 15, 0), 
+            content_margins = (20, 0, 20, 0), 
             alignment = core.Qt.AlignmentFlag.AlignCenter
         )
         self.setStyleSheet("border: none")
@@ -57,7 +57,7 @@ class LeftContainer(qt_widgets.QFrame):
                 )
             card.load_weather()
                 
-            self.SCROLL_FRAME_LAYOUT.addWidget(card)
+            self.SCROLL_FRAME_LAYOUT.addWidget(card, alignment = core.Qt.AlignmentFlag.AlignRight)
         
 
 

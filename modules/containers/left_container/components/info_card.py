@@ -4,7 +4,7 @@ import PyQt6.QtSvgWidgets as qt_svg
 import PyQt6.QtGui as qt_gui
 
 from config import API_KEY
-from ...containers_utils import WeatherLoader, city_name_message
+from ...containers_utils import WeatherLoader, city_name_message,api_link_message
 
 from utils import *
 
@@ -15,7 +15,7 @@ class InfoCard(qt_widgets.QFrame):
 
         self.LEFT_CONTAINER = self.parent().parent().parent().parent()
         self.CLICKED = False
-        self.SEARCH_NAME = search_city_name
+        self.SEARCH_NAME = str(search_city_name)
         self.API_LINK = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.SEARCH_NAME}&appid={API_KEY}&lang=ua"
         
         self.setObjectName("Card")
@@ -186,8 +186,9 @@ class InfoCard(qt_widgets.QFrame):
                     """
                     )
                 self.load_weather()
-                city_name_message.message.emit(self.API_LINK)
-                city_name_message.city_name.emit(self.SEARCH_NAME)
+                api_link_message.message.emit(self.API_LINK)
+                city_name_message.message.emit(self.SEARCH_NAME)
+                
                 
             elif self.CLICKED == True:
 

@@ -2,6 +2,8 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
+from datetime import datetime, timezone, timedelta
+
 from .components import WeatherCard, TopFrameScroll
 from .....containers_utils import city_name_message, WeatherLoader
 from config import API_KEY
@@ -11,7 +13,7 @@ class TopFrame(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
 
-        city_name_message.city_name.connect(self.request_by_name)
+        city_name_message.message.connect(self.request_by_name)
         self.setObjectName("TopFrame")
         self.setFixedSize(788, 157)
         self.LAYOUT = create_layout(
@@ -89,11 +91,16 @@ class TopFrame(qt_widgets.QFrame):
         event.accept()
     
     def create_content(self, data: dict):
+        self.SCROLL.setValue(self.SCROLL.minimum())
         clear_layout(self.SCROLL_CONTAINER.SCROLL_FRAME_LAYOUT)
         number = 1
         for hourly_forecast in data["list"]:
             card = WeatherCard(parent = self.SCROLL_CONTAINER.SCROLL_FRAME)
-            card.TIME_LABEL.setText(f"{number}")
+            dt_utc = datetime.fromtimestamp(hourly_forecast['dt'], tz=timezone.utc)
+            local_time = dt_utc + timedelta(seconds = data["city"]["timezone"])
+            hour = local_time.hour
+            card.TIME_LABEL.setText(f"{hour}")
+           
             card.ICON.load(f"media/scroll_icons/{hourly_forecast["weather"][0]["icon"]}.svg")
             card.TEMPERATURE_LABEL.setText(f"{int(hourly_forecast["main"]["temp"])}°")
             self.SCROLL_CONTAINER.SCROLL_FRAME_LAYOUT.addWidget(card)
@@ -103,7 +110,7 @@ class TopFrame(qt_widgets.QFrame):
         self.HOURLY_FORECAST = WeatherLoader(
             api_request_link = f"https://api.openweathermap.org/data/2.5/forecast/hourly?units=metric&q={city_name}&mode=json&appid={API_KEY}&cnt=24"
             )
-        self.HOURLY_FORECAST.recieved_dict.connect(self.create_content) 
+        self.HOURLY_FORECAST.received_dict.connect(self.create_content) 
         self.HOURLY_FORECAST.start()
 
             
