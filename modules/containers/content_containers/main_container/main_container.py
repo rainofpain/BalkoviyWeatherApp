@@ -11,7 +11,8 @@ class MainContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
-        city_name_message.message.connect(self.get_name)
+        city_name_message.message.connect(self.get_link)
+
         self.setFixedSize(788, 303)
         self.LAYOUT = create_layout(
             orientation = "h", 
@@ -161,20 +162,20 @@ class MainContainer(qt_widgets.QFrame):
 
         self.LAYOUT.addWidget(self.CLOCK_WIDGET)
     
-    def show_data(self, data):
-        self.CITY_NAME_LABEL.setText(data["name"])
-        self.TEMP_FRAME_LABEL.setText(f"{data["temp"]}")
-        self.TEMP_FRAME_ICON.load(f"media/weather_icons/{data["weather_icon"]}.svg")
-        self.WEATHER_DESCRIPTION_LABEL.setText(data["weather"].capitalize())
-        self.MIN_MAX_TEMP_LABEL.setText(f"Макс.:{data["max_temp"]}, мін.:{data["min_temp"]}")
-        self.DAY_LABEL.setText(data["day"])
-        self.DATE_LABEL.setText(data["date"])
-        self.TIME_LABEL.setText(data["time"])
+    def show_data(self, new_data):
+        self.CITY_NAME_LABEL.setText(new_data["name"])
+        self.TEMP_FRAME_LABEL.setText(f"{new_data["temp"]}")
+        self.TEMP_FRAME_ICON.load(f"media/weather_icons/{new_data["weather_icon"]}.svg")
+        self.WEATHER_DESCRIPTION_LABEL.setText(new_data["weather"].capitalize())
+        self.MIN_MAX_TEMP_LABEL.setText(f"Макс.:{new_data["max_temp"]}, мін.:{new_data["min_temp"]}")
+        self.DAY_LABEL.setText(new_data["day"])
+        self.DATE_LABEL.setText(new_data["date"])
+        self.TIME_LABEL.setText(new_data["time"])
         self.WATCH_FRAME.show()
         
         
 
-    def get_name(self, city_name):
-        self.WEATHER_LOADER = WeatherLoader(city_name = city_name)
-        self.WEATHER_LOADER.finished.connect(self.show_data) 
+    def get_link(self, api_request_link):
+        self.WEATHER_LOADER = WeatherLoader(api_request_link = api_request_link)
+        self.WEATHER_LOADER.filtered_dict.connect(self.show_data) 
         self.WEATHER_LOADER.start()

@@ -3,6 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
 import PyQt6.QtGui as qt_gui
 
+from config import API_KEY
 from ...containers_utils import WeatherLoader, city_name_message
 
 from utils import *
@@ -15,6 +16,7 @@ class InfoCard(qt_widgets.QFrame):
         self.LEFT_CONTAINER = self.parent().parent().parent().parent()
         self.CLICKED = False
         self.SEARCH_NAME = search_city_name
+        self.API_LINK = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.SEARCH_NAME}&appid={API_KEY}&lang=ua"
         
         self.setObjectName("Card")
         self.setFixedSize(330, 90)
@@ -153,8 +155,11 @@ class InfoCard(qt_widgets.QFrame):
         self.MIN_AND_MAX_TEMP.setText(f"Макс.:{new_data['max_temp']}, мін.:{new_data['min_temp']}")
     
     def load_weather(self):
-        self.WEATHER_LOADER = WeatherLoader(city_name = self.SEARCH_NAME)
-        self.WEATHER_LOADER.finished.connect(self.update_ui) 
+        self.WEATHER_LOADER = WeatherLoader(
+            api_request_link = self.API_LINK
+            )
+        
+        self.WEATHER_LOADER.filtered_dict.connect(self.update_ui) 
         self.WEATHER_LOADER.start()
 
     def mousePressEvent(self, event: qt_gui.QMouseEvent):
@@ -181,8 +186,8 @@ class InfoCard(qt_widgets.QFrame):
                     """
                     )
                 self.load_weather()
-                city_name_message.message.emit(self.SEARCH_NAME)
-                
+                city_name_message.message.emit(self.API_LINK)
+                city_name_message.city_name.emit(self.SEARCH_NAME)
                 
             elif self.CLICKED == True:
 

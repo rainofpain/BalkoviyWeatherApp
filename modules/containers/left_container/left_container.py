@@ -2,6 +2,7 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from .components import InfoCard, LeftContainerHeader
+from config import city_name_list
 
 from utils import *
 
