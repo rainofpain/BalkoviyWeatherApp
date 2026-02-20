@@ -137,7 +137,6 @@ class InfoCard(qt_widgets.QFrame):
         self.LAYOUT.addWidget(self.LINE_FRAME)
         self.LINE_FRAME.setFixedSize(314, 1)
         self.LINE_FRAME.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")
-
     
     def update_ui(self, new_data: dict):
         self.CITY_NAME.setText(new_data["name"])

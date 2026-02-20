@@ -93,18 +93,21 @@ class TopFrame(qt_widgets.QFrame):
     def create_content(self, data: dict):
         self.SCROLL.setValue(self.SCROLL.minimum())
         clear_layout(self.SCROLL_CONTAINER.SCROLL_FRAME_LAYOUT)
-        number = 1
+
         for hourly_forecast in data["list"]:
             card = WeatherCard(parent = self.SCROLL_CONTAINER.SCROLL_FRAME)
             dt_utc = datetime.fromtimestamp(hourly_forecast['dt'], tz=timezone.utc)
             local_time = dt_utc + timedelta(seconds = data["city"]["timezone"])
             hour = local_time.hour
-            card.TIME_LABEL.setText(f"{hour}")
+            if hour < 10:
+                card.TIME_LABEL.setText(f"0{hour}")
+            else:   
+                card.TIME_LABEL.setText(f"{hour}")
            
             card.ICON.load(f"media/scroll_icons/{hourly_forecast["weather"][0]["icon"]}.svg")
             card.TEMPERATURE_LABEL.setText(f"{int(hourly_forecast["main"]["temp"])}°")
             self.SCROLL_CONTAINER.SCROLL_FRAME_LAYOUT.addWidget(card)
-            number += 1
+            
 
     def request_by_name(self, city_name):
         self.HOURLY_FORECAST = WeatherLoader(
