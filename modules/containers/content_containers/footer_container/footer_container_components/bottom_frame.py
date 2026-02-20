@@ -1,5 +1,6 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
+import PyQt6.QtSvgWidgets as qt_svg
 from config import API_KEY
 
 from ....containers_utils import city_name_message, WeatherLoader
@@ -49,8 +50,8 @@ class BottomFrame(qt_widgets.QFrame):
         self.ICONS_FRAME_LAYOUT = create_layout(
             orientation = "h",
             content_margins = (0, 4, 0, 4),
-            spacing = 0,
-            alignment = core.Qt.AlignmentFlag.AlignLeft
+            spacing = 20,
+            alignment = core.Qt.AlignmentFlag.AlignVCenter
         )
         self.ICONS_FRAME.setLayout(self.ICONS_FRAME_LAYOUT)
         self.GRAPH_CONTENT_FRAME_LAYOUT.addWidget(self.ICONS_FRAME)
@@ -96,8 +97,8 @@ class BottomFrame(qt_widgets.QFrame):
         )
         self.RIGHT_FRAME.setLayout(self.RIGHT_FRAME_LAYOUT)
 
-        temp = 25
 
+        temp = 25
         for temp_label in range(8):
             temp_label = qt_widgets.QLabel(text = f"{temp}°", parent = self.RIGHT_FRAME)
             temp_label.setStyleSheet("font-size: 12px;")
@@ -109,7 +110,7 @@ class BottomFrame(qt_widgets.QFrame):
     def get_name(self, city_name):
         
         self.WEATHER_LOADER = WeatherLoader(
-            api_request_link = f"https://api.openweathermap.org/data/2.5/forecast/hourly?units=metric&q={city_name}&&mode=json&appid={API_KEY}&cnt=64"
+            api_request_link = f"https://api.openweathermap.org/data/2.5/forecast/hourly?units=metric&q={city_name}&&mode=json&appid={API_KEY}&cnt=12"
         )
         self.WEATHER_LOADER.received_dict.connect(self.build_graph) 
         self.WEATHER_LOADER.start()
@@ -117,9 +118,22 @@ class BottomFrame(qt_widgets.QFrame):
     def build_graph(self, data_dict):
 
         clear_layout(self.LEFT_FRAME_LAYOUT)
+        clear_layout(self.ICONS_FRAME_LAYOUT)
     
         for col in data_dict["list"]: 
             temp = int(col["main"]["temp"])
+            icon_frame = qt_widgets.QFrame(parent = self.ICONS_FRAME)
+            self.ICONS_FRAME_LAYOUT.addWidget(icon_frame)
+            icon_frame.setFixedSize(16, 16)
+            icon_frame_layout = create_layout(
+                orientation = "v",
+                spacing = 0,
+                content_margins = (0, 0, 0, 0),
+                alignment = core.Qt.AlignmentFlag.AlignCenter
+            )
+            icon_frame.setLayout(icon_frame_layout)
+            icon = qt_svg.QSvgWidget(f"media/scroll_icons/{col["weather"][0]["icon"]}.svg", parent = icon_frame)
+            icon_frame_layout.addWidget(icon)
 
             if temp < 0:
                 height = 30 - ((temp * - 1) * 3)
@@ -132,14 +146,14 @@ class BottomFrame(qt_widgets.QFrame):
                 height = temp * 3 + 30
                 if temp > 25:
                     height = 105
-          
-            graph_frame = qt_widgets.QFrame(parent = self.LEFT_FRAME)
-            graph_frame.setStyleSheet("""
-                background: qlineargradient(
-                    x1: 0 y1: 0,
-                    x2: 0 y2: 1,
-                    stop:0 rgba(255, 223, 86, 1), stop:1 rgba(135, 206, 250, 1)
-                ); 
-            """)
-            graph_frame.setFixedSize(8, height)
-            self.LEFT_FRAME_LAYOUT.addWidget(graph_frame, alignment = core.Qt.AlignmentFlag.AlignBottom)
+            for cols in range(5):
+                graph_frame = qt_widgets.QFrame(parent = self.LEFT_FRAME)
+                graph_frame.setStyleSheet("""
+                    background: qlineargradient(
+                        x1: 0 y1: 0,
+                        x2: 0 y2: 1,
+                        stop:0 rgba(255, 223, 86, 1), stop:1 rgba(135, 206, 250, 1)
+                    ); 
+                """)
+                graph_frame.setFixedSize(8, height)
+                self.LEFT_FRAME_LAYOUT.addWidget(graph_frame, alignment = core.Qt.AlignmentFlag.AlignBottom)

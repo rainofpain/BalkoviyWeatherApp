@@ -28,7 +28,7 @@ class TopFrame(qt_widgets.QFrame):
 
         self.LAYOUT.addWidget(self.TITLE_FRAME)
 
-        self.TITLE_FRAME.setFixedSize(756, 27)
+        self.TITLE_FRAME.setFixedSize(756, 28)
         self.TITLE_FRAME_LAYOUT = create_layout(
             orientation = "v",
             spacing = 8,
@@ -42,7 +42,7 @@ class TopFrame(qt_widgets.QFrame):
 
         self.TITLE_FRAME_LABEL.setStyleSheet("font-size: 16px; font-weight: 500;")
 
-        self.LINE_FRAME = qt_widgets.QFrame(parent = self)
+        self.LINE_FRAME = qt_widgets.QFrame(parent = self.TITLE_FRAME)
         self.TITLE_FRAME_LAYOUT.addWidget(self.LINE_FRAME)
         self.LINE_FRAME.setFixedSize(756, 1)
         self.LINE_FRAME.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")

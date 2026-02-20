@@ -24,9 +24,9 @@ class InfoCard(qt_widgets.QFrame):
 
         self.LAYOUT = create_layout(
             orientation = "v", 
-            spacing = 0, 
+            spacing = 8, 
             content_margins = (8, 8, 8, 8), 
-            alignment = core.Qt.AlignmentFlag.AlignLeft
+            alignment = core.Qt.AlignmentFlag.AlignTop
         )
 
         self.setLayout(self.LAYOUT)
@@ -38,24 +38,27 @@ class InfoCard(qt_widgets.QFrame):
             orientation = "h", 
             spacing = 0, 
             content_margins = (0, 0, 0, 0), 
-            alignment = core.Qt.AlignmentFlag.AlignLeft
+            alignment = core.Qt.AlignmentFlag.AlignTop
         )
 
         self.TOP_FRAME.setLayout(self.TOP_FRAME_LAYOUT)
+        self.LAYOUT.addWidget(self.TOP_FRAME)
 
         self.CITY_FRAME = qt_widgets.QFrame(parent = self.TOP_FRAME)
         self.CITY_FRAME.setFixedSize(247, 52)
+        self.TOP_FRAME_LAYOUT.addWidget(self.CITY_FRAME)
         
 
         self.CITY_FRAME_LAYOUT = create_layout(
             orientation = "v", 
             spacing = 6, 
-            content_margins = (0, 0, 0, 0), 
+            content_margins = (0, 0, 0, 4), 
             alignment = core.Qt.AlignmentFlag.AlignTop
         )
         self.CITY_FRAME.setLayout(self.CITY_FRAME_LAYOUT)
 
         self.CITY_NAME_FRAME = qt_widgets.QFrame(parent = self.CITY_FRAME)
+        self.CITY_FRAME_LAYOUT.addWidget(self.CITY_NAME_FRAME)
 
         self.CITY_NAME_FRAME_LAYOUT = create_layout(
             orientation = "h", 
@@ -76,28 +79,21 @@ class InfoCard(qt_widgets.QFrame):
 
         self.CITY_NAME = qt_widgets.QLabel(parent = self.CITY_NAME_FRAME)
         self.CITY_NAME.setStyleSheet("font-size: 24px")
-                                      
-                                     
-                                     
-
         self.CITY_NAME_FRAME_LAYOUT.addWidget(self.CITY_NAME)
-
-        self.CITY_FRAME_LAYOUT.addWidget(self.CITY_NAME_FRAME)
-        
+                                      
         self.CITY_TIME = qt_widgets.QLabel(parent = self.CITY_FRAME)
         self.CITY_TIME.setFixedSize(247, 18)
         self.CITY_TIME.setStyleSheet("font-size: 12px;")
 
         self.CITY_FRAME_LAYOUT.addWidget(self.CITY_TIME)
 
-
-        self.TOP_FRAME_LAYOUT.addWidget(self.CITY_FRAME)
-
         self.CITY_TEMP_FRAME = qt_widgets.QFrame(parent = self.TOP_FRAME)
+        self.TOP_FRAME_LAYOUT.addWidget(self.CITY_TEMP_FRAME)
+
         self.CITY_TEMP_FRAME.setFixedSize(67, 52)
 
         self.CITY_TEMP_FRAME_LAYOUT = create_layout(
-            orientation = "v", 
+            orientation = "h", 
             spacing = 0, 
             content_margins = (0, 0, 0, 0), 
             alignment = core.Qt.AlignmentFlag.AlignTop
@@ -105,15 +101,11 @@ class InfoCard(qt_widgets.QFrame):
         self.CITY_TEMP_FRAME.setLayout(self.CITY_TEMP_FRAME_LAYOUT)
 
         self.CITY_TEMP_LABEL = qt_widgets.QLabel(parent = self.CITY_TEMP_FRAME)
-        self.CITY_TEMP_LABEL.setFixedSize(67, 44)
-        self.CITY_TEMP_LABEL.setStyleSheet("font-size: 44px;")
-
         self.CITY_TEMP_FRAME_LAYOUT.addWidget(self.CITY_TEMP_LABEL)
-
-        self.TOP_FRAME_LAYOUT.addWidget(self.CITY_TEMP_FRAME)
-
-        self.LAYOUT.addWidget(self.TOP_FRAME)
-
+        self.CITY_TEMP_LABEL.setStyleSheet("font-size: 44px;")
+        self.CITY_TEMP_LABEL.setIndent(0)
+        self.CITY_TEMP_LABEL.setAlignment(core.Qt.AlignmentFlag.AlignBottom | core.Qt.AlignmentFlag.AlignRight)
+    
         self.BOT_FRAME = qt_widgets.QFrame(parent = self)
         self.BOT_FRAME.setFixedSize(314, 14)
 
@@ -142,10 +134,10 @@ class InfoCard(qt_widgets.QFrame):
         self.LAYOUT.addWidget(self.BOT_FRAME)
 
         self.LINE_FRAME = qt_widgets.QFrame(parent = self)
+        self.LAYOUT.addWidget(self.LINE_FRAME)
         self.LINE_FRAME.setFixedSize(314, 1)
         self.LINE_FRAME.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")
 
-        self.LAYOUT.addWidget(self.LINE_FRAME)
     
     def update_ui(self, new_data: dict):
         self.CITY_NAME.setText(new_data["name"])

@@ -14,18 +14,30 @@ class WeatherCard(qt_widgets.QFrame):
             orientation = "v",
             spacing = 10,
             content_margins = (0, 0, 0, 0),
-            alignment = core.Qt.AlignmentFlag.AlignHCenter
+            alignment = core.Qt.AlignmentFlag.AlignCenter
         )
         self.setLayout(self.LAYOUT)
 
         self.TIME_LABEL = qt_widgets.QLabel(parent = self)
         self.LAYOUT.addWidget(self.TIME_LABEL, alignment = core.Qt.AlignmentFlag.AlignTop)
         self.TIME_LABEL.setStyleSheet("font-size: 16px; font-weight: 500;")
+        self.TIME_LABEL.setAlignment(core.Qt.AlignmentFlag.AlignCenter)
 
-        self.ICON = qt_svg.QSvgWidget(parent = self)
-        self.ICON.setFixedSize(24, 24)
-        self.LAYOUT.addWidget(self.ICON)
+        self.ICON_FRAME = qt_widgets.QFrame(parent = self)
+        self.LAYOUT.addWidget(self.ICON_FRAME)
+        self.ICON_FRAME_LAYOUT = create_layout(
+            orientation = "v",
+            spacing = 0,
+            content_margins = (10, 0, 10, 0),
+            alignment = core.Qt.AlignmentFlag.AlignCenter
+        )
+        self.ICON_FRAME.setLayout(self.ICON_FRAME_LAYOUT)
+        self.ICON_FRAME.setFixedSize(45, 24)
+
+        self.ICON = qt_svg.QSvgWidget(parent = self.ICON_FRAME)
+        self.ICON_FRAME_LAYOUT.addWidget(self.ICON)
 
         self.TEMPERATURE_LABEL = self.TEMPERATURE_LABEL = qt_widgets.QLabel(parent = self)
         self.LAYOUT.addWidget(self.TEMPERATURE_LABEL, alignment = core.Qt.AlignmentFlag.AlignBottom)
         self.TEMPERATURE_LABEL.setStyleSheet("font-size: 16px; font-weight: 500;")
+        self.TEMPERATURE_LABEL.setAlignment(core.Qt.AlignmentFlag.AlignCenter)
