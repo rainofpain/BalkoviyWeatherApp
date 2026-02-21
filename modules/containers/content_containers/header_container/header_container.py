@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
 from utils import *
-
+from .components import SearchFrame
 
 class HeaderContainer(qt_widgets.QFrame):
     def __init__(self, parent):
@@ -19,6 +19,7 @@ class HeaderContainer(qt_widgets.QFrame):
 
         self.setLayout(self.LAYOUT)
         self.SETTINGS_FRAME = qt_widgets.QFrame(parent = self)
+        self.LAYOUT.addWidget(self.SETTINGS_FRAME)
         self.SETTINGS_FRAME.setFixedSize(144, 36)
         self.SETTINGS_FRAME_LAYOUT = create_layout(
             orientation = "h", 
@@ -45,17 +46,7 @@ class HeaderContainer(qt_widgets.QFrame):
         self.SETTINGS_FRAME_LAYOUT.addWidget(self.SETTINGS_LABEL)
 
 
-        self.LAYOUT.addWidget(self.SETTINGS_FRAME)
 
-        self.SEARCH_WIDGET = qt_widgets.QLineEdit(parent = self)
-        self.SEARCH_WIDGET.setFixedSize(261, 36)
-        self.SEARCH_WIDGET.setStyleSheet(
-            """
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 4px;
-            font-size: 17px;
-            """
-            )
-        self.SEARCH_WIDGET.setPlaceholderText("Пошук")
-        self.SEARCH_WIDGET.addAction(qt_gui.QIcon("media/search_icon.svg"), qt_widgets.QLineEdit.ActionPosition.LeadingPosition)
+        
+        self.SEARCH_WIDGET = SearchFrame(parent = self)
         self.LAYOUT.addWidget(self.SEARCH_WIDGET)

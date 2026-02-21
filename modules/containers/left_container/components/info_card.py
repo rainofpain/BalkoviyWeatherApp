@@ -20,7 +20,7 @@ class InfoCard(qt_widgets.QFrame):
         
         self.setObjectName("Card")
         self.setFixedSize(330, 90)
-        self.setStyleSheet("background-color: transparent; ")
+        self.setStyleSheet("background-color: transparent;")
 
         self.LAYOUT = create_layout(
             orientation = "v", 
@@ -119,17 +119,19 @@ class InfoCard(qt_widgets.QFrame):
         self.BOT_FRAME.setLayout(self.BOT_FRAME_LAYOUT)
 
         self.CITY_WEATHER = qt_widgets.QLabel(parent = self.BOT_FRAME)
-        self.CITY_WEATHER.setFixedSize(216, 14)
+        self.CITY_WEATHER.setFixedSize(161, 14)
         self.CITY_WEATHER.setStyleSheet("font-size: 12px;")
 
         self.BOT_FRAME_LAYOUT.addWidget(self.CITY_WEATHER)
 
-        self.MIN_AND_MAX_TEMP = qt_widgets.QLabel( parent = self.BOT_FRAME)
+        self.MIN_AND_MAX_TEMP = qt_widgets.QLabel(parent = self.BOT_FRAME)
         
-        self.MIN_AND_MAX_TEMP.setFixedSize(98, 14)
+        self.MIN_AND_MAX_TEMP.setFixedSize(161, 14)
         self.MIN_AND_MAX_TEMP.setStyleSheet("font-size: 12px;")
 
         self.BOT_FRAME_LAYOUT.addWidget(self.MIN_AND_MAX_TEMP)
+        self.MIN_AND_MAX_TEMP.setAlignment(core.Qt.AlignmentFlag.AlignRight)
+        self.MIN_AND_MAX_TEMP.setIndent(4)
 
         self.LAYOUT.addWidget(self.BOT_FRAME)
 
