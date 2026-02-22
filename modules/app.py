@@ -20,7 +20,12 @@ app_obj.setStyleSheet(
     }
 
     #SearchDropdownMenu[style = "dark"]{
-        background-color: rgb(76, 82, 88); 
+        background-color: qlineargradient(
+            spread:pad, 
+            x1:0, y1:0, x2:0, y2:1, 
+            stop:0 #5a6166, 
+            stop:1 #4e5357
+            ); 
         border-radius: 10px;
     }
 
@@ -34,7 +39,14 @@ app_obj.setStyleSheet(
         }
 
     #SearchDropdownMenu[style="light"]{
-        background-color: rgb(146, 137, 72); 
+        background-color: qlineargradient(
+                spread:pad, 
+                x1:0, y1:0,   
+                x2:0.3, y2:1, 
+                stop:0 rgba(162, 153, 85, 1), 
+                stop:1 rgba(125, 117, 62, 1)
+            ); 
+         
         border-radius: 10px;
     }
 

@@ -4,6 +4,7 @@ import PyQt6.QtGui as qt_gui
 import PyQt6.QtSvgWidgets as qt_svg
 
 from utils import *
+from config import cities_dict
 
 
 class SearchFrame(qt_widgets.QFrame):
@@ -51,7 +52,7 @@ class SearchFrame(qt_widgets.QFrame):
         self.LAYOUT.addWidget(self.SEARCH_FIELD)
         self.SEARCH_FIELD.setFixedSize(220, 22)
         self.SEARCH_FIELD.setPlaceholderText("Пошук")
-        self.SEARCH_FIELD.textChanged.connect(self.show_clear_button)
+        self.SEARCH_FIELD.textChanged.connect(self.text_changed)
 
         self.CLEAR_BUTTON = qt_widgets.QPushButton(parent = self)
         self.LAYOUT.addWidget(
@@ -66,17 +67,29 @@ class SearchFrame(qt_widgets.QFrame):
         self.CLEAR_BUTTON.clicked.connect(self.clear_search)
         
 
-    def show_clear_button(self):
+    def text_changed(self):
+       
         if self.SEARCH_FIELD.text() != "":
             self.CLEAR_BUTTON.show()
+            self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.clear()
+            for letter in cities_dict:
+                if letter.lower() == self.SEARCH_FIELD.text()[0].lower():
+                    for city in cities_dict[letter]:
+                        if self.SEARCH_FIELD.text() in city:
+                            if self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.count() < 30:
+                                self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.addItem(city)
+                            else:
+                                break
+                
             self.window().SEARCH_DROPDOWN_MENU.show()
             self.CLEAR_BUTTON.clicked.connect(self.clear_search)
         else:
             self.CLEAR_BUTTON.hide()
             self.window().SEARCH_DROPDOWN_MENU.hide()
+            self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.clear()
     
     def clear_search(self):
         self.SEARCH_FIELD.setText("")
         self.CLEAR_BUTTON.hide()
-        self.window().SEARCH_DROPDOWN_MENU.hide()
+        self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.clear()
        

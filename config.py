@@ -1,5 +1,6 @@
 import dotenv
 import os
+from utils import read_json
 
 dotenv.load_dotenv()
 
@@ -11,3 +12,4 @@ city_name_list = [
             "Lviv",
             "Rome"
         ]
+cities_dict = read_json("static/json/cities_english.json")

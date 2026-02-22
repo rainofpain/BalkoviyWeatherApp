@@ -14,7 +14,7 @@ class SearchDropdownMenu(qt_widgets.QWidget):
 
         self.setGeometry(
             923,
-            108,
+            105,
             261, 
             200
             )
@@ -22,14 +22,21 @@ class SearchDropdownMenu(qt_widgets.QWidget):
         self.LAYOUT = create_layout(
             orientation = "v", 
             spacing = 10, 
-            content_margins = (0, 8, 0, 0), 
+            content_margins = (0, 8, 0, 8), 
             alignment = core.Qt.AlignmentFlag.AlignHCenter
         )
         self.setLayout(self.LAYOUT)
 
         self.LABEL = qt_widgets.QLabel("Результати пошуку", parent = self)
         self.LAYOUT.addWidget(self.LABEL)
-        self.LABEL.setStyleSheet("padding-left: 8px; font-size: 12px; background-color: transparent;")
+        self.LABEL.setStyleSheet(
+            """
+            padding-left: 8px;
+            font-size: 12px; 
+            background-color: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            """
+            )
        
         self.LIST_WIDGET = qt_widgets.QListWidget(parent = self)
         self.LAYOUT.addWidget(self.LIST_WIDGET)
@@ -60,6 +67,5 @@ class SearchDropdownMenu(qt_widgets.QWidget):
             }
             """
             )
-        self.LIST_WIDGET.addItems(["Python", "PyQt6", "Qt Designer","Python", "PyQt6", "Qt Designer","Python", "PyQt6", "Qt Designer","Python", "PyQt6", "Qt Designer"])
         self.LIST_WIDGET.setVerticalScrollBarPolicy(core.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.LIST_WIDGET.setHorizontalScrollBarPolicy(core.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
