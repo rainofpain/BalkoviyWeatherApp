@@ -45,8 +45,6 @@ class HeaderContainer(qt_widgets.QFrame):
         self.SETTINGS_LABEL.setStyleSheet("font-size: 14px; font-weight: 500;")
         self.SETTINGS_FRAME_LAYOUT.addWidget(self.SETTINGS_LABEL)
 
-
-
-        
         self.SEARCH_WIDGET = SearchFrame(parent = self)
         self.LAYOUT.addWidget(self.SEARCH_WIDGET)
+        

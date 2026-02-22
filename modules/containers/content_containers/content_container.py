@@ -2,7 +2,7 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
-from .content_containers import MainContainer, FooterContainer, HeaderContainer
+from . import MainContainer, FooterContainer, HeaderContainer
 
 
 class ContentContainer(qt_widgets.QFrame):
@@ -23,6 +23,7 @@ class ContentContainer(qt_widgets.QFrame):
         self.HEADER.setObjectName("Header")
         self.LAYOUT.addWidget(self.HEADER)
 
+
         self.MAIN = MainContainer(parent = self)
         self.MAIN.setObjectName("Main")
         self.LAYOUT.addWidget(self.MAIN)
@@ -31,3 +32,4 @@ class ContentContainer(qt_widgets.QFrame):
         self.FOOTER.setObjectName("Footer") 
         self.LAYOUT.addWidget(self.FOOTER)
 
+        

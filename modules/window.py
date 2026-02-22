@@ -8,8 +8,9 @@ import io
 
 from .app import app_obj
 from utils import *
-from .containers import LeftContainer, ContentContainer
+from .containers import LeftContainer, ContentContainer, SearchDropdownMenu
 from .title_bar import TitleBar
+
 
 
 class MainWindow(qt_widgets.QMainWindow):
@@ -43,7 +44,7 @@ class MainWindow(qt_widgets.QMainWindow):
         
         self.CENTRAL_WIDGET = qt_widgets.QWidget(parent = self)
         self.CENTRAL_WIDGET.setObjectName("CentralWidget")
-
+        self.CENTRAL_WIDGET.setProperty("style", "dark")
         self.CENTRAL_WIDGET.setFixedSize(self.WINDOW_WIDTH, self.WINDOW_HEIGHT + 40)
         
         self.CENTRAL_WIDGET_LAYOUT = create_layout(
@@ -53,7 +54,12 @@ class MainWindow(qt_widgets.QMainWindow):
             alignment = core.Qt.AlignmentFlag.AlignCenter
         )
         self.CENTRAL_WIDGET.setLayout(self.CENTRAL_WIDGET_LAYOUT)
-        
+
+        self.SEARCH_DROPDOWN_MENU = SearchDropdownMenu(parent = self)
+        self.SEARCH_DROPDOWN_MENU.setProperty("style", "dark")
+        self.SEARCH_DROPDOWN_MENU.hide()
+
+
         self.TITLE_BAR = TitleBar(parent = self.CENTRAL_WIDGET, window_width = self.WINDOW_WIDTH)
 
         self.CENTRAL_WIDGET_LAYOUT.addWidget(self.TITLE_BAR)

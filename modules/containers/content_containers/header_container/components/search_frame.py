@@ -20,11 +20,15 @@ class SearchFrame(qt_widgets.QFrame):
         )
         self.setLayout(self.LAYOUT)
         self.setStyleSheet(
-            """
-            #SearchFrame {
+            f"""
+            #SearchFrame {{
             background-color: rgba(0, 0, 0, 0.2);
             border-radius: 4px;
-            }
+            }}
+
+            #SearchFrame:focus {{
+            border: 2px solid white;
+            }}
             """
         )
         self.ICON_FRAME = qt_widgets.QFrame(parent = self)
@@ -60,15 +64,19 @@ class SearchFrame(qt_widgets.QFrame):
         self.CLEAR_BUTTON.setStyleSheet("margin-top: 2px; border: none;")
         
         self.CLEAR_BUTTON.clicked.connect(self.clear_search)
+        
 
     def show_clear_button(self):
         if self.SEARCH_FIELD.text() != "":
             self.CLEAR_BUTTON.show()
+            self.window().SEARCH_DROPDOWN_MENU.show()
             self.CLEAR_BUTTON.clicked.connect(self.clear_search)
         else:
             self.CLEAR_BUTTON.hide()
+            self.window().SEARCH_DROPDOWN_MENU.hide()
     
     def clear_search(self):
         self.SEARCH_FIELD.setText("")
         self.CLEAR_BUTTON.hide()
+        self.window().SEARCH_DROPDOWN_MENU.hide()
        
