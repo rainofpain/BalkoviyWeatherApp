@@ -4,17 +4,21 @@ import PyQt6.QtGui as qt_gui
 
 from utils import *
 from .components import SearchFrame
+from ...containers_utils import search_field_text
+from ...left_container import InfoCard
 
 class HeaderContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
+        self.CHECK_RESULT = {}
+
         self.setFixedSize(788, 36)
         self.LAYOUT = create_layout(
             orientation = "h", 
-            spacing = 383, 
+            spacing = 0, 
             content_margins = (0, 0, 0, 0), 
-            alignment = core.Qt.AlignmentFlag.AlignLeft
+            alignment = core.Qt.AlignmentFlag.AlignVCenter
         )
 
         self.setLayout(self.LAYOUT)
@@ -45,6 +49,56 @@ class HeaderContainer(qt_widgets.QFrame):
         self.SETTINGS_LABEL.setStyleSheet("font-size: 14px; font-weight: 500;")
         self.SETTINGS_FRAME_LAYOUT.addWidget(self.SETTINGS_LABEL)
 
-        self.SEARCH_WIDGET = SearchFrame(parent = self)
-        self.LAYOUT.addWidget(self.SEARCH_WIDGET)
+        self.SEARCH_GROUP_FRAME = qt_widgets.QFrame(parent = self)
+        self.LAYOUT.addWidget(self.SEARCH_GROUP_FRAME, alignment = core.Qt.AlignmentFlag.AlignRight)
+        self.SEARCH_GROUP_FRAME.setFixedSize(368, 36)
+        self.SEARCH_GROUP_FRAME_LAYOUT =  create_layout(
+            orientation = "h", 
+            spacing = 10, 
+            content_margins = (0, 0, 0, 0), 
+            alignment = core.Qt.AlignmentFlag.AlignVCenter
+        )
+        self.SEARCH_GROUP_FRAME.setLayout(self.SEARCH_GROUP_FRAME_LAYOUT)
+
+        self.ADD_CITY_BUTTON = qt_widgets.QPushButton(parent = self.SEARCH_GROUP_FRAME)
+        self.SEARCH_GROUP_FRAME.layout().addWidget(self.ADD_CITY_BUTTON)
+        self.ADD_CITY_BUTTON.setObjectName("AddCityButton")
+        self.ADD_CITY_BUTTON.setFixedSize(97, 36)
+        self.ADD_CITY_BUTTON.setText(" Додати")
+        self.ADD_CITY_BUTTON.setIcon(qt_gui.QIcon("media/add_btn.svg"))
+        self.ADD_CITY_BUTTON.setStyleSheet(
+            """
+            QPushButton{
+            background-color: rgba(0, 0, 0, 0.2); 
+            border-radius: 4px;
+            color: rgba(255, 255, 255, 1);
+            font-size: 17px;
+            }
+            """
+            )
+        self.ADD_CITY_BUTTON.hide()
+        self.ADD_CITY_BUTTON.clicked.connect(self.add_city)
+
+        self.SEARCH_INPUT_FRAME = SearchFrame(parent = self.SEARCH_GROUP_FRAME)
+        self.SEARCH_GROUP_FRAME.layout().addWidget(self.SEARCH_INPUT_FRAME, alignment = core.Qt.AlignmentFlag.AlignRight)
+    
+    def check_data(self, data):
+        self.CHECK_RESULT = data
+
+    def add_city(self):
+
+        left_container_scroll = self.window().findChild(qt_widgets.QFrame, "LeftContainerScroll")
+        city_name = self.SEARCH_INPUT_FRAME.SEARCH_FIELD.text().capitalize()
+        
+        card = InfoCard(
+                parent = left_container_scroll,
+                search_city_name = city_name
+                )
+        card.load_weather()
+        card.WEATHER_LOADER.filtered_dict.connect(self.check_data)   
+
+        if len(self.CHECK_RESULT) > 0:
+            left_container_scroll.layout().addWidget(card, alignment = core.Qt.AlignmentFlag.AlignRight)
+        
+        
         

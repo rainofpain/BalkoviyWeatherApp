@@ -5,7 +5,7 @@ import PyQt6.QtSvgWidgets as qt_svg
 
 from utils import *
 from config import cities_dict
-
+from ....containers_utils import search_field_text
 
 class SearchFrame(qt_widgets.QFrame):
     def __init__(self, parent):
@@ -21,15 +21,11 @@ class SearchFrame(qt_widgets.QFrame):
         )
         self.setLayout(self.LAYOUT)
         self.setStyleSheet(
-            f"""
-            #SearchFrame {{
+            """
+            #SearchFrame {
             background-color: rgba(0, 0, 0, 0.2);
             border-radius: 4px;
-            }}
-
-            #SearchFrame:focus {{
-            border: 2px solid white;
-            }}
+            }
             """
         )
         self.ICON_FRAME = qt_widgets.QFrame(parent = self)
@@ -65,31 +61,40 @@ class SearchFrame(qt_widgets.QFrame):
         self.CLEAR_BUTTON.setStyleSheet("margin-top: 2px; border: none;")
         
         self.CLEAR_BUTTON.clicked.connect(self.clear_search)
+        self.ADD_CITY_BUTTON = self.parent().parent().ADD_CITY_BUTTON
         
 
     def text_changed(self):
-       
+        
         if self.SEARCH_FIELD.text() != "":
             self.CLEAR_BUTTON.show()
             self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.clear()
             for letter in cities_dict:
                 if letter.lower() == self.SEARCH_FIELD.text()[0].lower():
                     for city in cities_dict[letter]:
-                        if self.SEARCH_FIELD.text() in city:
+
+                        
+                        if self.SEARCH_FIELD.text().lower() in city.lower():
                             if self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.count() < 30:
                                 self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.addItem(city)
+                                if len(self.SEARCH_FIELD.text()) == len(city):
+                                    self.ADD_CITY_BUTTON.show()
+                                    break
+                                else:
+                                    self.ADD_CITY_BUTTON.hide()
                             else:
                                 break
-                
+                        if len(self.SEARCH_FIELD.text()) > len(city): 
+                            self.ADD_CITY_BUTTON.hide()
+                            
             self.window().SEARCH_DROPDOWN_MENU.show()
             self.CLEAR_BUTTON.clicked.connect(self.clear_search)
         else:
             self.CLEAR_BUTTON.hide()
+            self.ADD_CITY_BUTTON.hide()
             self.window().SEARCH_DROPDOWN_MENU.hide()
             self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.clear()
     
     def clear_search(self):
         self.SEARCH_FIELD.setText("")
-        self.CLEAR_BUTTON.hide()
-        self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.clear()
        

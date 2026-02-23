@@ -7,4 +7,5 @@ class Message(core.QObject):
         super().__init__()
 
 city_name_message = Message()
+search_field_text = Message()
 api_link_message = Message()

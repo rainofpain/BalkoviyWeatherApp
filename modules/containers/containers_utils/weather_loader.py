@@ -15,5 +15,6 @@ class WeatherLoader(core.QThread):
         filtered_data = create_city_dict(data)
         if filtered_data is not None:
             self.filtered_dict.emit(filtered_data)
-    
+        else:
+            self.filtered_dict.emit({})
 

@@ -33,6 +33,7 @@ class LeftContainer(qt_widgets.QFrame):
         self.LAYOUT.addWidget(self.SCROLL_AREA)
         
         self.SCROLL_FRAME = qt_widgets.QFrame(parent = self.SCROLL_AREA)
+        self.SCROLL_FRAME.setObjectName("LeftContainerScroll")
         
         self.SCROLL_FRAME.setFixedWidth(330)
 

@@ -1,7 +1,8 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
-
+from ....containers_utils import api_link_message, city_name_message
+from config import API_KEY
 from utils import *
 
 class SearchDropdownMenu(qt_widgets.QWidget):
@@ -69,3 +70,14 @@ class SearchDropdownMenu(qt_widgets.QWidget):
             )
         self.LIST_WIDGET.setVerticalScrollBarPolicy(core.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.LIST_WIDGET.setHorizontalScrollBarPolicy(core.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+
+        self.LIST_WIDGET.itemClicked.connect(self.item_clicked)
+    
+    def item_clicked(self, item):
+        search_frame = self.window().findChild(qt_widgets.QFrame, "SearchFrame")
+        city_name = item.text()
+        search_frame.SEARCH_FIELD.setText(city_name)
+        api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={city_name}&appid={API_KEY}&lang=ua")
+        city_name_message.message.emit(city_name)
+        self.hide()
+        self.LIST_WIDGET.clear()

@@ -141,11 +141,14 @@ class InfoCard(qt_widgets.QFrame):
         self.LINE_FRAME.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")
     
     def update_ui(self, new_data: dict):
-        self.CITY_NAME.setText(new_data["name"])
-        self.CITY_TIME.setText(f"{new_data['time']}")
-        self.CITY_TEMP_LABEL.setText(new_data["temp"])
-        self.CITY_WEATHER.setText(new_data["weather"].capitalize())
-        self.MIN_AND_MAX_TEMP.setText(f"Макс.:{new_data['max_temp']}, мін.:{new_data['min_temp']}")
+        try:
+            self.CITY_NAME.setText(new_data["name"])
+            self.CITY_TIME.setText(f"{new_data['time']}")
+            self.CITY_TEMP_LABEL.setText(new_data["temp"])
+            self.CITY_WEATHER.setText(new_data["weather"].capitalize())
+            self.MIN_AND_MAX_TEMP.setText(f"Макс.:{new_data['max_temp']}, мін.:{new_data['min_temp']}")
+        except:
+            print("Немає данних для побудови картки")
     
     def load_weather(self):
         self.WEATHER_LOADER = WeatherLoader(
