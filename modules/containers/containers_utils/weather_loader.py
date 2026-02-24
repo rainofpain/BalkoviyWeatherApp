@@ -13,8 +13,8 @@ class WeatherLoader(core.QThread):
         self.received_dict.emit(data)
 
         filtered_data = create_city_dict(data)
-        if filtered_data is not None:
+        if isinstance(filtered_data, dict):
             self.filtered_dict.emit(filtered_data)
         else:
-            self.filtered_dict.emit({})
+            self.filtered_dict.emit({"cod": filtered_data})
 

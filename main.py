@@ -1,10 +1,8 @@
 from modules import app_obj, main_window
-import faulthandler
 
 
 def main():
     try:
-        faulthandler.enable()
         main_window.show()
         app_obj.exec()
     except Exception as error:

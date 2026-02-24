@@ -98,7 +98,7 @@ class HeaderContainer(qt_widgets.QFrame):
         card.WEATHER_LOADER.filtered_dict.connect(self.check_data)   
 
         if len(self.CHECK_RESULT) > 0:
+            
             left_container_scroll.layout().addWidget(card, alignment = core.Qt.AlignmentFlag.AlignRight)
-        
         
         

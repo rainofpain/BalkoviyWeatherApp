@@ -119,41 +119,43 @@ class BottomFrame(qt_widgets.QFrame):
 
         clear_layout(self.LEFT_FRAME_LAYOUT)
         clear_layout(self.ICONS_FRAME_LAYOUT)
-    
-        for col in data_dict["list"]: 
-            temp = int(col["main"]["temp"])
-            icon_frame = qt_widgets.QFrame(parent = self.ICONS_FRAME)
-            self.ICONS_FRAME_LAYOUT.addWidget(icon_frame)
-            icon_frame.setFixedSize(16, 16)
-            icon_frame_layout = create_layout(
-                orientation = "v",
-                spacing = 0,
-                content_margins = (0, 0, 0, 0),
-                alignment = core.Qt.AlignmentFlag.AlignCenter
-            )
-            icon_frame.setLayout(icon_frame_layout)
-            icon = qt_svg.QSvgWidget(f"media/scroll_icons/{col["weather"][0]["icon"]}.svg", parent = icon_frame)
-            icon_frame_layout.addWidget(icon)
+        try:
+            for col in data_dict["list"]: 
+                temp = int(col["main"]["temp"])
+                icon_frame = qt_widgets.QFrame(parent = self.ICONS_FRAME)
+                self.ICONS_FRAME_LAYOUT.addWidget(icon_frame)
+                icon_frame.setFixedSize(16, 16)
+                icon_frame_layout = create_layout(
+                    orientation = "v",
+                    spacing = 0,
+                    content_margins = (0, 0, 0, 0),
+                    alignment = core.Qt.AlignmentFlag.AlignCenter
+                )
+                icon_frame.setLayout(icon_frame_layout)
+                icon = qt_svg.QSvgWidget(f"media/scroll_icons/{col["weather"][0]["icon"]}.svg", parent = icon_frame)
+                icon_frame_layout.addWidget(icon)
 
-            if temp < 0:
-                height = 30 - ((temp * - 1) * 3)
-                
-                if temp < -10 or height < 15:
-                    height = 15
-            elif temp == 0:
-                height = 30
-            elif temp > 0:
-                height = temp * 3 + 30
-                if temp > 25:
-                    height = 105
-            for cols in range(5):
-                graph_frame = qt_widgets.QFrame(parent = self.LEFT_FRAME)
-                graph_frame.setStyleSheet("""
-                    background: qlineargradient(
-                        x1: 0 y1: 0,
-                        x2: 0 y2: 1,
-                        stop:0 rgba(255, 223, 86, 1), stop:1 rgba(135, 206, 250, 1)
-                    ); 
-                """)
-                graph_frame.setFixedSize(8, height)
-                self.LEFT_FRAME_LAYOUT.addWidget(graph_frame, alignment = core.Qt.AlignmentFlag.AlignBottom)
+                if temp < 0:
+                    height = 30 - ((temp * - 1) * 3)
+                    
+                    if temp < -10 or height < 15:
+                        height = 15
+                elif temp == 0:
+                    height = 30
+                elif temp > 0:
+                    height = temp * 3 + 30
+                    if temp > 25:
+                        height = 105
+                for cols in range(5):
+                    graph_frame = qt_widgets.QFrame(parent = self.LEFT_FRAME)
+                    graph_frame.setStyleSheet("""
+                        background: qlineargradient(
+                            x1: 0 y1: 0,
+                            x2: 0 y2: 1,
+                            stop:0 rgba(255, 223, 86, 1), stop:1 rgba(135, 206, 250, 1)
+                        ); 
+                    """)
+                    graph_frame.setFixedSize(8, height)
+                    self.LEFT_FRAME_LAYOUT.addWidget(graph_frame, alignment = core.Qt.AlignmentFlag.AlignBottom)
+        except:
+            print("Немає данних для відображення")

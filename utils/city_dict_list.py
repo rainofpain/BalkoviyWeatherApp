@@ -5,9 +5,14 @@ from .api_request import api_request
 
 def create_city_dict(city_data: dict):
     try:
+        cod = city_data["cod"]
         city_name = city_data["name"]
         geo_dict = api_request(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={API_KEY}")
-        translated_city_name = geo_dict[0]["local_names"]["uk"]
+
+        try:
+            translated_city_name = geo_dict[0]["local_names"]["uk"]
+        except:
+            translated_city_name = geo_dict[0]["name"]
 
         days = [
             "Понеділок", 
@@ -47,4 +52,4 @@ def create_city_dict(city_data: dict):
     
     except Exception:
         print("create_city_dict() not able to load data")
-        return None
+        return cod

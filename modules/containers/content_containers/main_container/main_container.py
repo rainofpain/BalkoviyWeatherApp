@@ -163,16 +163,18 @@ class MainContainer(qt_widgets.QFrame):
         self.LAYOUT.addWidget(self.CLOCK_WIDGET)
     
     def show_data(self, new_data):
-        self.CITY_NAME_LABEL.setText(new_data["name"])
-        self.TEMP_FRAME_LABEL.setText(f"{new_data["temp"]}")
-        self.TEMP_FRAME_ICON.load(f"media/weather_icons/{new_data["weather_icon"]}.svg")
-        self.WEATHER_DESCRIPTION_LABEL.setText(new_data["weather"].capitalize())
-        self.MIN_MAX_TEMP_LABEL.setText(f"Макс.:{new_data["max_temp"]}, мін.:{new_data["min_temp"]}")
-        self.DAY_LABEL.setText(new_data["day"])
-        self.DATE_LABEL.setText(new_data["date"])
-        self.TIME_LABEL.setText(new_data["time"])
-        self.WATCH_FRAME.show()
-        
+        try:
+            self.CITY_NAME_LABEL.setText(new_data["name"])
+            self.TEMP_FRAME_LABEL.setText(f"{new_data["temp"]}")
+            self.TEMP_FRAME_ICON.load(f"media/weather_icons/{new_data["weather_icon"]}.svg")
+            self.WEATHER_DESCRIPTION_LABEL.setText(new_data["weather"].capitalize())
+            self.MIN_MAX_TEMP_LABEL.setText(f"Макс.:{new_data["max_temp"]}, мін.:{new_data["min_temp"]}")
+            self.DAY_LABEL.setText(new_data["day"])
+            self.DATE_LABEL.setText(new_data["date"])
+            self.TIME_LABEL.setText(new_data["time"])
+            self.WATCH_FRAME.show()
+        except:
+            print(f"Немає данних для відображення {new_data}")
         
 
     def get_link(self, api_request_link):

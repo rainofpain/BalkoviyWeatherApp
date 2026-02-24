@@ -148,7 +148,7 @@ class InfoCard(qt_widgets.QFrame):
             self.CITY_WEATHER.setText(new_data["weather"].capitalize())
             self.MIN_AND_MAX_TEMP.setText(f"Макс.:{new_data['max_temp']}, мін.:{new_data['min_temp']}")
         except:
-            print("Немає данних для побудови картки")
+            print(f"Немає данних для побудови картки {new_data['cod']}, {self.SEARCH_NAME}")
     
     def load_weather(self):
         self.WEATHER_LOADER = WeatherLoader(
