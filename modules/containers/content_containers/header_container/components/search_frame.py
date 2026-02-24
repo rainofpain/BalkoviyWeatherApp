@@ -25,6 +25,7 @@ class SearchFrame(qt_widgets.QFrame):
             #SearchFrame {
             background-color: rgba(0, 0, 0, 0.2);
             border-radius: 4px;
+            border: none;
             }
             """
         )
@@ -38,7 +39,7 @@ class SearchFrame(qt_widgets.QFrame):
         )
         self.ICON_FRAME.setLayout(self.ICON_FRAME_LAYOUT)
         self.ICON_FRAME.setFixedSize(25, 22)
-        self.ICON_FRAME.setStyleSheet("padding-left: 3px; padding-top: 1px; margin-top: 1px;")
+        self.ICON_FRAME.setStyleSheet("padding-left: 2px; padding-top: 1px; margin-top: 1px;")
         self.ICON = qt_svg.QSvgWidget("media/search_icon.svg", parent = self.ICON_FRAME)
         self.ICON_FRAME_LAYOUT.addWidget(self.ICON)
         self.ICON.renderer().setAspectRatioMode(core.Qt.AspectRatioMode.KeepAspectRatio)
@@ -49,6 +50,7 @@ class SearchFrame(qt_widgets.QFrame):
         self.SEARCH_FIELD.setFixedSize(220, 22)
         self.SEARCH_FIELD.setPlaceholderText("Пошук")
         self.SEARCH_FIELD.textChanged.connect(self.text_changed)
+        self.SEARCH_FIELD.installEventFilter(self)
 
         self.CLEAR_BUTTON = qt_widgets.QPushButton(parent = self)
         self.LAYOUT.addWidget(
@@ -61,9 +63,35 @@ class SearchFrame(qt_widgets.QFrame):
         self.CLEAR_BUTTON.setStyleSheet("margin-top: 2px; border: none;")
         
         self.CLEAR_BUTTON.clicked.connect(self.clear_search)
+
+
         self.ADD_CITY_BUTTON = self.parent().parent().ADD_CITY_BUTTON
         
-
+    def eventFilter(self, widget, event):
+      
+        if event.type() == core.QEvent.Type.FocusIn:
+            self.setStyleSheet(
+                """
+                #SearchFrame {
+                    background-color: rgba(0, 0, 0, 0.2);
+                    border-radius: 4px;
+                    border: 1px solid white;
+                }
+                """
+                )
+        elif event.type() == core.QEvent.Type.FocusOut and self.SEARCH_FIELD.text() == "":
+            self.setStyleSheet(
+                """
+                #SearchFrame {
+                    background-color: rgba(0, 0, 0, 0.2);
+                    border-radius: 4px;
+                    border: none;
+                }
+                """
+                )
+        return super().eventFilter(widget, event)
+            
+    
     def text_changed(self):
         
         if self.SEARCH_FIELD.text() != "":
@@ -73,7 +101,6 @@ class SearchFrame(qt_widgets.QFrame):
                 if letter.lower() == self.SEARCH_FIELD.text()[0].lower():
                     for city in cities_dict[letter]:
 
-                        
                         if self.SEARCH_FIELD.text().lower() in city.lower():
                             if self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.count() < 30:
                                 self.window().SEARCH_DROPDOWN_MENU.LIST_WIDGET.addItem(city)
@@ -97,4 +124,13 @@ class SearchFrame(qt_widgets.QFrame):
     
     def clear_search(self):
         self.SEARCH_FIELD.setText("")
+        self.setStyleSheet(
+                """
+                #SearchFrame {
+                background-color: rgba(0, 0, 0, 0.2);
+                border-radius: 4px;
+                border: none;
+                }
+                """
+                )
        
