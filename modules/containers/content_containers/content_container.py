@@ -14,22 +14,33 @@ class ContentContainer(qt_widgets.QFrame):
         self.LAYOUT = create_layout(
             orientation = "v", 
             spacing = 20, 
-            content_margins = (0, 0, 0, 0), 
-            alignment = core.Qt.AlignmentFlag.AlignCenter
+            content_margins = (20, 20, 20, 0), 
+            alignment = core.Qt.AlignmentFlag.AlignTop
         )
         self.setLayout(self.LAYOUT)
-
+        
         self.HEADER = HeaderContainer(parent = self)
         self.HEADER.setObjectName("Header")
         self.LAYOUT.addWidget(self.HEADER)
 
-
-        self.MAIN = MainContainer(parent = self)
+        self.WEATHER_INFO_FRAME = qt_widgets.QFrame(parent = self)
+        self.LAYOUT.addWidget(self.WEATHER_INFO_FRAME)
+        self.WEATHER_INFO_FRAME.setFixedSize(788, 677)
+        self.WEATHER_INFO_FRAME_LAYOUT = create_layout(
+            orientation = "v", 
+            spacing = 10, 
+            content_margins = (0, 0, 0, 0), 
+            alignment = core.Qt.AlignmentFlag.AlignCenter
+        )
+        self.WEATHER_INFO_FRAME.setLayout(self.WEATHER_INFO_FRAME_LAYOUT)
+       
+        
+        self.MAIN = MainContainer(parent = self.WEATHER_INFO_FRAME)
         self.MAIN.setObjectName("Main")
-        self.LAYOUT.addWidget(self.MAIN)
+        self.WEATHER_INFO_FRAME_LAYOUT.addWidget(self.MAIN)
 
-        self.FOOTER = FooterContainer(parent = self)
+        self.FOOTER = FooterContainer(parent = self.WEATHER_INFO_FRAME)
         self.FOOTER.setObjectName("Footer") 
-        self.LAYOUT.addWidget(self.FOOTER)
+        self.WEATHER_INFO_FRAME_LAYOUT.addWidget(self.FOOTER)
 
         

@@ -12,7 +12,7 @@ class SearchDropdownMenu(qt_widgets.QWidget):
 
         self.setObjectName("SearchDropdownMenu")
         self.setAttribute(core.Qt.WidgetAttribute.WA_StyledBackground)
-        self.move(923, 105)
+        self.move(923, 96)
         self.setFixedWidth(261)
         self.setFixedHeight(200)
         self.LAYOUT = create_layout(
@@ -65,7 +65,6 @@ class SearchDropdownMenu(qt_widgets.QWidget):
             )
         self.LIST_WIDGET.setVerticalScrollBarPolicy(core.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.LIST_WIDGET.setHorizontalScrollBarPolicy(core.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        print(self.LIST_WIDGET.item(0))
         
         self.LIST_WIDGET.itemClicked.connect(self.item_clicked)
     

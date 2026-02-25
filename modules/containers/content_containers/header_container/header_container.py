@@ -88,6 +88,7 @@ class HeaderContainer(qt_widgets.QFrame):
         self.CHECK_RESULT = data
         if len(self.CHECK_RESULT) > 0 and data["name"] not in city_name_list: 
             city_name_list.append(data["name"])
+            self.CARD.LEFT_CONTAINER.reset_card_click()
             self.CARD.CLICKED = True
             self.CARD.ARROW.show()
             self.CARD.setStyleSheet(

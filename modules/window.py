@@ -65,6 +65,7 @@ class MainWindow(qt_widgets.QMainWindow):
         self.CENTRAL_WIDGET_LAYOUT.addWidget(self.TITLE_BAR)
 
         self.CONTENT_FRAME = qt_widgets.QFrame(parent= self.CENTRAL_WIDGET)
+        self.CENTRAL_WIDGET_LAYOUT.addWidget(self.CONTENT_FRAME)
 
         self.CONTENT_FRAME.setObjectName("ContentFrame")
         
