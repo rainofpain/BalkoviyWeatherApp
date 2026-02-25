@@ -3,6 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
 from utils import *
+from config import city_name_list
 from .components import SearchFrame
 from ...containers_utils import search_field_text
 from ...left_container import InfoCard
@@ -12,6 +13,7 @@ class HeaderContainer(qt_widgets.QFrame):
         super().__init__(parent = parent)
         
         self.CHECK_RESULT = {}
+        self.LEFT_CONTAINER_SCROLL = self.window().findChild(qt_widgets.QFrame, "LeftContainerScroll")
 
         self.setFixedSize(788, 36)
         self.LAYOUT = create_layout(
@@ -61,7 +63,7 @@ class HeaderContainer(qt_widgets.QFrame):
         self.SEARCH_GROUP_FRAME.setLayout(self.SEARCH_GROUP_FRAME_LAYOUT)
 
         self.ADD_CITY_BUTTON = qt_widgets.QPushButton(parent = self.SEARCH_GROUP_FRAME)
-        self.SEARCH_GROUP_FRAME.layout().addWidget(self.ADD_CITY_BUTTON)
+        self.SEARCH_GROUP_FRAME_LAYOUT.addWidget(self.ADD_CITY_BUTTON)
         self.ADD_CITY_BUTTON.setObjectName("AddCityButton")
         self.ADD_CITY_BUTTON.setFixedSize(97, 36)
         self.ADD_CITY_BUTTON.setText(" Додати")
@@ -76,29 +78,43 @@ class HeaderContainer(qt_widgets.QFrame):
             }
             """
             )
-        self.ADD_CITY_BUTTON.hide()
         self.ADD_CITY_BUTTON.clicked.connect(self.add_city)
+        self.ADD_CITY_BUTTON.hide()
 
         self.SEARCH_INPUT_FRAME = SearchFrame(parent = self.SEARCH_GROUP_FRAME)
         self.SEARCH_GROUP_FRAME.layout().addWidget(self.SEARCH_INPUT_FRAME, alignment = core.Qt.AlignmentFlag.AlignRight)
     
     def check_data(self, data):
         self.CHECK_RESULT = data
+        if len(self.CHECK_RESULT) > 0 and data["name"] not in city_name_list: 
+            city_name_list.append(data["name"])
+            self.CARD.CLICKED = True
+            self.CARD.ARROW.show()
+            self.CARD.setStyleSheet(
+                """
+                *{
+                background-color: transparent;
+                }
+
+                #Card {
+                background-color: rgba(0, 0, 0, 0.2); 
+                border-radius: 8px;
+                }
+                """
+                )
+            self.LEFT_CONTAINER_SCROLL.layout().addWidget(self.CARD, alignment = core.Qt.AlignmentFlag.AlignRight)
+        self.SEARCH_INPUT_FRAME.SEARCH_FIELD.setText("")
 
     def add_city(self):
 
-        left_container_scroll = self.window().findChild(qt_widgets.QFrame, "LeftContainerScroll")
         city_name = self.SEARCH_INPUT_FRAME.SEARCH_FIELD.text().capitalize()
         
-        card = InfoCard(
-                parent = left_container_scroll,
+        self.CARD = InfoCard(
+                parent = self.LEFT_CONTAINER_SCROLL,
                 search_city_name = city_name
                 )
-        card.load_weather()
-        card.WEATHER_LOADER.filtered_dict.connect(self.check_data)   
+        self.CARD.load_weather()
+        self.CARD.WEATHER_LOADER.filtered_dict.connect(self.check_data)   
 
-        if len(self.CHECK_RESULT) > 0:
-            
-            left_container_scroll.layout().addWidget(card, alignment = core.Qt.AlignmentFlag.AlignRight)
         
         
