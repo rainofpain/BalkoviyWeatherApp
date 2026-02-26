@@ -10,7 +10,7 @@ from utils import *
 class LeftContainerHeader(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
-
+        self.MAIN_WINDOW = self.window()
         self.SWITCH = False
 
         self.setFixedSize(330, 44)
@@ -42,23 +42,23 @@ class LeftContainerHeader(qt_widgets.QFrame):
             self.SWITCH = True
             self.SWITCH_ICON = qt_gui.QIcon("media/switch/switch_light.svg")
             self.SWITCH_BUTTON.setIcon(self.SWITCH_ICON)
-            self.window().SEARCH_DROPDOWN_MENU.setProperty("style", "light")
-            self.window().SEARCH_DROPDOWN_MENU.style().unpolish(self.window().SEARCH_DROPDOWN_MENU)
-            self.window().SEARCH_DROPDOWN_MENU.style().polish(self.window().SEARCH_DROPDOWN_MENU)
-            self.window().CENTRAL_WIDGET.setProperty("style", "light")
-            self.window().CENTRAL_WIDGET.style().unpolish(self.window().CENTRAL_WIDGET)
-            self.window().CENTRAL_WIDGET.style().polish(self.window().CENTRAL_WIDGET)
+            self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.setProperty("style", "light")
+            self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.style().unpolish(self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU)
+            self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.style().polish(self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU)
+            self.MAIN_WINDOW.CENTRAL_WIDGET.setProperty("style", "light")
+            self.MAIN_WINDOW.CENTRAL_WIDGET.style().unpolish(self.MAIN_WINDOW.CENTRAL_WIDGET)
+            self.MAIN_WINDOW.CENTRAL_WIDGET.style().polish(self.MAIN_WINDOW.CENTRAL_WIDGET)
 
         elif self.SWITCH == True:
             self.SWITCH = False
             self.SWITCH_ICON = qt_gui.QIcon("media/switch/switch_dark.svg")
             self.SWITCH_BUTTON.setIcon(self.SWITCH_ICON)
-            self.window().SEARCH_DROPDOWN_MENU.setProperty("style", "dark")
-            self.window().SEARCH_DROPDOWN_MENU.style().unpolish(self.window().SEARCH_DROPDOWN_MENU)
-            self.window().SEARCH_DROPDOWN_MENU.style().polish(self.window().SEARCH_DROPDOWN_MENU)
-            self.window().CENTRAL_WIDGET.setProperty("style", "dark")
-            self.window().CENTRAL_WIDGET.style().unpolish(self.window().CENTRAL_WIDGET)
-            self.window().CENTRAL_WIDGET.style().polish(self.window().CENTRAL_WIDGET)
+            self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.setProperty("style", "dark")
+            self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.style().unpolish(self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU)
+            self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.style().polish(self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU)
+            self.MAIN_WINDOW.CENTRAL_WIDGET.setProperty("style", "dark")
+            self.MAIN_WINDOW.CENTRAL_WIDGET.style().unpolish(self.MAIN_WINDOW.CENTRAL_WIDGET)
+            self.MAIN_WINDOW.CENTRAL_WIDGET.style().polish(self.MAIN_WINDOW.CENTRAL_WIDGET)
           
 
 

@@ -3,6 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
 from . import MainContainer, FooterContainer, HeaderContainer
+from .settings_modal import SettingsFrame
 
 
 class ContentContainer(qt_widgets.QFrame):
@@ -42,5 +43,9 @@ class ContentContainer(qt_widgets.QFrame):
         self.FOOTER = FooterContainer(parent = self.WEATHER_INFO_FRAME)
         self.FOOTER.setObjectName("Footer") 
         self.WEATHER_INFO_FRAME_LAYOUT.addWidget(self.FOOTER)
+
+        self.SETTINGS_FRAME = SettingsFrame(parent = self)
+        self.LAYOUT.addWidget(self.SETTINGS_FRAME)
+        self.SETTINGS_FRAME.hide()
 
         

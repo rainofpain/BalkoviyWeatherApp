@@ -12,6 +12,8 @@ class HeaderContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
+        self.MAIN_WINDOW = self.window()
+        self.CONTENT_CONTAINER = self.parent()
         self.CHECK_RESULT = {}
         self.LEFT_CONTAINER_SCROLL = self.window().findChild(qt_widgets.QFrame, "LeftContainerScroll")
 
@@ -50,6 +52,7 @@ class HeaderContainer(qt_widgets.QFrame):
         self.SETTINGS_LABEL = qt_widgets.QLabel(text = "Налаштування", parent = self.SETTINGS_FRAME)
         self.SETTINGS_LABEL.setStyleSheet("font-size: 14px; font-weight: 500;")
         self.SETTINGS_FRAME_LAYOUT.addWidget(self.SETTINGS_LABEL)
+        self.SETTINGS_BUTTON.clicked.connect(self.settings_button_click)
 
         self.SEARCH_GROUP_FRAME = qt_widgets.QFrame(parent = self)
         self.LAYOUT.addWidget(self.SEARCH_GROUP_FRAME, alignment = core.Qt.AlignmentFlag.AlignRight)
@@ -115,7 +118,12 @@ class HeaderContainer(qt_widgets.QFrame):
                 search_city_name = city_name
                 )
         self.CARD.load_weather()
-        self.CARD.WEATHER_LOADER.filtered_dict.connect(self.check_data)   
+        self.CARD.WEATHER_LOADER.filtered_dict.connect(self.check_data)  
+
+    def settings_button_click(self):
+        self.CONTENT_CONTAINER.WEATHER_INFO_FRAME.hide()
+        # self.MAIN_WINDOW.SHADOW_MASK_FRAME.show()
+        self.CONTENT_CONTAINER.SETTINGS_FRAME.show()
 
         
         

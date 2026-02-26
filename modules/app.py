@@ -18,7 +18,7 @@ app_obj.setStyleSheet(
             ); 
         border-radius: 16px;
     }
-
+    
     #SearchDropdownMenu[style = "dark"]{
         background-color: qlineargradient(
             spread:pad, 
@@ -37,7 +37,7 @@ app_obj.setStyleSheet(
             ); 
             border-radius: 16px;
         }
-
+    
     #SearchDropdownMenu[style="light"]{
         background-color: qlineargradient(
                 spread:pad, 

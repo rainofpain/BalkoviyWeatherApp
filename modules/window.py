@@ -51,7 +51,7 @@ class MainWindow(qt_widgets.QMainWindow):
             orientation = "v", 
             spacing = 0, 
             content_margins = (0, 0, 0, 0), 
-            alignment = core.Qt.AlignmentFlag.AlignCenter
+            alignment = core.Qt.AlignmentFlag.AlignLeft
         )
         self.CENTRAL_WIDGET.setLayout(self.CENTRAL_WIDGET_LAYOUT)
 
@@ -73,7 +73,7 @@ class MainWindow(qt_widgets.QMainWindow):
             orientation = "h", 
             spacing = 0, 
             content_margins = (0, 0, 0, 0), 
-            alignment = core.Qt.AlignmentFlag.AlignCenter
+            alignment = core.Qt.AlignmentFlag.AlignLeft
         )
         self.CONTENT_FRAME.setLayout(self.CONTENT_FRAME_LAYOUT)
         self.CENTRAL_WIDGET_LAYOUT.addWidget(self.CONTENT_FRAME)
@@ -85,7 +85,18 @@ class MainWindow(qt_widgets.QMainWindow):
         
         self.CONTENT_CONTAINER = ContentContainer(parent = self.CONTENT_FRAME)
         self.CONTENT_FRAME_LAYOUT.addWidget(self.CONTENT_CONTAINER)
+
+        # self.SHADOW_MASK_FRAME = qt_widgets.QFrame(parent = self)  
+        # self.SHADOW_MASK_FRAME.setFixedSize(1200, 800)
+        # self.SHADOW_MASK_FRAME.setStyleSheet(
+        #     """
+        #         background-color: rgba(0, 0, 0, 0.2);
+        #         border-radius: 16px;
+        #     """
+        #     )
+    
         
+        # self.SHADOW_MASK_FRAME.hide()
         
        
     
