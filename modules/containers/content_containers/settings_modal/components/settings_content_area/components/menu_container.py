@@ -2,12 +2,13 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
-from .components import MenuButton
+from .components import MenuButton, SearchCityContent, AppSizeContent, AppLanguageContent, ImageListsContent
 
 class SettingsMenuContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
 
+        self.CONTENT_CONTAINER = self.parent().CONTENT_CONTAINER
         self.setFixedSize(174, 578)
         self.setStyleSheet(
             """
@@ -66,17 +67,29 @@ class SettingsMenuContainer(qt_widgets.QFrame):
         self.IMAGE_LISTS_BUTTON.LABEL.setText("Списки зображень")         
 
     def show_city_search(self):
-        print("Пошук міста")
+        if self.CONTENT_CONTAINER.LAYOUT.count() > 0:
+            clear_layout(self.CONTENT_CONTAINER.LAYOUT)
+        self.CONTENT = SearchCityContent(parent = self.CONTENT_CONTAINER)
+        self.CONTENT_CONTAINER.LAYOUT.addWidget(self.CONTENT)
 
     def show_app_size(self):
-        print("Розмір додатку")
+        if self.CONTENT_CONTAINER.LAYOUT.count() > 0:
+            clear_layout(self.CONTENT_CONTAINER.LAYOUT)
+        self.CONTENT = AppSizeContent(parent = self.CONTENT_CONTAINER)
+        self.CONTENT_CONTAINER.LAYOUT.addWidget(self.CONTENT)
 
     def show_app_language(self):
-        print("Мова додатку")
-    
-    def show_images_lists(self):
-        print("Списки зображень")
+        if self.CONTENT_CONTAINER.LAYOUT.count() > 0:
+            clear_layout(self.CONTENT_CONTAINER.LAYOUT)
+        self.CONTENT = AppLanguageContent(parent = self.CONTENT_CONTAINER)
+        self.CONTENT_CONTAINER.LAYOUT.addWidget(self.CONTENT)
 
+    def show_images_lists(self):
+        if self.CONTENT_CONTAINER.LAYOUT.count() > 0:
+            clear_layout(self.CONTENT_CONTAINER.LAYOUT)
+        self.CONTENT = ImageListsContent(parent = self.CONTENT_CONTAINER)
+        self.CONTENT_CONTAINER.LAYOUT.addWidget(self.CONTENT)
+        
     def reset_card_click(self):
         for index in range(self.BUTTON_FRAME_LAYOUT.count()):
             item = self.BUTTON_FRAME_LAYOUT.itemAt(index)

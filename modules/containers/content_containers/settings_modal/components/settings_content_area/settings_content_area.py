@@ -17,11 +17,13 @@ class SettingsContentArea(qt_widgets.QFrame):
         )
         self.setLayout(self.LAYOUT)
 
+        self.CONTENT_CONTAINER = SettingsContentContainer(parent = self) # create ContentContainer
+        
         self.MENU_CONTAINER = SettingsMenuContainer(parent = self)
         self.LAYOUT.addWidget(self.MENU_CONTAINER)
 
+        self.LAYOUT.addWidget(self.CONTENT_CONTAINER) # add ContentContainer
 
-        self.CONTENT_CONTAINER = SettingsContentContainer(parent = self)
-        self.LAYOUT.addWidget(self.CONTENT_CONTAINER)
+
         
 

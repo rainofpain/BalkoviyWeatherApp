@@ -2,7 +2,7 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as widgets
 
 
-def create_layout(orientation: str, spacing: int, content_margins: tuple, alignment: core.Qt.AlignmentFlag):
+def create_layout(orientation: str, spacing: int, content_margins: tuple, alignment: core.Qt.AlignmentFlag = None):
     """
     v - vertical
     h - horizontal
@@ -21,6 +21,9 @@ def create_layout(orientation: str, spacing: int, content_margins: tuple, alignm
     layout.setSpacing(spacing)
     left, top, right, bottom = content_margins
     layout.setContentsMargins(left, top, right, bottom)
-    layout.setAlignment(alignment)
+    try:
+        layout.setAlignment(alignment)
+    except:
+        pass
     
     return layout
