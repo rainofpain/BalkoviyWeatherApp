@@ -3,9 +3,9 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
 from utils import *
-from config import city_name_list
+from config import city_name_list, API_KEY
 from .components import SearchFrame
-from ...containers_utils import search_field_text
+from ...containers_utils import update_content, api_link_message, city_name_message
 from ...left_container import InfoCard
 
 class HeaderContainer(qt_widgets.QFrame):
@@ -107,6 +107,9 @@ class HeaderContainer(qt_widgets.QFrame):
                 """
                 )
             self.LEFT_CONTAINER_SCROLL.layout().addWidget(self.CARD, alignment = core.Qt.AlignmentFlag.AlignRight)
+            api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["name"]}&appid={API_KEY}&lang=ua")
+            city_name_message.message.emit(data["name"])
+            update_content.update_settings_container.emit(True)
         self.SEARCH_INPUT_FRAME.SEARCH_FIELD.setText("")
 
     def add_city(self):

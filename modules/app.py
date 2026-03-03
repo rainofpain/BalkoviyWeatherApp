@@ -5,6 +5,7 @@ import sys
 
 widgets.QApplication.setAttribute(core.Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
 
+
 app_obj = widgets.QApplication(sys.argv)
 
 app_obj.setStyleSheet(
@@ -29,6 +30,21 @@ app_obj.setStyleSheet(
         border-radius: 10px;
     }
 
+    #SettingsInputFields[style="dark"] QComboBox QAbstractItemView {
+                border: none;
+                selection-background-color: rgba(0, 0, 0, 0.2);
+                background-color: qlineargradient(
+                    spread: pad, 
+                    x1:0, y1:0, x2:0, y2:1, 
+                    stop:0 #4e5255, 
+                    stop:1 #6d7275
+                ); 
+         
+                border-radius: 10px;
+                color: white;
+                outline: none;
+            }
+
     #CentralWidget[style="light"]{
             background: qlineargradient(
                 x1: 0 y1: 1,
@@ -49,6 +65,21 @@ app_obj.setStyleSheet(
          
         border-radius: 10px;
     }
+
+    #SettingsInputFields[style="light"] QComboBox QAbstractItemView {
+                border: none;
+                selection-background-color: rgba(0, 0, 0, 0.2);
+                background-color: qlineargradient(
+                    spread: pad, 
+                    x1:0, y1:0, x2:0, y2:1, 
+                    stop:0 #74786a, 
+                    stop:1 #868a7b
+                ); 
+         
+                border-radius: 10px;
+                color: white;
+                outline: none;
+            }
 
     #TitleBar{
         background-color: rgba(0, 0, 0, 0.6); 

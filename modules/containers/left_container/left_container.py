@@ -3,6 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 
 from .components import InfoCard, LeftContainerHeader
 from config import city_name_list
+from ..containers_utils import update_content
 
 from utils import *
 
@@ -11,6 +12,7 @@ class LeftContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
+        update_content.update_left_container.connect(self.update_content)
         self.setFixedSize(375, 800)
         self.LAYOUT = create_layout(
             orientation = "v", 
@@ -69,6 +71,18 @@ class LeftContainer(qt_widgets.QFrame):
             widget.CLICKED = False
             widget.ARROW.hide()
             widget.setStyleSheet("background-color: transparent; ")
+
+    def update_content(self, update_signal):
+        if update_signal == True:
+            clear_layout(self.SCROLL_FRAME_LAYOUT)
+            for city in city_name_list:
+                card = InfoCard(
+                    parent = self.SCROLL_FRAME,
+                    search_city_name = city
+                    )
+                card.load_weather()
+                    
+                self.SCROLL_FRAME_LAYOUT.addWidget(card, alignment = core.Qt.AlignmentFlag.AlignRight)
         
 
     

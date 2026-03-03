@@ -2,7 +2,7 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
-from .components import CityInputFrame
+from .components import CityInputFrame, AddedCitiesFrame, MapFrame
 
 class SearchCityContent(qt_widgets.QFrame):
     def __init__(self, parent):
@@ -19,7 +19,7 @@ class SearchCityContent(qt_widgets.QFrame):
 
         self.TOP_FRAME = qt_widgets.QFrame(parent = self)
         self.LAYOUT.addWidget(self.TOP_FRAME)
-        self.TOP_FRAME.setFixedSize(544, 301)
+        self.TOP_FRAME.setFixedSize(544, 320)
         self.TOP_FRAME_LAYOUT = create_layout(
             orientation  = "h",
             spacing = 16,
@@ -28,19 +28,32 @@ class SearchCityContent(qt_widgets.QFrame):
             )
         self.TOP_FRAME.setLayout(self.TOP_FRAME_LAYOUT)
 
+        # Create MAP_FRAME
+        self.MAP_FRAME = MapFrame(parent = self.TOP_FRAME) 
 
+        # Create CITY_INPUT_FRAME
         self.CITY_INPUT_FRAME = CityInputFrame(parent = self.TOP_FRAME)
         self.TOP_FRAME_LAYOUT.addWidget(self.CITY_INPUT_FRAME)
+
+        # Add MAP_FRAME to Layout
+        self.TOP_FRAME_LAYOUT.addWidget(self.MAP_FRAME)
+
+        self.MAP_FRAME.hide()
         
-
-
         self.BOTTOM_FRAME = qt_widgets.QFrame(parent = self)
         self.LAYOUT.addWidget(self.BOTTOM_FRAME)
-        self.BOTTOM_FRAME.setFixedSize(544, 197)
+        self.BOTTOM_FRAME.setFixedSize(544, 200)
         self.BOTTOM_FRAME_LAYOUT = create_layout(
             orientation  = "v",
             spacing = 16,
             content_margins = (0, 0, 0, 0),
-            alignment = core.Qt.AlignmentFlag.AlignTop
+            alignment = core.Qt.AlignmentFlag.AlignTop | core.Qt.AlignmentFlag.AlignLeft
         )
         self.BOTTOM_FRAME.setLayout(self.BOTTOM_FRAME_LAYOUT)
+
+        self.BOTTOM_FRAME_TITLE = qt_widgets.QLabel("Додані міста", parent = self.BOTTOM_FRAME)
+        self.BOTTOM_FRAME_LAYOUT.addWidget(self.BOTTOM_FRAME_TITLE)
+        self.BOTTOM_FRAME_TITLE.setStyleSheet("font-size: 18px")
+
+        self.CITIES_FRAME = AddedCitiesFrame(parent = self.BOTTOM_FRAME)
+        self.BOTTOM_FRAME_LAYOUT.addWidget(self.CITIES_FRAME)

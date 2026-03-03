@@ -8,3 +8,4 @@ API_KEY = os.getenv("API_KEY")
 
 city_name_list = []
 cities_dict = read_json("static/json/cities_english.json")
+countries_and_cities_dict = read_json("static/json/countries_and_cities.json")

@@ -2,7 +2,7 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
-
+from ...containers_utils import set_property
 from modules import app_obj
 
 from utils import *
@@ -45,9 +45,12 @@ class LeftContainerHeader(qt_widgets.QFrame):
             self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.setProperty("style", "light")
             self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.style().unpolish(self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU)
             self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.style().polish(self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU)
+
             self.MAIN_WINDOW.CENTRAL_WIDGET.setProperty("style", "light")
             self.MAIN_WINDOW.CENTRAL_WIDGET.style().unpolish(self.MAIN_WINDOW.CENTRAL_WIDGET)
             self.MAIN_WINDOW.CENTRAL_WIDGET.style().polish(self.MAIN_WINDOW.CENTRAL_WIDGET)
+
+            set_property.message.emit("light")
 
         elif self.SWITCH == True:
             self.SWITCH = False
@@ -56,9 +59,12 @@ class LeftContainerHeader(qt_widgets.QFrame):
             self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.setProperty("style", "dark")
             self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.style().unpolish(self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU)
             self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU.style().polish(self.MAIN_WINDOW.SEARCH_DROPDOWN_MENU)
+
             self.MAIN_WINDOW.CENTRAL_WIDGET.setProperty("style", "dark")
             self.MAIN_WINDOW.CENTRAL_WIDGET.style().unpolish(self.MAIN_WINDOW.CENTRAL_WIDGET)
             self.MAIN_WINDOW.CENTRAL_WIDGET.style().polish(self.MAIN_WINDOW.CENTRAL_WIDGET)
+
+            set_property.message.emit("dark")
           
 
 

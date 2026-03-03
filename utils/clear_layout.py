@@ -6,6 +6,6 @@ def clear_layout(layout: qt_widgets.QLayout):
         if child.widget():
             child.widget().deleteLater()
             child.widget().setParent(None)
-            layout.removeWidget(child.widget())
+            # layout.removeWidget(child.widget())
         elif child.layout():
             clear_layout(child.layout())
