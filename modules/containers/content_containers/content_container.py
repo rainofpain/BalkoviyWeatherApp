@@ -11,7 +11,7 @@ class ContentContainer(qt_widgets.QFrame):
         super().__init__(parent = parent)
         
         self.setObjectName("ContentContainer")
-        self.setFixedSize(828, 800)
+        self.setMinimumSize(828, 800)
         self.LAYOUT = create_layout(
             orientation = "v", 
             spacing = 20, 
@@ -26,12 +26,13 @@ class ContentContainer(qt_widgets.QFrame):
 
         self.WEATHER_INFO_FRAME = qt_widgets.QFrame(parent = self)
         self.LAYOUT.addWidget(self.WEATHER_INFO_FRAME)
-        self.WEATHER_INFO_FRAME.setFixedSize(788, 677)
+        self.WEATHER_INFO_FRAME.setMinimumSize(788, 677)
+        self.WEATHER_INFO_FRAME.setMaximumHeight(816)
         self.WEATHER_INFO_FRAME_LAYOUT = create_layout(
             orientation = "v", 
             spacing = 10, 
             content_margins = (0, 0, 0, 0), 
-            alignment = core.Qt.AlignmentFlag.AlignCenter
+            alignment = core.Qt.AlignmentFlag.AlignTop
         )
         self.WEATHER_INFO_FRAME.setLayout(self.WEATHER_INFO_FRAME_LAYOUT)
        

@@ -14,6 +14,16 @@ class CityCard(qt_widgets.QFrame):
         self.NAME = city_name
         self.setFixedSize(512, 32)
 
+        self.setStyleSheet(
+            """
+           
+            CityCard::hover {
+            border-radius: 2px;
+            background-color: rgba(0, 0, 0, 0.2);
+            }
+            """
+            )
+
         self.LAYOUT = create_layout(
             orientation = "h",
             spacing = 0,

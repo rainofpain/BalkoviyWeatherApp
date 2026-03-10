@@ -12,7 +12,8 @@ class BottomFrame(qt_widgets.QFrame):
         super().__init__(parent = parent)
 
         city_name_message.message.connect(self.get_name)
-        self.setFixedSize(788, 197)
+        self.setFixedHeight(197)
+        self.setMinimumWidth(788)
         self.setObjectName("BottomFrame")
         
         self.LAYOUT = create_layout(
@@ -30,11 +31,19 @@ class BottomFrame(qt_widgets.QFrame):
 
         self.LINE_FRAME = qt_widgets.QFrame(parent = self)
         self.LAYOUT.addWidget(self.LINE_FRAME)
-        self.LINE_FRAME.setFixedSize(756, 1)
+        self.LINE_FRAME.setMinimumSize(756, 1)
+        self.LINE_FRAME.setSizePolicy(
+            qt_widgets.QSizePolicy.Policy.Expanding, 
+            qt_widgets.QSizePolicy.Policy.Fixed
+            )
         self.LINE_FRAME.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")
 
         self.GRAPH_CONTENT_FRAME = qt_widgets.QFrame(parent = self)
-        self.GRAPH_CONTENT_FRAME.setFixedSize(758, 130)
+        self.GRAPH_CONTENT_FRAME.setMinimumSize(758, 130)
+        self.GRAPH_CONTENT_FRAME.setSizePolicy(
+            qt_widgets.QSizePolicy.Policy.Expanding,
+            qt_widgets.QSizePolicy.Policy.Fixed
+            )
         self.GRAPH_CONTENT_FRAME_LAYOUT = create_layout(
             orientation = "v",
             content_margins = (0, 0, 0, 0),
@@ -46,7 +55,7 @@ class BottomFrame(qt_widgets.QFrame):
         
         
         self.ICONS_FRAME = qt_widgets.QFrame(parent = self.GRAPH_CONTENT_FRAME)
-        self.ICONS_FRAME.setFixedSize(728, 24)
+        self.ICONS_FRAME.setMinimumSize(728, 24)
         self.ICONS_FRAME_LAYOUT = create_layout(
             orientation = "h",
             content_margins = (0, 4, 0, 4),
@@ -58,7 +67,11 @@ class BottomFrame(qt_widgets.QFrame):
         
         
         self.GRAPH_FRAME = qt_widgets.QFrame(parent = self.GRAPH_CONTENT_FRAME)
-        self.GRAPH_FRAME.setFixedSize(755, 106)
+        self.GRAPH_FRAME.setMinimumSize(755, 106)
+        self.GRAPH_FRAME.setSizePolicy(
+            qt_widgets.QSizePolicy.Policy.Expanding,
+            qt_widgets.QSizePolicy.Policy.Fixed
+            )
         self.GRAPH_FRAME_LAYOUT = create_layout(
             orientation = "h",
             content_margins = (0, 0, 0, 0),
@@ -69,15 +82,19 @@ class BottomFrame(qt_widgets.QFrame):
         self.GRAPH_CONTENT_FRAME_LAYOUT.addWidget(self.GRAPH_FRAME)
         
         self.LEFT_FRAME = qt_widgets.QFrame(parent = self.GRAPH_FRAME)
+        self.LEFT_FRAME.setSizePolicy(
+            qt_widgets.QSizePolicy.Policy.Expanding,
+            qt_widgets.QSizePolicy.Policy.Fixed
+        )
         graph_bg_path = create_abspath("media/graph_bg.svg")
         self.LEFT_FRAME.setStyleSheet(
             f"""
-            background-image: url({graph_bg_path.replace('\\', '/')}); 
+            border-image: url({graph_bg_path.replace('\\', '/')}) 0 0 0 0 stretch stretch;
             background-repeat: norepeat;
             """
             )
 
-        self.LEFT_FRAME.setFixedSize(727, 106)
+        self.LEFT_FRAME.setMinimumSize(727, 106)
         self.LEFT_FRAME_LAYOUT = create_layout(
             orientation = "h",
             content_margins = (0, 0, 0, 0),
@@ -88,7 +105,7 @@ class BottomFrame(qt_widgets.QFrame):
         self.GRAPH_FRAME_LAYOUT.addWidget(self.LEFT_FRAME)
         
         self.RIGHT_FRAME = qt_widgets.QFrame(parent = self.GRAPH_FRAME)
-        self.RIGHT_FRAME.setFixedSize(22, 106)
+        self.RIGHT_FRAME.setMinimumSize(22, 106)
         self.RIGHT_FRAME_LAYOUT = create_layout(
             orientation = "v",
             content_margins = (0, 0, 0, 0),

@@ -13,7 +13,7 @@ class MainContainer(qt_widgets.QFrame):
         
         api_link_message.message.connect(self.get_link)
 
-        self.setFixedSize(788, 303)
+        self.setMinimumSize(788, 303)
         self.LAYOUT = create_layout(
             orientation = "h", 
             spacing = 10, 
@@ -34,7 +34,7 @@ class MainContainer(qt_widgets.QFrame):
         self.WEATHER_WIDGET.HEADER_TITLE_LAYOUT.addWidget(self.WEATHER_WIDGET_HEADER_TITLE_LABEL)
 
         self.WEATHER_WIDGET_CONTENT = qt_widgets.QFrame(parent = self.WEATHER_WIDGET)
-        self.WEATHER_WIDGET_CONTENT.setFixedSize(358, 228)
+        self.WEATHER_WIDGET_CONTENT.setMinimumSize(358, 228)
         self.WEATHER_WIDGET_CONTENT_LAYOUT = create_layout(
             orientation = "v", 
             spacing = 16, 
@@ -102,7 +102,7 @@ class MainContainer(qt_widgets.QFrame):
         self.CLOCK_WIDGET.HEADER_TITLE_LAYOUT.addWidget(self.CLOCK_WIDGET_HEADER_TITLE_LABEL)
 
         self.CLOCK_WIDGET_CONTENT = qt_widgets.QFrame(parent = self.CLOCK_WIDGET)
-        self.CLOCK_WIDGET_CONTENT.setFixedSize(358, 228)
+        self.CLOCK_WIDGET_CONTENT.setMinimumSize(358, 228)
         self.CLOCK_WIDGET_CONTENT_LAYOUT = create_layout(
             orientation = "v", 
             spacing = 16, 
@@ -112,24 +112,30 @@ class MainContainer(qt_widgets.QFrame):
         self.CLOCK_WIDGET_CONTENT.setLayout(self.CLOCK_WIDGET_CONTENT_LAYOUT)
 
         self.DATE_FRAME = qt_widgets.QFrame(parent = self.CLOCK_WIDGET_CONTENT)
-        self.DATE_FRAME.setFixedSize(358, 44)
+        self.DATE_FRAME.setMinimumSize(358, 44)
+        self.DATE_FRAME.setSizePolicy(
+            qt_widgets.QSizePolicy.Policy.Preferred,
+            qt_widgets.QSizePolicy.Policy.Fixed
+        )
         self.DATE_FRAME_LAYOUT = create_layout(
             orientation = "h", 
-            spacing = 116, 
+            spacing = 0, 
             content_margins = (8, 0, 8, 0), 
-            alignment = core.Qt.AlignmentFlag.AlignJustify
+            alignment = core.Qt.AlignmentFlag.AlignVCenter
             )
         self.DATE_FRAME.setLayout(self.DATE_FRAME_LAYOUT)
 
         self.DAY_LABEL = qt_widgets.QLabel(parent = self.DATE_FRAME)
         self.DAY_LABEL.setStyleSheet("font-size: 24px; font-weight: 500;")
-        self.DATE_FRAME_LAYOUT.addWidget(self.DAY_LABEL)
+       
+        self.DATE_FRAME_LAYOUT.addWidget(self.DAY_LABEL, alignment = core.Qt.AlignmentFlag.AlignLeft)
 
         self.DATE_LABEL = qt_widgets.QLabel(parent = self.DATE_FRAME)
         self.DATE_LABEL.setStyleSheet("font-size: 24px; font-weight: 500;")
-        self.DATE_FRAME_LAYOUT.addWidget(self.DATE_LABEL)
+       
+        self.DATE_FRAME_LAYOUT.addWidget(self.DATE_LABEL, alignment = core.Qt.AlignmentFlag.AlignRight)
 
-        self.CLOCK_WIDGET_CONTENT_LAYOUT.addWidget(self.DATE_FRAME, alignment = core.Qt.AlignmentFlag.AlignCenter)
+        self.CLOCK_WIDGET_CONTENT_LAYOUT.addWidget(self.DATE_FRAME, alignment = core.Qt.AlignmentFlag.AlignTop)
 
         self.WATCH_FRAME = qt_widgets.QFrame(parent = self.CLOCK_WIDGET_CONTENT)
         self.WATCH_FRAME.setFixedSize(168, 168)

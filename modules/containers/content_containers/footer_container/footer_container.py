@@ -9,12 +9,12 @@ class FooterContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
-        self.setFixedSize(788, 364)
+        self.setMinimumSize(788, 364)
         self.LAYOUT = create_layout(
             orientation = "v", 
             spacing = 10, 
             content_margins = (0, 0, 0, 0), 
-            alignment = core.Qt.AlignmentFlag.AlignCenter
+            alignment = core.Qt.AlignmentFlag.AlignTop
         )
         self.setLayout(self.LAYOUT)
         

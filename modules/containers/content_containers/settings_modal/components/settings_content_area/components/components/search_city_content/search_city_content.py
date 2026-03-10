@@ -37,8 +37,6 @@ class SearchCityContent(qt_widgets.QFrame):
 
         # Add MAP_FRAME to Layout
         self.TOP_FRAME_LAYOUT.addWidget(self.MAP_FRAME)
-
-        self.MAP_FRAME.hide()
         
         self.BOTTOM_FRAME = qt_widgets.QFrame(parent = self)
         self.LAYOUT.addWidget(self.BOTTOM_FRAME)

@@ -17,7 +17,8 @@ class HeaderContainer(qt_widgets.QFrame):
         self.CHECK_RESULT = {}
         self.LEFT_CONTAINER_SCROLL = self.window().findChild(qt_widgets.QFrame, "LeftContainerScroll")
 
-        self.setFixedSize(788, 36)
+        self.setMinimumWidth(788)
+        self.setFixedHeight(36)
         self.LAYOUT = create_layout(
             orientation = "h", 
             spacing = 0, 

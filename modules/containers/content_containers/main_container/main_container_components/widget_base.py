@@ -7,7 +7,7 @@ class WidgetBase(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
 
-        self.setFixedSize(390, 303)
+        self.setMinimumSize(390, 303)
         
         self.LAYOUT = create_layout(
             orientation = "v", 
@@ -18,7 +18,7 @@ class WidgetBase(qt_widgets.QFrame):
         self.setLayout(self.LAYOUT)
     
         self.HEADER = qt_widgets.QFrame(parent = self)
-        self.HEADER.setFixedSize(358,27)
+        self.HEADER.setMinimumSize(358,27)
         self.HEADER_LAYOUT = create_layout(
             orientation = "v", 
             spacing = 8, 
@@ -28,7 +28,7 @@ class WidgetBase(qt_widgets.QFrame):
         self.HEADER.setLayout(self.HEADER_LAYOUT)
 
         self.HEADER_TITLE = qt_widgets.QFrame(parent = self.HEADER)
-        self.HEADER_TITLE.setFixedSize(152, 19)
+        self.HEADER_TITLE.setMinimumSize(152, 19)
         self.HEADER_TITLE_LAYOUT = create_layout(
             orientation = "h", 
             spacing = 6, 
@@ -40,7 +40,7 @@ class WidgetBase(qt_widgets.QFrame):
         self.HEADER_LAYOUT.addWidget(self.HEADER_TITLE)
 
         self.HEADER_LINE_FRAME = qt_widgets.QFrame(parent = self.HEADER)
-        self.HEADER_LINE_FRAME.setFixedSize(358, 1)
+        self.HEADER_LINE_FRAME.setMinimumSize(358, 1)
         self.HEADER_LINE_FRAME.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")
         self.HEADER_LAYOUT.addWidget(self.HEADER_LINE_FRAME)
 

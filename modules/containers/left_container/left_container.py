@@ -13,7 +13,8 @@ class LeftContainer(qt_widgets.QFrame):
         super().__init__(parent = parent)
         
         update_content.update_left_container.connect(self.update_content)
-        self.setFixedSize(375, 800)
+        self.setFixedWidth(375)
+        self.setMinimumHeight(800)
         self.LAYOUT = create_layout(
             orientation = "v", 
             spacing = 0, 

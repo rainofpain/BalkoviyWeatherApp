@@ -11,7 +11,7 @@ class TitleBar(qt_widgets.QFrame):
 
         self.setObjectName("TitleBar")
         
-        self.setFixedSize(window_width, 40)
+        self.setMinimumSize(window_width, 40)
         
         self.LAYOUT = create_layout(
             orientation = "h",

@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
 from config import countries_and_cities_dict, city_name_list, API_KEY
-from .........containers_utils import set_property, update_content, WeatherLoader
+from .........containers_utils import set_property, update_content, api_link_message, city_name_message, WeatherLoader
 from .........left_container import InfoCard
 
 class CityInputFrame(qt_widgets.QFrame):
@@ -210,7 +210,6 @@ class CityInputFrame(qt_widgets.QFrame):
         self.COUNTRY_FRAME_DROPDOWN.view().style().polish(self.COUNTRY_FRAME_DROPDOWN.view())
     
     def fill_city_dropdown(self, text):
-        self.PARENT.MAP_FRAME.hide()
         self.COORDINATES_FRAME_INPUT.setText("")
         self.CITY_FRAME_DROPDOWN.clear()
         for country_dict in countries_and_cities_dict["data"]:
@@ -240,15 +239,14 @@ class CityInputFrame(qt_widgets.QFrame):
         
 
     def save_city(self):
-        if self.CITY_NAME:
-            city_name = self.CITY_NAME
-        
-            self.CARD = InfoCard(
-                    parent = self.LEFT_CONTAINER_SCROLL,
-                    search_city_name = city_name
-                    )
-            self.CARD.load_weather()
-            self.CARD.WEATHER_LOADER.filtered_dict.connect(self.check_data)  
+        city_name = self.CITY_NAME
+    
+        self.CARD = InfoCard(
+                parent = self.LEFT_CONTAINER_SCROLL,
+                search_city_name = city_name
+                )
+        self.CARD.load_weather()
+        self.CARD.WEATHER_LOADER.filtered_dict.connect(self.check_data)  
     
     def check_data(self, data):
         try:
@@ -271,6 +269,8 @@ class CityInputFrame(qt_widgets.QFrame):
                     """
                     )
                 self.LEFT_CONTAINER_SCROLL.layout().addWidget(self.CARD, alignment = core.Qt.AlignmentFlag.AlignRight)
+                api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["name"]}&appid={API_KEY}&lang=ua")
+                city_name_message.message.emit(data["name"])
                 update_content.update_settings_container.emit(True)
         except Exception as error:
             print(error)

@@ -13,7 +13,7 @@ class TopFrameScroll(qt_widgets.QFrame):
             content_margins = (0, 0, 0, 0), 
             alignment = core.Qt.AlignmentFlag.AlignLeft
         )
-        self.setFixedSize(648, 82)
+        self.setMinimumSize(648, 82)
         self.setLayout(self.LAYOUT)
         self.setStyleSheet("border: none;")
 

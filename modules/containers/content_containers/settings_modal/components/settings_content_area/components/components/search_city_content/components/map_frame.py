@@ -22,34 +22,43 @@ class MapFrame(qt_widgets.QFrame):
         )
         self.setLayout(self.LAYOUT)
 
-        update_content.coord.connect(self.load_map)
-
-    def load_map(self, coord):
-
-        clear_layout(self.LAYOUT)
-
-        map = folium.Map(
-            location = coord,
-            zoom_start = 10,
+        self.MAP = folium.Map(
+            location = (51.507408, -0.127699),
+            zoom_start = 15,
             zoom_control = False,
             attribution_control = False 
             )
         
-        web_view = web_engine.QWebEngineView(parent = self)
+        self.WEB_VIEW = web_engine.QWebEngineView(parent = self)
 
-        self.LAYOUT.addWidget(web_view)
+        self.LAYOUT.addWidget(self.WEB_VIEW)
 
-        web_view.setFixedSize(289, 256)
+        self.WEB_VIEW.setFixedSize(289, 256)
 
-        path = qt_gui.QPainterPath()
-        path.addRoundedRect(0, 0, 289, 256, 4, 4)
-        region = qt_gui.QRegion(path.toFillPolygon().toPolygon())
-        web_view.setMask(region)
+        self.MARKER = folium.Marker(location = (51.507408, -0.127699), icon = None)
+        self.MARKER.add_to(self.MAP)
         
         data = io.BytesIO()
-        map.save(data, close_file = False)
+        self.MAP.save(data, close_file = False)
         
         data_value = data.getvalue()
         
-        web_view.setHtml(data_value.decode())
+        self.WEB_VIEW.setHtml(data_value.decode())
+
+        update_content.coord.connect(self.load_map)
+
+    def load_map(self, coord):
+        
+        self.MAP.location = coord
+        self.MARKER.location = coord
+
+        data = io.BytesIO()
+        self.MAP.save(data, close_file = False)
+        
+        data_value = data.getvalue()
+        
+        self.WEB_VIEW.setHtml(data_value.decode())
+        
+
+        
         

@@ -12,7 +12,7 @@ class SettingsFrame(qt_widgets.QFrame):
         self.HEADER_CONTAINER = self.parent()
         self.MAIN_WINDOW = self.window()
         self.setObjectName("SettingsContainer")
-        self.setFixedSize(790, 688)
+        self.setMinimumSize(790, 688)
         self.LAYOUT = create_layout(
             orientation = "v", 
             spacing = 34, 
@@ -36,18 +36,22 @@ class SettingsFrame(qt_widgets.QFrame):
             orientation = "h", 
             spacing = 550, 
             content_margins = (0, 2, 0, 2), 
-            alignment = core.Qt.AlignmentFlag.AlignTop
+            alignment = core.Qt.AlignmentFlag.AlignVCenter
         )
-        self.TITLE_FRAME.setFixedSize(742, 28)
+        self.TITLE_FRAME.setMinimumSize(742, 28)
+        self.TITLE_FRAME.setSizePolicy(
+            qt_widgets.QSizePolicy.Policy.Expanding,
+            qt_widgets.QSizePolicy.Policy.Fixed
+        )
 
         self.TITLE_FRAME.setLayout(self.TITLE_FRAME_LAYOUT)
 
         self.TITLE_LABEL = qt_widgets.QLabel("Налаштування",parent = self.TITLE_FRAME)
-        self.TITLE_FRAME_LAYOUT.addWidget(self.TITLE_LABEL)
+        self.TITLE_FRAME_LAYOUT.addWidget(self.TITLE_LABEL, alignment = core.Qt.AlignmentFlag.AlignLeft)
         self.TITLE_LABEL.setStyleSheet("font-size: 24px; font-weight: 500;")
 
         self.CROSS_BUTTON = qt_widgets.QPushButton(parent = self.TITLE_FRAME)
-        self.TITLE_FRAME_LAYOUT.addWidget(self.CROSS_BUTTON)
+        self.TITLE_FRAME_LAYOUT.addWidget(self.CROSS_BUTTON, alignment = core.Qt.AlignmentFlag.AlignRight)
         self.CROSS_BUTTON.setIcon(qt_gui.QIcon("media/cross.svg"))
         self.CROSS_BUTTON.clicked.connect(self.close_modal)
         self.CROSS_BUTTON.setFixedSize(24, 24)

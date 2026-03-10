@@ -12,7 +12,6 @@ class SearchDropdownMenu(qt_widgets.QWidget):
 
         self.setObjectName("SearchDropdownMenu")
         self.setAttribute(core.Qt.WidgetAttribute.WA_StyledBackground)
-        self.move(923, 96)
         self.setFixedWidth(261)
         self.setFixedHeight(200)
         self.LAYOUT = create_layout(

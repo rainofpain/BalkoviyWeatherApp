@@ -15,7 +15,9 @@ class TopFrame(qt_widgets.QFrame):
 
         city_name_message.message.connect(self.request_by_name)
         self.setObjectName("TopFrame")
-        self.setFixedSize(788, 157)
+        self.setFixedHeight(157)
+        self.setMinimumWidth(788)
+
         self.LAYOUT = create_layout(
             orientation = "v",
             spacing = 16,
@@ -28,7 +30,7 @@ class TopFrame(qt_widgets.QFrame):
 
         self.LAYOUT.addWidget(self.TITLE_FRAME)
 
-        self.TITLE_FRAME.setFixedSize(756, 28)
+        self.TITLE_FRAME.setMinimumSize(756, 28)
         self.TITLE_FRAME_LAYOUT = create_layout(
             orientation = "v",
             spacing = 8,
@@ -44,12 +46,16 @@ class TopFrame(qt_widgets.QFrame):
 
         self.LINE_FRAME = qt_widgets.QFrame(parent = self.TITLE_FRAME)
         self.TITLE_FRAME_LAYOUT.addWidget(self.LINE_FRAME)
-        self.LINE_FRAME.setFixedSize(756, 1)
+        self.LINE_FRAME.setMinimumSize(756, 1)
+        self.LINE_FRAME.setSizePolicy(
+            qt_widgets.QSizePolicy.Policy.Expanding, 
+            qt_widgets.QSizePolicy.Policy.Fixed
+            )
         self.LINE_FRAME.setStyleSheet("background-color: rgba(255, 255, 255, 0.2);")
         
         self.CONTENT_FRAME = qt_widgets.QFrame(parent = self)
         self.LAYOUT.addWidget(self.CONTENT_FRAME)
-        self.CONTENT_FRAME.setFixedSize(756, 82)
+        self.CONTENT_FRAME.setMinimumSize(756, 82)
         self.CONTENT_FRAME_LAYOUT = create_layout(
             orientation = "h",
             spacing = 14,
