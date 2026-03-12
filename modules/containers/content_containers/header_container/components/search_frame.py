@@ -5,11 +5,14 @@ import PyQt6.QtSvgWidgets as qt_svg
 
 from utils import *
 from config import cities_dict
+from ....containers_utils import language_change
 
 
 class SearchFrame(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
+
+        language_change.message.connect(self.change_language)
 
         self.DROPDOWN_MENU = self.window().SEARCH_DROPDOWN_MENU
         self.setFixedSize(261, 36)
@@ -49,7 +52,6 @@ class SearchFrame(qt_widgets.QFrame):
         self.SEARCH_FIELD.setStyleSheet("border:none; font-size: 16px; color: rgba(255, 255, 255, 1);")
         self.LAYOUT.addWidget(self.SEARCH_FIELD)
         self.SEARCH_FIELD.setFixedSize(220, 22)
-        self.SEARCH_FIELD.setPlaceholderText("Пошук")
         self.SEARCH_FIELD.textChanged.connect(self.text_changed)
         self.SEARCH_FIELD.installEventFilter(self)
 
@@ -67,6 +69,14 @@ class SearchFrame(qt_widgets.QFrame):
 
 
         self.ADD_CITY_BUTTON = self.parent().parent().ADD_CITY_BUTTON
+
+        self.change_language(self.window().APP_LANGUAGE)
+    
+    def change_language(self, language):
+        if language == "uk":
+            self.SEARCH_FIELD.setPlaceholderText("Пошук")
+        elif language == "en":
+            self.SEARCH_FIELD.setPlaceholderText("Search")
         
     def eventFilter(self, widget, event):
       

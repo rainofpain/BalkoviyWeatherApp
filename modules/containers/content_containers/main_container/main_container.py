@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
 
 from .main_container_components.widget_base import WidgetBase
-from ...containers_utils import WeatherLoader, api_link_message
+from ...containers_utils import WeatherLoader, api_link_message, language_change
 
 from utils import *
 
@@ -11,6 +11,9 @@ class MainContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
+        language_change.message.connect(self.change_language)
+        self.DATA_DICT = {}
+            
         api_link_message.message.connect(self.get_link)
 
         self.setMinimumSize(788, 303)
@@ -29,7 +32,7 @@ class MainContainer(qt_widgets.QFrame):
         self.ARROW.setFixedSize(16, 16)
         self.WEATHER_WIDGET.HEADER_TITLE_LAYOUT.addWidget(self.ARROW)
 
-        self.WEATHER_WIDGET_HEADER_TITLE_LABEL = qt_widgets.QLabel(text = "Поточна позиція", parent = self.WEATHER_WIDGET.HEADER_TITLE)
+        self.WEATHER_WIDGET_HEADER_TITLE_LABEL = qt_widgets.QLabel(parent = self.WEATHER_WIDGET.HEADER_TITLE)
         self.WEATHER_WIDGET_HEADER_TITLE_LABEL.setStyleSheet("font-size: 16px; font-weight: 500;")
         self.WEATHER_WIDGET.HEADER_TITLE_LAYOUT.addWidget(self.WEATHER_WIDGET_HEADER_TITLE_LABEL)
 
@@ -97,7 +100,7 @@ class MainContainer(qt_widgets.QFrame):
         self.CLOCK_WIDGET = WidgetBase(parent = self)
         self.CLOCK_WIDGET.setObjectName("ClockWidget")
        
-        self.CLOCK_WIDGET_HEADER_TITLE_LABEL = qt_widgets.QLabel(text = "Сьогодні", parent = self.CLOCK_WIDGET.HEADER_TITLE)
+        self.CLOCK_WIDGET_HEADER_TITLE_LABEL = qt_widgets.QLabel(parent = self.CLOCK_WIDGET.HEADER_TITLE)
         self.CLOCK_WIDGET_HEADER_TITLE_LABEL.setStyleSheet("font-size: 16px; font-weight: 500;")
         self.CLOCK_WIDGET.HEADER_TITLE_LAYOUT.addWidget(self.CLOCK_WIDGET_HEADER_TITLE_LABEL)
 
@@ -167,23 +170,40 @@ class MainContainer(qt_widgets.QFrame):
         self.CLOCK_WIDGET.LAYOUT.addWidget(self.CLOCK_WIDGET_CONTENT)
 
         self.LAYOUT.addWidget(self.CLOCK_WIDGET)
+
+        self.change_language(language = self.window().APP_LANGUAGE)
     
     def show_data(self, new_data):
         try:
+            self.DATA_DICT = new_data
             self.CITY_NAME_LABEL.setText(new_data["name"])
             self.TEMP_FRAME_LABEL.setText(f"{new_data["temp"]}")
             self.TEMP_FRAME_ICON.load(f"media/weather_icons/{new_data["weather_icon"]}.svg")
             self.WEATHER_DESCRIPTION_LABEL.setText(new_data["weather"].capitalize())
-            self.MIN_MAX_TEMP_LABEL.setText(f"Макс.:{new_data["max_temp"]}, мін.:{new_data["min_temp"]}")
+
+            if self.window().APP_LANGUAGE == "uk":
+                self.MIN_MAX_TEMP_LABEL.setText(f"Макс.:{new_data["max_temp"]}, мін.:{new_data["min_temp"]}")
+            elif self.window().APP_LANGUAGE == "en":
+                self.MIN_MAX_TEMP_LABEL.setText(f"Max.:{new_data['max_temp']}, min.:{new_data['min_temp']}")
+
             self.DAY_LABEL.setText(new_data["day"])
             self.DATE_LABEL.setText(new_data["date"])
             self.TIME_LABEL.setText(new_data["time"])
             self.WATCH_FRAME.show()
         except:
             print(f"Немає данних для відображення {new_data}")
-        
+    
+    def change_language(self, language):
+       
+        if language == "uk":
+            self.WEATHER_WIDGET_HEADER_TITLE_LABEL.setText("Поточна позиція")
+            self.CLOCK_WIDGET_HEADER_TITLE_LABEL.setText("Сьогодні")
+        elif language == "en":
+            self.WEATHER_WIDGET_HEADER_TITLE_LABEL.setText("Current position")
+            self.CLOCK_WIDGET_HEADER_TITLE_LABEL.setText("Today")
+
 
     def get_link(self, api_request_link):
-        self.WEATHER_LOADER = WeatherLoader(api_request_link = api_request_link)
+        self.WEATHER_LOADER = WeatherLoader(api_request_link = api_request_link, language = self.window().APP_LANGUAGE)
         self.WEATHER_LOADER.filtered_dict.connect(self.show_data) 
         self.WEATHER_LOADER.start()

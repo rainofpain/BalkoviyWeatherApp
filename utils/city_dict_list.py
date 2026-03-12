@@ -3,27 +3,41 @@ from datetime import datetime, timedelta, timezone
 from config import API_KEY
 from .api_request import api_request
 
-def create_city_dict(city_data: dict):
+def create_city_dict(city_data: dict, language: str):
+    """
+    language = "uk" or "en"
+    """
     try:
         cod = city_data["cod"]
         city_name = city_data["name"]
         geo_dict = api_request(f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={API_KEY}")
 
-        try:
-            translated_city_name = geo_dict[0]["local_names"]["uk"]
-        except:
+        if language == "en":
             translated_city_name = geo_dict[0]["name"]
-
-        days = [
-            "Понеділок", 
-            "Вівторок", 
-            "Середа", 
-            "Четвер", 
-            "П’ятниця", 
-            "Субота", 
-            "Неділя"
-            ]
-        
+            days = [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+                ]
+        else:
+            days = [
+                "Понеділок", 
+                "Вівторок", 
+                "Середа", 
+                "Четвер", 
+                "П’ятниця", 
+                "Субота", 
+                "Неділя"
+                ]
+            try:
+                translated_city_name = geo_dict[0]["local_names"]["uk"]
+            except:
+                translated_city_name = geo_dict[0]["name"]
+ 
         day = days[datetime.now().weekday()]
         utc_now = datetime.now(timezone.utc)
         city_tz = timezone(timedelta(seconds = city_data["timezone"]))

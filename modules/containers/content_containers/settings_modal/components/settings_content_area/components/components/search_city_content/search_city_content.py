@@ -3,10 +3,13 @@ import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
 from .components import CityInputFrame, AddedCitiesFrame, MapFrame
+from ........containers_utils import language_change
 
 class SearchCityContent(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
+
+        language_change.message.connect(self.change_language)
 
         self.setFixedSize(544, 578)
         self.LAYOUT = create_layout(
@@ -49,9 +52,16 @@ class SearchCityContent(qt_widgets.QFrame):
         )
         self.BOTTOM_FRAME.setLayout(self.BOTTOM_FRAME_LAYOUT)
 
-        self.BOTTOM_FRAME_TITLE = qt_widgets.QLabel("Додані міста", parent = self.BOTTOM_FRAME)
+        self.BOTTOM_FRAME_TITLE = qt_widgets.QLabel(parent = self.BOTTOM_FRAME)
         self.BOTTOM_FRAME_LAYOUT.addWidget(self.BOTTOM_FRAME_TITLE)
         self.BOTTOM_FRAME_TITLE.setStyleSheet("font-size: 18px")
 
         self.CITIES_FRAME = AddedCitiesFrame(parent = self.BOTTOM_FRAME)
         self.BOTTOM_FRAME_LAYOUT.addWidget(self.CITIES_FRAME)
+
+    def change_language(self, language):
+       
+        if language == "uk":
+            self.BOTTOM_FRAME_TITLE.setText("Додані міста")
+        elif language == "en":
+            self.BOTTOM_FRAME_TITLE.setText("Added cities")

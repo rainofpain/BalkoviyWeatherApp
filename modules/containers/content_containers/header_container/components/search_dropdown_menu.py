@@ -10,6 +10,8 @@ class SearchDropdownMenu(qt_widgets.QWidget):
     def __init__(self, parent):
         super().__init__(parent = parent)
 
+        self.MAIN_WINDOW = self.window()
+
         self.setObjectName("SearchDropdownMenu")
         self.setAttribute(core.Qt.WidgetAttribute.WA_StyledBackground)
         self.setFixedWidth(261)
@@ -71,7 +73,7 @@ class SearchDropdownMenu(qt_widgets.QWidget):
         search_frame = self.window().findChild(qt_widgets.QFrame, "SearchFrame")
         city_name = item.text()
         search_frame.SEARCH_FIELD.setText(city_name)
-        api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={city_name}&appid={API_KEY}&lang=ua")
+        api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={city_name}&appid={API_KEY}&lang={self.MAIN_WINDOW.APP_LANGUAGE}")
         city_name_message.message.emit(city_name)
         self.hide()
         self.LIST_WIDGET.clear()

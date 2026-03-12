@@ -3,12 +3,15 @@ import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
 from config import countries_and_cities_dict, city_name_list, API_KEY
-from .........containers_utils import set_property, update_content, api_link_message, city_name_message, WeatherLoader
+from .........containers_utils import set_property, update_content, api_link_message, city_name_message, WeatherLoader, language_change
 from .........left_container import InfoCard
 
 class CityInputFrame(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
+
+        language_change.message.connect(self.change_language)
+
         self.PARENT = self.parent().parent()
         self.CHECK_RESULT = {}
         self.LEFT_CONTAINER_SCROLL = self.window().findChild(qt_widgets.QFrame, "LeftContainerScroll")
@@ -23,7 +26,7 @@ class CityInputFrame(qt_widgets.QFrame):
         )
         self.setLayout(self.LAYOUT)
 
-        self.TITLE_LABEL = qt_widgets.QLabel("Пошук міста", parent = self)
+        self.TITLE_LABEL = qt_widgets.QLabel(parent = self)
         self.LAYOUT.addWidget(self.TITLE_LABEL)
         self.TITLE_LABEL.setFixedWidth(239)
         self.TITLE_LABEL.setStyleSheet("font-size: 18px; border: none;")
@@ -34,6 +37,7 @@ class CityInputFrame(qt_widgets.QFrame):
         self.INPUT_FIELDS_FRAME.setFixedWidth(239)
         self.INPUT_FIELDS_FRAME.setObjectName("SettingsInputFields")
         self.INPUT_FIELDS_FRAME.setProperty("style", self.STYLE)
+        
         set_property.message.connect(self.set_property)
 
         self.INPUT_FIELDS_FRAME.setStyleSheet(
@@ -101,7 +105,7 @@ class CityInputFrame(qt_widgets.QFrame):
             alignment = core.Qt.AlignmentFlag.AlignTop | core.Qt.AlignmentFlag.AlignLeft
             )
         self.COUNTRY_FRAME.setLayout(self.COUNTRY_FRAME_LAYOUT)
-        self.COUNTRY_FRAME_LABEL = qt_widgets.QLabel("Країна", parent = self.COUNTRY_FRAME)
+        self.COUNTRY_FRAME_LABEL = qt_widgets.QLabel(parent = self.COUNTRY_FRAME)
         self.COUNTRY_FRAME_LAYOUT.addWidget(self.COUNTRY_FRAME_LABEL)
         self.COUNTRY_FRAME_LABEL.setStyleSheet("font-size: 14px; font-weight: 500; border: none;")
 
@@ -109,11 +113,16 @@ class CityInputFrame(qt_widgets.QFrame):
         self.COUNTRY_FRAME_LAYOUT.addWidget(self.COUNTRY_FRAME_DROPDOWN)
         self.COUNTRY_FRAME_DROPDOWN.setFixedWidth(240)
         self.COUNTRY_FRAME_DROPDOWN.setContentsMargins(10, 8, 0,8)
-        self.COUNTRY_FRAME_DROPDOWN.setPlaceholderText("Виберіть країну")
         self.COUNTRY_FRAME_DROPDOWN.setMaxVisibleItems(9)
         self.COUNTRY_FRAME_DROPDOWN.view().setVerticalScrollBarPolicy(core.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.COUNTRY_FRAME_DROPDOWN.view().window().setWindowFlags(core.Qt.WindowType.Popup | core.Qt.WindowType.FramelessWindowHint | core.Qt.WindowType.NoDropShadowWindowHint)
         self.COUNTRY_FRAME_DROPDOWN.view().window().setAttribute(core.Qt.WidgetAttribute.WA_TranslucentBackground)
+
+        if self.window().APP_LANGUAGE == "uk":
+            self.COUNTRY_FRAME_DROPDOWN.setPlaceholderText("Виберіть країну")
+        elif self.window().APP_LANGUAGE == "en":
+            self.COUNTRY_FRAME_DROPDOWN.setPlaceholderText("Select country")
+         
     
         for country_dict in countries_and_cities_dict["data"]:
             self.COUNTRY_FRAME_DROPDOWN.addItem(country_dict["country"])
@@ -132,7 +141,7 @@ class CityInputFrame(qt_widgets.QFrame):
             alignment = core.Qt.AlignmentFlag.AlignTop | core.Qt.AlignmentFlag.AlignLeft
             )
         self.CITY_FRAME.setLayout(self.CITY_FRAME_LAYOUT)
-        self.CITY_FRAME_LABEL = qt_widgets.QLabel("Місто", parent = self.COUNTRY_FRAME)
+        self.CITY_FRAME_LABEL = qt_widgets.QLabel(parent = self.COUNTRY_FRAME)
         self.CITY_FRAME_LAYOUT.addWidget(self.CITY_FRAME_LABEL)
         self.CITY_FRAME_LABEL.setStyleSheet("font-size: 14px; font-weight: 500; border: none;")
 
@@ -140,7 +149,6 @@ class CityInputFrame(qt_widgets.QFrame):
         self.CITY_FRAME_LAYOUT.addWidget(self.CITY_FRAME_DROPDOWN)
         self.CITY_FRAME_DROPDOWN.setFixedWidth(240)
         self.CITY_FRAME_DROPDOWN.setContentsMargins(10, 8, 0,8)
-        self.CITY_FRAME_DROPDOWN.setPlaceholderText("Виберіть місто")
         self.CITY_FRAME_DROPDOWN.setMaxVisibleItems(5)
         self.CITY_FRAME_DROPDOWN.view().setVerticalScrollBarPolicy(core.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.CITY_FRAME_DROPDOWN.view().window().setWindowFlags(core.Qt.WindowType.Popup | core.Qt.WindowType.FramelessWindowHint | core.Qt.WindowType.NoDropShadowWindowHint)
@@ -160,7 +168,7 @@ class CityInputFrame(qt_widgets.QFrame):
             alignment = core.Qt.AlignmentFlag.AlignTop | core.Qt.AlignmentFlag.AlignLeft
             )
         self.COORDINATES_FRAME.setLayout(self.COORDINATES_FRAME_LAYOUT)
-        self.COORDINATES_FRAME_LABEL = qt_widgets.QLabel("Координати", parent = self.COUNTRY_FRAME)
+        self.COORDINATES_FRAME_LABEL = qt_widgets.QLabel(parent = self.COUNTRY_FRAME)
         self.COORDINATES_FRAME_LAYOUT.addWidget(self.COORDINATES_FRAME_LABEL)
         self.COORDINATES_FRAME_LABEL.setStyleSheet("font-size: 14px; font-weight: 500; border: none;")
 
@@ -183,9 +191,8 @@ class CityInputFrame(qt_widgets.QFrame):
             }
             """
             )
-        self.COORDINATES_FRAME_INPUT.setPlaceholderText("(WGS 84,UTM,MGRS)")
 
-        self.SAVE_BUTTON = qt_widgets.QPushButton("Зберегти", parent = self)
+        self.SAVE_BUTTON = qt_widgets.QPushButton(parent = self)
         self.LAYOUT.addWidget(self.SAVE_BUTTON)
         self.SAVE_BUTTON.setFixedSize(105, 38)
         self.SAVE_BUTTON.setStyleSheet(
@@ -197,6 +204,8 @@ class CityInputFrame(qt_widgets.QFrame):
             """
             )
         self.SAVE_BUTTON.clicked.connect(self.save_city)
+
+        self.change_language(language = self.window().APP_LANGUAGE)
     
     def set_property(self, property):
         self.INPUT_FIELDS_FRAME.setProperty("style", property)
@@ -223,7 +232,8 @@ class CityInputFrame(qt_widgets.QFrame):
             self.CITY_NAME = text
 
             self.WEATHER_LOADER = WeatherLoader(
-                api_request_link = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.CITY_NAME}&appid={API_KEY}&lang=ua"
+                api_request_link = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.CITY_NAME}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}",
+                language = self.window().APP_LANGUAGE
                 )
             self.WEATHER_LOADER.received_dict.connect(self.set_coords)
             self.WEATHER_LOADER.start()
@@ -269,11 +279,32 @@ class CityInputFrame(qt_widgets.QFrame):
                     """
                     )
                 self.LEFT_CONTAINER_SCROLL.layout().addWidget(self.CARD, alignment = core.Qt.AlignmentFlag.AlignRight)
-                api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["name"]}&appid={API_KEY}&lang=ua")
+                api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["name"]}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}")
                 city_name_message.message.emit(data["name"])
                 update_content.update_settings_container.emit(True)
         except Exception as error:
             print(error)
 
+    def change_language(self, language):
+       
+        if language == "uk":
+            self.TITLE_LABEL.setText("Пошук міста")
+            self.COUNTRY_FRAME_LABEL.setText("Країна")
+            self.CITY_FRAME_LABEL.setText("Місто")
+            self.COORDINATES_FRAME_LABEL.setText("Координати")
+            self.COUNTRY_FRAME_DROPDOWN.setPlaceholderText("Виберіть країну")
+            self.CITY_FRAME_DROPDOWN.setPlaceholderText("Виберіть місто")
+            self.COORDINATES_FRAME_INPUT.setPlaceholderText("(WGS 84,UTM,MGRS)")
+            self.SAVE_BUTTON.setText("Зберегти")
+
+        elif language == "en":
+            self.TITLE_LABEL.setText("Search city")
+            self.COUNTRY_FRAME_LABEL.setText("Country")
+            self.CITY_FRAME_LABEL.setText("City")
+            self.COORDINATES_FRAME_LABEL.setText("Coordinates")
+            self.COUNTRY_FRAME_DROPDOWN.setPlaceholderText("Select country")
+            self.CITY_FRAME_DROPDOWN.setPlaceholderText("Select city")
+            self.COORDINATES_FRAME_INPUT.setPlaceholderText("(WGS 84,UTM,MGRS)")
+            self.SAVE_BUTTON.setText("Apply")
 
 

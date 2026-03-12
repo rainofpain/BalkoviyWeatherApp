@@ -4,10 +4,13 @@ import PyQt6.QtGui as qt_gui
 
 from utils import *
 from .components import SettingsContentArea
+from ...containers_utils import language_change
 
 class SettingsFrame(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
+        
+        language_change.message.connect(self.change_language)
         
         self.HEADER_CONTAINER = self.parent()
         self.MAIN_WINDOW = self.window()
@@ -46,7 +49,7 @@ class SettingsFrame(qt_widgets.QFrame):
 
         self.TITLE_FRAME.setLayout(self.TITLE_FRAME_LAYOUT)
 
-        self.TITLE_LABEL = qt_widgets.QLabel("Налаштування",parent = self.TITLE_FRAME)
+        self.TITLE_LABEL = qt_widgets.QLabel(parent = self.TITLE_FRAME)
         self.TITLE_FRAME_LAYOUT.addWidget(self.TITLE_LABEL, alignment = core.Qt.AlignmentFlag.AlignLeft)
         self.TITLE_LABEL.setStyleSheet("font-size: 24px; font-weight: 500;")
 
@@ -59,7 +62,14 @@ class SettingsFrame(qt_widgets.QFrame):
 
         self.SETTING_CONTENT_AREA = SettingsContentArea(parent = self)
         self.LAYOUT.addWidget(self.SETTING_CONTENT_AREA)
+        self.change_language(language = self.window().APP_LANGUAGE)
     
+    def change_language(self, language):
+        if language == "uk":
+            self.TITLE_LABEL.setText("Налаштування")
+        elif language == "en":
+            self.TITLE_LABEL.setText("Settings") 
+
     def close_modal(self):
         self.hide()
         self.HEADER_CONTAINER.WEATHER_INFO_FRAME.show()

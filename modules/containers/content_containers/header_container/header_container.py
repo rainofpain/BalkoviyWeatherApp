@@ -5,14 +5,15 @@ import PyQt6.QtGui as qt_gui
 from utils import *
 from config import city_name_list, API_KEY
 from .components import SearchFrame
-from ...containers_utils import update_content, api_link_message, city_name_message
+from ...containers_utils import update_content, api_link_message, city_name_message, language_change
 from ...left_container import InfoCard
 
 class HeaderContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
-        self.MAIN_WINDOW = self.window()
+        language_change.message.connect(self.change_language)
+
         self.CONTENT_CONTAINER = self.parent()
         self.CHECK_RESULT = {}
         self.LEFT_CONTAINER_SCROLL = self.window().findChild(qt_widgets.QFrame, "LeftContainerScroll")
@@ -50,7 +51,7 @@ class HeaderContainer(qt_widgets.QFrame):
         
         self.SETTINGS_FRAME_LAYOUT.addWidget(self.SETTINGS_BUTTON)
 
-        self.SETTINGS_LABEL = qt_widgets.QLabel(text = "Налаштування", parent = self.SETTINGS_FRAME)
+        self.SETTINGS_LABEL = qt_widgets.QLabel(parent = self.SETTINGS_FRAME)
         self.SETTINGS_LABEL.setStyleSheet("font-size: 14px; font-weight: 500;")
         self.SETTINGS_FRAME_LAYOUT.addWidget(self.SETTINGS_LABEL)
         self.SETTINGS_BUTTON.clicked.connect(self.settings_button_click)
@@ -70,7 +71,6 @@ class HeaderContainer(qt_widgets.QFrame):
         self.SEARCH_GROUP_FRAME_LAYOUT.addWidget(self.ADD_CITY_BUTTON)
         self.ADD_CITY_BUTTON.setObjectName("AddCityButton")
         self.ADD_CITY_BUTTON.setFixedSize(97, 36)
-        self.ADD_CITY_BUTTON.setText(" Додати")
         self.ADD_CITY_BUTTON.setIcon(qt_gui.QIcon("media/add_btn.svg"))
         self.ADD_CITY_BUTTON.setStyleSheet(
             """
@@ -87,6 +87,8 @@ class HeaderContainer(qt_widgets.QFrame):
 
         self.SEARCH_INPUT_FRAME = SearchFrame(parent = self.SEARCH_GROUP_FRAME)
         self.SEARCH_GROUP_FRAME.layout().addWidget(self.SEARCH_INPUT_FRAME, alignment = core.Qt.AlignmentFlag.AlignRight)
+
+        self.change_language(language = self.window().APP_LANGUAGE)
     
     def check_data(self, data):
         self.CHECK_RESULT = data
@@ -108,11 +110,19 @@ class HeaderContainer(qt_widgets.QFrame):
                 """
                 )
             self.LEFT_CONTAINER_SCROLL.layout().addWidget(self.CARD, alignment = core.Qt.AlignmentFlag.AlignRight)
-            api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["name"]}&appid={API_KEY}&lang=ua")
+            api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["name"]}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}")
             city_name_message.message.emit(data["name"])
             update_content.update_settings_container.emit(True)
         self.SEARCH_INPUT_FRAME.SEARCH_FIELD.setText("")
 
+    def change_language(self, language):
+        if language == "uk":
+            self.SETTINGS_LABEL.setText("Налаштування")
+            self.ADD_CITY_BUTTON.setText(" Додати")
+        elif language == "en":
+            self.SETTINGS_LABEL.setText("Settings")
+            self.ADD_CITY_BUTTON.setText(" Add")
+            
     def add_city(self):
 
         city_name = self.SEARCH_INPUT_FRAME.SEARCH_FIELD.text().capitalize()

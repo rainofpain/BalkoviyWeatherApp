@@ -44,6 +44,21 @@ app_obj.setStyleSheet(
                 color: white;
                 outline: none;
             }
+    
+    #ChooseLanguageFrame[style="dark"] QComboBox QAbstractItemView {
+                border: none;
+                selection-background-color: rgba(0, 0, 0, 0.2);
+                background-color: qlineargradient(
+                    spread: pad, 
+                    x1:0, y1:0, x2:0, y2:1, 
+                    stop:0 #4e5255, 
+                    stop:1 #6d7275
+                ); 
+         
+                border-radius: 10px;
+                color: white;
+                outline: none;
+            }        
 
     #CentralWidget[style="light"]{
             background: qlineargradient(
@@ -67,6 +82,21 @@ app_obj.setStyleSheet(
     }
 
     #SettingsInputFields[style="light"] QComboBox QAbstractItemView {
+                border: none;
+                selection-background-color: rgba(0, 0, 0, 0.2);
+                background-color: qlineargradient(
+                    spread: pad, 
+                    x1:0, y1:0, x2:0, y2:1, 
+                    stop:0 #74786a, 
+                    stop:1 #868a7b
+                ); 
+         
+                border-radius: 10px;
+                color: white;
+                outline: none;
+            }
+    
+    #ChooseLanguageFrame[style="light"] QComboBox QAbstractItemView {
                 border: none;
                 selection-background-color: rgba(0, 0, 0, 0.2);
                 background-color: qlineargradient(

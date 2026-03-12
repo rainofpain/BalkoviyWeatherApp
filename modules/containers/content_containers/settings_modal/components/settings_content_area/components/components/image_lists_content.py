@@ -2,10 +2,13 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
+from .......containers_utils import language_change
 
 class ImageListsContent(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
+
+        language_change.message.connect(self.change_language)
 
         self.setFixedSize(544, 578)
         self.LAYOUT = create_layout(
@@ -28,13 +31,13 @@ class ImageListsContent(qt_widgets.QFrame):
         )
         self.OPTIONS_FRAME.setLayout(self.OPTIONS_FRAME_LAYOUT)
 
-        self.TITLE_LABEL = qt_widgets.QLabel("Списки зображень", parent = self.OPTIONS_FRAME)
+        self.TITLE_LABEL = qt_widgets.QLabel(parent = self.OPTIONS_FRAME)
         self.OPTIONS_FRAME_LAYOUT.addWidget(self.TITLE_LABEL)
         self.TITLE_LABEL.setFixedWidth(239)
         self.TITLE_LABEL.setStyleSheet("font-size: 18px; border: none;")
         self.TITLE_LABEL.setAlignment(core.Qt.AlignmentFlag.AlignLeft)
 
-        self.ADD_BUTTON = qt_widgets.QPushButton("Додати", parent = self.OPTIONS_FRAME)
+        self.ADD_BUTTON = qt_widgets.QPushButton(parent = self.OPTIONS_FRAME)
         self.OPTIONS_FRAME_LAYOUT.addWidget(self.ADD_BUTTON)
         self.ADD_BUTTON.setFixedSize(96, 36)
         self.ADD_BUTTON.setStyleSheet(
@@ -50,7 +53,7 @@ class ImageListsContent(qt_widgets.QFrame):
         self.OPTIONS_FRAME_LAYOUT.addWidget(self.INPUT_FIELDS_FRAME)
         self.INPUT_FIELDS_FRAME.setFixedSize(490, 228)
 
-        self.SAVE_BUTTON = qt_widgets.QPushButton("Зберегти", parent = self.OPTIONS_FRAME)
+        self.SAVE_BUTTON = qt_widgets.QPushButton(parent = self.OPTIONS_FRAME)
         self.OPTIONS_FRAME_LAYOUT.addWidget(self.SAVE_BUTTON)
         self.SAVE_BUTTON.setFixedSize(105, 38)
         self.SAVE_BUTTON.setStyleSheet(
@@ -61,3 +64,14 @@ class ImageListsContent(qt_widgets.QFrame):
                 font-size: 14px;
             """
             )
+        self.change_language(language = self.window().APP_LANGUAGE)
+        
+    def change_language(self, language):
+        if language == "uk":
+            self.TITLE_LABEL.setText("Списки зображень")
+            self.ADD_BUTTON.setText("Додати")
+            self.SAVE_BUTTON.setText("Зберегти")
+        elif language == "en":
+            self.TITLE_LABEL.setText("Image lists")
+            self.ADD_BUTTON.setText("Add")
+            self.SAVE_BUTTON.setText("Apply")

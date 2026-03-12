@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
 from config import API_KEY
 
-from ....containers_utils import city_name_message, WeatherLoader
+from ....containers_utils import city_name_message, WeatherLoader, language_change
 
 from utils import *
 
@@ -11,6 +11,9 @@ class BottomFrame(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
 
+        self.MAIN_WINDOW = self.window()
+
+        language_change.message.connect(self.change_language)
         city_name_message.message.connect(self.get_name)
         self.setFixedHeight(197)
         self.setMinimumWidth(788)
@@ -25,7 +28,7 @@ class BottomFrame(qt_widgets.QFrame):
         self.setLayout(self.LAYOUT)
         
         
-        self.FORECAST_LABEL = qt_widgets.QLabel(parent = self, text = "Прогноз на 12 годин")
+        self.FORECAST_LABEL = qt_widgets.QLabel(parent = self)
         self.FORECAST_LABEL.setStyleSheet("font-size: 16px; font-weight: 500;")
         self.LAYOUT.addWidget(self.FORECAST_LABEL)
 
@@ -124,10 +127,20 @@ class BottomFrame(qt_widgets.QFrame):
 
         self.GRAPH_FRAME_LAYOUT.addWidget(self.RIGHT_FRAME)
 
+        self.change_language(language = self.window().APP_LANGUAGE)
+    
+    def change_language(self, language):
+       
+        if language == "uk":
+            self.FORECAST_LABEL.setText("Прогноз на 12 годин")
+        elif language == "en":
+            self.FORECAST_LABEL.setText("12 hours forecast")
+
     def get_name(self, city_name):
         
         self.WEATHER_LOADER = WeatherLoader(
-            api_request_link = f"https://api.openweathermap.org/data/2.5/forecast/hourly?units=metric&q={city_name}&&mode=json&appid={API_KEY}&cnt=12"
+            api_request_link = f"https://api.openweathermap.org/data/2.5/forecast/hourly?units=metric&q={city_name}&&mode=json&appid={API_KEY}&cnt=12",
+            language = self.window().APP_LANGUAGE
         )
         self.WEATHER_LOADER.received_dict.connect(self.build_graph) 
         self.WEATHER_LOADER.start()

@@ -2,11 +2,13 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
+from .......containers_utils import language_change
 
 class AppSizeContent(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
 
+        language_change.message.connect(self.change_language)
         self.MAIN_WINDOW = self.window()
         self.NEW_WINDOW_WIDTH = 0
         self.NEW_WINDOW_HEIGHT = 0
@@ -31,7 +33,7 @@ class AppSizeContent(qt_widgets.QFrame):
         )
         self.OPTIONS_FRAME.setLayout(self.OPTIONS_FRAME_LAYOUT)
 
-        self.TITLE_LABEL = qt_widgets.QLabel("Оберіть розмір додатку", parent = self.OPTIONS_FRAME)
+        self.TITLE_LABEL = qt_widgets.QLabel(parent = self.OPTIONS_FRAME)
         self.OPTIONS_FRAME_LAYOUT.addWidget(self.TITLE_LABEL)
         self.TITLE_LABEL.setFixedWidth(239)
         self.TITLE_LABEL.setStyleSheet("font-size: 18px; border: none;")
@@ -89,7 +91,7 @@ class AppSizeContent(qt_widgets.QFrame):
         elif self.MAIN_WINDOW.WINDOW_WIDTH == 1728:
             self.SIZE_1728x1117.setChecked(True)
 
-        self.SAVE_BUTTON = qt_widgets.QPushButton("Зберегти", parent = self.OPTIONS_FRAME)
+        self.SAVE_BUTTON = qt_widgets.QPushButton(parent = self.OPTIONS_FRAME)
         self.OPTIONS_FRAME_LAYOUT.addWidget(self.SAVE_BUTTON)
         self.SAVE_BUTTON.setFixedSize(105, 38)
         self.SAVE_BUTTON.setStyleSheet(
@@ -101,6 +103,16 @@ class AppSizeContent(qt_widgets.QFrame):
             """
             )
         self.SAVE_BUTTON.clicked.connect(self.save_resize)
+        self.change_language(language = self.MAIN_WINDOW.APP_LANGUAGE)
+    
+    def change_language(self, language):
+       
+        if language == "uk":
+            self.TITLE_LABEL.setText("Оберіть розмір додатку")
+            self.SAVE_BUTTON.setText("Зберегти")
+        elif language == "en":
+            self.TITLE_LABEL.setText("Select app size")
+            self.SAVE_BUTTON.setText("Apply")
     
     def save_resize(self):
         self.MAIN_WINDOW.resize(self.NEW_WINDOW_WIDTH, self.NEW_WINDOW_HEIGHT + 40)

@@ -3,11 +3,14 @@ import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
 from .components import MenuButton, SearchCityContent, AppSizeContent, AppLanguageContent, ImageListsContent
+from ......containers_utils import language_change
 
 class SettingsMenuContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
 
+        language_change.message.connect(self.change_language)
+        
         self.CONTENT_CONTAINER = self.parent().CONTENT_CONTAINER
         self.setFixedSize(174, 578)
         self.setStyleSheet(
@@ -43,28 +46,38 @@ class SettingsMenuContainer(qt_widgets.QFrame):
             clicked_callback = self.show_city_search
             )
         self.BUTTON_FRAME_LAYOUT.addWidget(self.CITY_SEARCH_BUTTON)
-        self.CITY_SEARCH_BUTTON.LABEL.setText("Пошук міста")
 
         self.APP_SIZE_BUTTON = MenuButton(
             parent = self.BUTTON_FRAME, 
             clicked_callback = self.show_app_size
             )
         self.BUTTON_FRAME_LAYOUT.addWidget(self.APP_SIZE_BUTTON)
-        self.APP_SIZE_BUTTON.LABEL.setText("Розмір додатку")
 
         self.APP_LANGUAGE_BUTTON = MenuButton(
             parent = self.BUTTON_FRAME, 
             clicked_callback = self.show_app_language
             )
         self.BUTTON_FRAME_LAYOUT.addWidget(self.APP_LANGUAGE_BUTTON)
-        self.APP_LANGUAGE_BUTTON.LABEL.setText("Мова додатку")
 
         self.IMAGE_LISTS_BUTTON = MenuButton(
             parent = self.BUTTON_FRAME, 
             clicked_callback = self.show_images_lists
             )   
         self.BUTTON_FRAME_LAYOUT.addWidget(self.IMAGE_LISTS_BUTTON) 
-        self.IMAGE_LISTS_BUTTON.LABEL.setText("Списки зображень")         
+
+        self.change_language(language = self.window().APP_LANGUAGE)
+
+    def change_language(self, language):
+        if language == "uk":
+            self.CITY_SEARCH_BUTTON.LABEL.setText("Пошук міста")
+            self.APP_SIZE_BUTTON.LABEL.setText("Розмір додатку")
+            self.APP_LANGUAGE_BUTTON.LABEL.setText("Мова додатку")
+            self.IMAGE_LISTS_BUTTON.LABEL.setText("Списки зображень")
+        elif language == "en":
+            self.CITY_SEARCH_BUTTON.LABEL.setText("Search city")
+            self.APP_SIZE_BUTTON.LABEL.setText("App size")
+            self.APP_LANGUAGE_BUTTON.LABEL.setText("App language")
+            self.IMAGE_LISTS_BUTTON.LABEL.setText("Image lists")     
 
     def show_city_search(self):
         if self.CONTENT_CONTAINER.LAYOUT.count() > 0:

@@ -5,7 +5,7 @@ import PyQt6.QtGui as qt_gui
 from datetime import datetime, timezone, timedelta
 
 from .components import WeatherCard, TopFrameScroll
-from .....containers_utils import city_name_message, WeatherLoader
+from .....containers_utils import city_name_message, WeatherLoader, language_change
 from config import API_KEY
 from utils import *
 
@@ -13,7 +13,11 @@ class TopFrame(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
 
+        self.MAIN_WINDOW = self.window()
+
+        language_change.message.connect(self.change_language)
         city_name_message.message.connect(self.request_by_name)
+
         self.setObjectName("TopFrame")
         self.setFixedHeight(157)
         self.setMinimumWidth(788)
@@ -39,7 +43,7 @@ class TopFrame(qt_widgets.QFrame):
         )
         self.TITLE_FRAME.setLayout(self.TITLE_FRAME_LAYOUT)
 
-        self.TITLE_FRAME_LABEL = qt_widgets.QLabel(text = "Погода до кінця дня", parent = self.TITLE_FRAME)
+        self.TITLE_FRAME_LABEL = qt_widgets.QLabel(parent = self.TITLE_FRAME)
         self.TITLE_FRAME_LAYOUT.addWidget(self.TITLE_FRAME_LABEL)
 
         self.TITLE_FRAME_LABEL.setStyleSheet("font-size: 16px; font-weight: 500;")
@@ -85,6 +89,15 @@ class TopFrame(qt_widgets.QFrame):
         self.RIGHT_SCROLL_BUTTON.clicked.connect(lambda: self.SCROLL.setValue(self.SCROLL.maximum()))
 
         self.SCROLL = self.SCROLL_CONTAINER.SCROLL_AREA.horizontalScrollBar()
+
+        self.change_language(language = self.window().APP_LANGUAGE)
+     
+    def change_language(self, language):
+       
+        if language == "uk":
+            self.TITLE_FRAME_LABEL.setText("Погода до кінця дня")
+        elif language == "en":
+            self.TITLE_FRAME_LABEL.setText("Forecast till the end of the day")
     
     def wheelEvent(self, event: qt_gui.QWheelEvent):
        
@@ -117,7 +130,8 @@ class TopFrame(qt_widgets.QFrame):
 
     def request_by_name(self, city_name):
         self.HOURLY_FORECAST = WeatherLoader(
-            api_request_link = f"https://api.openweathermap.org/data/2.5/forecast/hourly?units=metric&q={city_name}&mode=json&appid={API_KEY}&cnt=24"
+            api_request_link = f"https://api.openweathermap.org/data/2.5/forecast/hourly?units=metric&q={city_name}&mode=json&appid={API_KEY}&cnt=24",
+            language = self.MAIN_WINDOW.APP_LANGUAGE
             )
         self.HOURLY_FORECAST.received_dict.connect(self.create_content) 
         self.HOURLY_FORECAST.start()
