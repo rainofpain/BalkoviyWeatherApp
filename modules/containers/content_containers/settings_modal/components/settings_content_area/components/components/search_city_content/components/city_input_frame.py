@@ -261,8 +261,8 @@ class CityInputFrame(qt_widgets.QFrame):
     def check_data(self, data):
         try:
             self.CHECK_RESULT = data
-            if len(self.CHECK_RESULT) > 0 and data["name"] not in city_name_list: 
-                city_name_list.append(data["name"])
+            if len(self.CHECK_RESULT) > 0 and data["search_name"] not in city_name_list: 
+                city_name_list.append(data["search_name"])
                 self.CARD.LEFT_CONTAINER.reset_card_click()
                 self.CARD.CLICKED = True
                 self.CARD.ARROW.show()
@@ -279,8 +279,8 @@ class CityInputFrame(qt_widgets.QFrame):
                     """
                     )
                 self.LEFT_CONTAINER_SCROLL.layout().addWidget(self.CARD, alignment = core.Qt.AlignmentFlag.AlignRight)
-                api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["name"]}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}")
-                city_name_message.message.emit(data["name"])
+                api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["search_name"]}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}")
+                city_name_message.message.emit(data["search_name"])
                 update_content.update_settings_container.emit(True)
         except Exception as error:
             print(error)

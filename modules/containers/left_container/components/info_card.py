@@ -13,7 +13,6 @@ class InfoCard(qt_widgets.QFrame):
     def __init__(self, parent, search_city_name: str):
         super().__init__(parent = parent)
 
-        print(self.window().APP_LANGUAGE)
 
         language_change.message.connect(self.change_language)
         self.LEFT_CONTAINER = self.parent().parent().parent().parent()
@@ -145,7 +144,6 @@ class InfoCard(qt_widgets.QFrame):
     
     def change_language(self, language):
         self.API_LINK = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.SEARCH_NAME}&appid={API_KEY}&lang={language}"
-        api_link_message.message.emit(self.API_LINK)
         self.load_weather()
 
     

@@ -2,8 +2,8 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from .components import InfoCard, LeftContainerHeader
-from config import city_name_list
-from ..containers_utils import update_content
+from config import city_name_list, API_KEY
+from ..containers_utils import update_content, language_change, api_link_message
 
 from utils import *
 
@@ -12,6 +12,7 @@ class LeftContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
+        language_change.message.connect(self.change_language)
         update_content.update_left_container.connect(self.update_content)
         self.setFixedWidth(375)
         self.setMinimumHeight(800)
@@ -64,6 +65,14 @@ class LeftContainer(qt_widgets.QFrame):
             self.SCROLL_FRAME_LAYOUT.addWidget(card, alignment = core.Qt.AlignmentFlag.AlignRight)
         
 
+    def change_language(self):
+        for index in range(self.SCROLL_FRAME_LAYOUT.count()):
+            item = self.SCROLL_FRAME_LAYOUT.itemAt(index)
+            widget = item.widget()
+            if widget.CLICKED == True:
+                api_link = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={widget.SEARCH_NAME}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}"
+                api_link_message.message.emit(api_link)
+                break
 
     def reset_card_click(self):
         for index in range(self.SCROLL_FRAME_LAYOUT.count()):

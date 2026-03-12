@@ -18,7 +18,7 @@ class MainWindow(qt_widgets.QMainWindow):
         super().__init__()
         
         # 'uk' for Ukrainian, 'en' for English
-        self.APP_LANGUAGE = "en"
+        self.APP_LANGUAGE = "uk"
 
         self.setWindowFlags(core.Qt.WindowType.FramelessWindowHint)
         self.setAttribute(core.Qt.WidgetAttribute.WA_TranslucentBackground)

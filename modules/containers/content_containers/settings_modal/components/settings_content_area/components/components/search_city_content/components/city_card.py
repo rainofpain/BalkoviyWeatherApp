@@ -3,8 +3,8 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
 from utils import *
-from config import city_name_list
-from .........containers_utils import update_content
+from config import city_name_list, API_KEY
+from .........containers_utils import update_content, WeatherLoader
 
 class CityCard(qt_widgets.QFrame):
     def __init__(self, parent, city_name: str):
@@ -33,7 +33,7 @@ class CityCard(qt_widgets.QFrame):
 
         self.setLayout(self.LAYOUT)
 
-        self.LABEL = qt_widgets.QLabel(f"{city_name}", parent = self)
+        self.LABEL = qt_widgets.QLabel(parent = self)
         self.LABEL.setStyleSheet("font-size: 14px;")
         self.LAYOUT.addWidget(self.LABEL, alignment = core.Qt.AlignmentFlag.AlignLeft)
 
@@ -47,6 +47,19 @@ class CityCard(qt_widgets.QFrame):
         self.BUTTON.setFixedSize(16, 16)
 
         self.BUTTON.clicked.connect(self.remove_city_from_list)
+
+        self.load_name()
+
+    def load_name(self):
+        self.WEATHER_LOADER = WeatherLoader(
+            api_request_link = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.NAME}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}",
+            language = self.window().APP_LANGUAGE
+        )
+        self.WEATHER_LOADER.filtered_dict.connect(self.set_name)
+        self.WEATHER_LOADER.start()
+
+    def set_name(self, city_dict):
+        self.LABEL.setText(city_dict["name"])
 
     def remove_city_from_list(self):
         if city_name_list:
