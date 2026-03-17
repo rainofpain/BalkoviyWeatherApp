@@ -15,4 +15,5 @@ search_field_text = Message()
 api_link_message = Message()
 update_content = Message()
 language_change = Message()
+image_list = Message()
 

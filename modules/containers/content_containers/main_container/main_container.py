@@ -3,7 +3,8 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
 
 from .main_container_components.widget_base import WidgetBase
-from ...containers_utils import WeatherLoader, api_link_message, language_change
+from ...containers_utils import WeatherLoader, api_link_message, language_change, image_list
+from config import path_to_image_list
 
 from utils import *
 
@@ -11,6 +12,7 @@ class MainContainer(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
         
+        image_list.message.connect(self.set_image_list)
         language_change.message.connect(self.change_language)
         self.DATA_DICT = {}
             
@@ -173,12 +175,19 @@ class MainContainer(qt_widgets.QFrame):
 
         self.change_language(language = self.window().APP_LANGUAGE)
     
+    def set_image_list(self, path_to_list):
+        try:
+            self.TEMP_FRAME_ICON.load(f"{path_to_list}/{self.TEMP_ICON_NAME}.svg")
+        except:
+            print("no data to load yet")
+    
     def show_data(self, new_data):
         try:
             self.DATA_DICT = new_data
             self.CITY_NAME_LABEL.setText(new_data["name"])
             self.TEMP_FRAME_LABEL.setText(f"{new_data["temp"]}")
-            self.TEMP_FRAME_ICON.load(f"media/weather_icons/{new_data["weather_icon"]}.svg")
+            self.TEMP_ICON_NAME = f"{new_data["weather_icon"]}"
+            self.TEMP_FRAME_ICON.load(f"{path_to_image_list[0]}/{self.TEMP_ICON_NAME}.svg")
             self.WEATHER_DESCRIPTION_LABEL.setText(new_data["weather"].capitalize())
 
             if self.window().APP_LANGUAGE == "uk":
