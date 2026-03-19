@@ -3,7 +3,6 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
 from utils import *
-from ........containers_utils import language_change, image_list
 from config import path_to_image_list
 from .image_set import ImageSet
 

@@ -3,7 +3,6 @@ import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
 from .components import CityInputFrame, AddedCitiesFrame, MapFrame
-from ........containers_utils import language_change
 
 class SearchCityContent(qt_widgets.QFrame):
     def __init__(self, parent):

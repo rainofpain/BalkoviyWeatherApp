@@ -3,7 +3,6 @@ import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
 from .components import MenuButton, SearchCityContent, AppSizeContent, AppLanguageContent, ImageListsContent
-from ......containers_utils import language_change
 
 class SettingsMenuContainer(qt_widgets.QFrame):
     def __init__(self, parent):

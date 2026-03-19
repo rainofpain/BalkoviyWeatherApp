@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
 
 from .main_container_components.widget_base import WidgetBase
-from ...containers_utils import WeatherLoader, api_link_message, language_change, image_list
+
 from config import path_to_image_list
 
 from utils import *

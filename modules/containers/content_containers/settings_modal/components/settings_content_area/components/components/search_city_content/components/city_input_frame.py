@@ -3,7 +3,6 @@ import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
 from config import countries_and_cities_dict, city_name_list, API_KEY
-from .........containers_utils import set_property, update_content, api_link_message, city_name_message, WeatherLoader, language_change
 from .........left_container import InfoCard
 
 class CityInputFrame(qt_widgets.QFrame):

@@ -4,7 +4,6 @@ import PyQt6.QtGui as qt_gui
 
 from utils import *
 from .components import SettingsContentArea
-from ...containers_utils import language_change
 
 class SettingsFrame(qt_widgets.QFrame):
     def __init__(self, parent):

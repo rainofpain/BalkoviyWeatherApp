@@ -5,7 +5,6 @@ import PyQt6.QtWebEngineWidgets as web_engine
 import folium
 import io
 
-from .........containers_utils import update_content
 from utils import *
 
 class MapFrame(qt_widgets.QFrame):

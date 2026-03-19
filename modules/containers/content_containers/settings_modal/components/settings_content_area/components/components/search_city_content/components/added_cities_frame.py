@@ -4,7 +4,6 @@ import PyQt6.QtWidgets as qt_widgets
 from utils import *
 from config import city_name_list
 from .city_card import CityCard
-from .........containers_utils import update_content
 
 class AddedCitiesFrame(qt_widgets.QFrame):
     def __init__(self, parent):

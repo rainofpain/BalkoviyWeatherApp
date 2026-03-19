@@ -1,6 +1,5 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
-from .......containers_utils import set_property, language_change
 
 from utils import *
 

@@ -5,7 +5,7 @@ import PyQt6.QtGui as qt_gui
 from datetime import datetime, timezone, timedelta
 
 from .components import WeatherCard, TopFrameScroll
-from .....containers_utils import city_name_message, WeatherLoader, language_change
+
 from config import API_KEY
 from utils import *
 

@@ -5,7 +5,6 @@ import PyQt6.QtGui as qt_gui
 from utils import *
 from config import city_name_list, API_KEY
 from .components import SearchFrame
-from ...containers_utils import update_content, api_link_message, city_name_message, language_change
 from ...left_container import InfoCard
 
 class HeaderContainer(qt_widgets.QFrame):

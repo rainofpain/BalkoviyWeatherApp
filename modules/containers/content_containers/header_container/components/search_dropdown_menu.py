@@ -1,7 +1,6 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
-from ....containers_utils import api_link_message, city_name_message
 from config import API_KEY
 from utils import *
 

@@ -5,7 +5,6 @@ import PyQt6.QtSvgWidgets as qt_svg
 
 from utils import *
 from config import cities_dict
-from ....containers_utils import language_change
 
 
 class SearchFrame(qt_widgets.QFrame):

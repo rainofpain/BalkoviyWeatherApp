@@ -4,7 +4,6 @@ import PyQt6.QtSvgWidgets as qt_svg
 import PyQt6.QtGui as qt_gui
 
 from utils import *
-from ........containers_utils import language_change
 from config import path_to_image_list
 
 class ImageSet(qt_widgets.QFrame):

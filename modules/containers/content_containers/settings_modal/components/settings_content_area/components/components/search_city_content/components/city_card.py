@@ -4,7 +4,6 @@ import PyQt6.QtGui as qt_gui
 
 from utils import *
 from config import city_name_list, API_KEY
-from .........containers_utils import update_content, WeatherLoader
 
 class CityCard(qt_widgets.QFrame):
     def __init__(self, parent, city_name: str):

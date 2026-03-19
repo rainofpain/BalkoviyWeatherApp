@@ -3,7 +3,6 @@ import PyQt6.QtWidgets as qt_widgets
 
 from .components import InfoCard, LeftContainerHeader
 from config import city_name_list, API_KEY
-from ..containers_utils import update_content, language_change, api_link_message
 
 from utils import *
 

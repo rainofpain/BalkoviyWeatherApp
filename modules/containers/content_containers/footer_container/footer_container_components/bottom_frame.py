@@ -3,7 +3,6 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
 from config import API_KEY
 
-from ....containers_utils import city_name_message, WeatherLoader, language_change
 
 from utils import *
 

@@ -2,7 +2,6 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
-from ...containers_utils import set_property
 from modules import app_obj
 
 from utils import *

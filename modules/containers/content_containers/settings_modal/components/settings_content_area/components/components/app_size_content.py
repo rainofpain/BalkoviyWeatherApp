@@ -2,7 +2,6 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
-from .......containers_utils import language_change
 
 class AppSizeContent(qt_widgets.QFrame):
     def __init__(self, parent):
