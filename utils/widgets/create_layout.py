@@ -7,6 +7,7 @@ def create_layout(orientation: str, spacing: int, content_margins: tuple, alignm
     v - vertical
     h - horizontal
     g - grid
+    content margins (left, top, right, bottom)
     """
     
     

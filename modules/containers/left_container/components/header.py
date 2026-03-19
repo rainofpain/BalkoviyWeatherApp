@@ -2,7 +2,8 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
-from modules import app_obj
+from  ....desktop_widget import desktop_widget
+
 
 from utils import *
 
@@ -49,6 +50,8 @@ class LeftContainerHeader(qt_widgets.QFrame):
             self.MAIN_WINDOW.CENTRAL_WIDGET.style().unpolish(self.MAIN_WINDOW.CENTRAL_WIDGET)
             self.MAIN_WINDOW.CENTRAL_WIDGET.style().polish(self.MAIN_WINDOW.CENTRAL_WIDGET)
 
+            desktop_widget.CENTRAL_WIDGET.setProperty("style", "light")
+
             set_property.message.emit("light")
 
         elif self.SWITCH == True:
@@ -62,6 +65,8 @@ class LeftContainerHeader(qt_widgets.QFrame):
             self.MAIN_WINDOW.CENTRAL_WIDGET.setProperty("style", "dark")
             self.MAIN_WINDOW.CENTRAL_WIDGET.style().unpolish(self.MAIN_WINDOW.CENTRAL_WIDGET)
             self.MAIN_WINDOW.CENTRAL_WIDGET.style().polish(self.MAIN_WINDOW.CENTRAL_WIDGET)
+
+            desktop_widget.CENTRAL_WIDGET.setProperty("style", "dark")
 
             set_property.message.emit("dark")
           

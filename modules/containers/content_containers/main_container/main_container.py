@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
 
 from .main_container_components.widget_base import WidgetBase
-
+from ....desktop_widget import desktop_widget
 from config import path_to_image_list
 
 from utils import *
@@ -185,15 +185,23 @@ class MainContainer(qt_widgets.QFrame):
         try:
             self.DATA_DICT = new_data
             self.CITY_NAME_LABEL.setText(new_data["name"])
-            self.TEMP_FRAME_LABEL.setText(f"{new_data["temp"]}")
+            self.TEMP_FRAME_LABEL.setText(new_data["temp"])
             self.TEMP_ICON_NAME = f"{new_data["weather_icon"]}"
             self.TEMP_FRAME_ICON.load(f"{path_to_image_list[0]}/{self.TEMP_ICON_NAME}.svg")
             self.WEATHER_DESCRIPTION_LABEL.setText(new_data["weather"].capitalize())
 
+            desktop_widget.CURRENT_CITY_DICT = new_data
+            desktop_widget.CITY_NAME.setText(new_data["name"])
+            desktop_widget.CURRENT_TEMP_LABEL.setText(new_data["temp"])
+            desktop_widget.WEATHER_ICON.load(f"{path_to_image_list[0]}/{self.TEMP_ICON_NAME}.svg")
+            desktop_widget.WEATHER_DESCRIPTION_LABEL.setText(new_data["weather"].capitalize())
+
             if self.window().APP_LANGUAGE == "uk":
                 self.MIN_MAX_TEMP_LABEL.setText(f"Макс.:{new_data["max_temp"]}, мін.:{new_data["min_temp"]}")
+                desktop_widget.MAX_MIN_TEMP_LABEL.setText(f"Макс.:{new_data["max_temp"]}, мін.:{new_data["min_temp"]}")
             elif self.window().APP_LANGUAGE == "en":
                 self.MIN_MAX_TEMP_LABEL.setText(f"Max.:{new_data['max_temp']}, min.:{new_data['min_temp']}")
+                desktop_widget.MAX_MIN_TEMP_LABEL.setText(f"Max.:{new_data['max_temp']}, min.:{new_data['min_temp']}")
 
             self.DAY_LABEL.setText(new_data["day"])
             self.DATE_LABEL.setText(new_data["date"])

@@ -3,6 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
 from utils import *
+from .desktop_widget import desktop_widget
 
 
 class TitleBar(qt_widgets.QFrame):
@@ -31,7 +32,7 @@ class TitleBar(qt_widgets.QFrame):
         self.CROSS_BUTTON.setIcon(cross_icon)
         self.CROSS_BUTTON.setStyleSheet("border: none")
         self.CROSS_BUTTON.setFixedSize(24, 24)
-        self.CROSS_BUTTON.clicked.connect(self.WINDOW.close)
+        self.CROSS_BUTTON.clicked.connect(self.close_window)
         
         self.LAYOUT.addWidget(self.CROSS_BUTTON)
         
@@ -41,7 +42,7 @@ class TitleBar(qt_widgets.QFrame):
         self.MINIMIZE_BUTTON.setIcon(cross_icon)
         self.MINIMIZE_BUTTON.setStyleSheet("border: none")
         self.MINIMIZE_BUTTON.setFixedSize(24, 24)
-        self.MINIMIZE_BUTTON.clicked.connect(self.WINDOW.showMinimized)
+        self.MINIMIZE_BUTTON.clicked.connect(self.minimize_window)
         
         self.LAYOUT.addWidget(self.MINIMIZE_BUTTON)
         
@@ -55,7 +56,13 @@ class TitleBar(qt_widgets.QFrame):
         
         self.LAYOUT.addWidget(self.MAXIMIZE_BUTTON)
     
+    def close_window(self):
+        self.WINDOW.close()
+        desktop_widget.close()
     
+    def minimize_window(self):
+        self.WINDOW.showMinimized()
+
     def mousePressEvent(self, event: qt_gui.QMouseEvent):
         if event.button() == core.Qt.MouseButton.LeftButton:
             self.CLICK_POSITION = event.position().toPoint()

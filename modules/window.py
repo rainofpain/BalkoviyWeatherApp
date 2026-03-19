@@ -7,6 +7,7 @@ import folium
 import io
 
 from .app import app_obj
+
 from utils import *
 from .containers import LeftContainer, ContentContainer, SearchDropdownMenu
 from .title_bar import TitleBar
