@@ -44,9 +44,7 @@ class MainWindow(qt_widgets.QMainWindow):
             self.WINDOW_WIDTH,
             self.WINDOW_HEIGHT + 40
         )
-        self.setWindowTitle("Weather forecast")
 
-        
         self.CENTRAL_WIDGET = qt_widgets.QWidget(parent = self)
         self.CENTRAL_WIDGET.setObjectName("CentralWidget")
         self.CENTRAL_WIDGET.setProperty("style", "dark")
@@ -92,9 +90,6 @@ class MainWindow(qt_widgets.QMainWindow):
         
         self.CONTENT_CONTAINER = ContentContainer(parent = self.CONTENT_FRAME)
         self.CONTENT_FRAME_LAYOUT.addWidget(self.CONTENT_CONTAINER)
-
-        
-    
 
 main_window = MainWindow(w = 1200, h = 800)
 

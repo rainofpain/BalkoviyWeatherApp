@@ -13,7 +13,7 @@ class DesktopWidget(qt_widgets.QWidget):
 
     def __init__(self, w, h):
         super().__init__()
-
+        
         self.WINDOW_MOVING = False
         self.CURRENT_CITY_DICT = {}
 
@@ -37,16 +37,24 @@ class DesktopWidget(qt_widgets.QWidget):
         self.setGeometry(
             self.CENTER_X, 
             0, 
-            self.WINDOW_WIDTH,
-            self.WINDOW_HEIGHT
+            self.WINDOW_WIDTH + 10,
+            self.WINDOW_HEIGHT + 10
         )
-        self.setWindowTitle("Weather forecast")
 
+        shadow = qt_widgets.QGraphicsDropShadowEffect()
+        
+        shadow.setXOffset(0)
+        shadow.setYOffset(0)
+        
+        shadow.setBlurRadius(5)
+        
+        shadow.setColor(qt_gui.QColor(0, 0, 0))
         
         self.CENTRAL_WIDGET = qt_widgets.QWidget(parent = self)
         self.CENTRAL_WIDGET.setObjectName("CentralWidget")
         self.CENTRAL_WIDGET.setProperty("style", "dark")
-        self.CENTRAL_WIDGET.setMinimumSize(self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+        self.CENTRAL_WIDGET.setFixedSize(self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+        self.CENTRAL_WIDGET.setGraphicsEffect(shadow)
         
         self.CENTRAL_WIDGET_LAYOUT = create_layout(
             orientation = "v", 
@@ -55,7 +63,7 @@ class DesktopWidget(qt_widgets.QWidget):
             alignment = core.Qt.AlignmentFlag.AlignTop | core.Qt.AlignmentFlag.AlignLeft
         )
         self.CENTRAL_WIDGET.setLayout(self.CENTRAL_WIDGET_LAYOUT)
-    
+
         self.HEADER = qt_widgets.QFrame(parent = self.CENTRAL_WIDGET)
         self.CENTRAL_WIDGET_LAYOUT.addWidget(self.HEADER)
 
@@ -191,7 +199,6 @@ class DesktopWidget(qt_widgets.QWidget):
         
         if event.button() == core.Qt.MouseButton.LeftButton:
             self.CLICK_POSITION = event.position().toPoint()
-    
     
     def mouseMoveEvent(self, event: qt_gui.QMouseEvent):
         
