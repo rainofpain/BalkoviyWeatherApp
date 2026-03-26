@@ -171,12 +171,12 @@ class CityInputFrame(qt_widgets.QFrame):
         self.COORDINATES_FRAME_LAYOUT.addWidget(self.COORDINATES_FRAME_LABEL)
         self.COORDINATES_FRAME_LABEL.setStyleSheet("font-size: 14px; font-weight: 500; border: none;")
 
-        self.COORDINATES_FRAME_INPUT = qt_widgets.QLineEdit(parent = self.COORDINATES_FRAME)
+        self.COORDINATES_FRAME_INPUT = qt_widgets.QLabel(parent = self.COORDINATES_FRAME)
         self.COORDINATES_FRAME_LAYOUT.addWidget(self.COORDINATES_FRAME_INPUT)
         self.COORDINATES_FRAME_INPUT.setFixedSize(239, 32)
         self.COORDINATES_FRAME_INPUT.setStyleSheet(
             """
-            QLineEdit{
+            QLabel{
             background-color: rgba(236, 236, 236, 1);
             border-radius: 4px;
             color: rgba(113, 113, 122, 1);
@@ -184,10 +184,6 @@ class CityInputFrame(qt_widgets.QFrame):
             padding: 8 10 8 10;
             }
             
-            QLineEdit::placeholder{
-            color: rgba(113, 113, 122, 1);
-            font-size: 12px;
-            }
             """
             )
 
@@ -293,7 +289,7 @@ class CityInputFrame(qt_widgets.QFrame):
             self.COORDINATES_FRAME_LABEL.setText("Координати")
             self.COUNTRY_FRAME_DROPDOWN.setPlaceholderText("Виберіть країну")
             self.CITY_FRAME_DROPDOWN.setPlaceholderText("Виберіть місто")
-            self.COORDINATES_FRAME_INPUT.setPlaceholderText("(WGS 84,UTM,MGRS)")
+            self.COORDINATES_FRAME_INPUT.setText("(WGS 84,UTM,MGRS)")
             self.SAVE_BUTTON.setText("Зберегти")
 
         elif language == "en":
@@ -303,7 +299,7 @@ class CityInputFrame(qt_widgets.QFrame):
             self.COORDINATES_FRAME_LABEL.setText("Coordinates")
             self.COUNTRY_FRAME_DROPDOWN.setPlaceholderText("Select country")
             self.CITY_FRAME_DROPDOWN.setPlaceholderText("Select city")
-            self.COORDINATES_FRAME_INPUT.setPlaceholderText("(WGS 84,UTM,MGRS)")
+            self.COORDINATES_FRAME_INPUT.setText("(WGS 84,UTM,MGRS)")
             self.SAVE_BUTTON.setText("Apply")
 
 
