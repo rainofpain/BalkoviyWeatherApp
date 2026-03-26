@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 import PyQt6.QtSvgWidgets as svg_widgets
 
-from config import API_KEY, path_to_image_list
+from config import API_KEY, path_to_image_list, app_language
 
 from ..app import app_obj
 
@@ -172,7 +172,7 @@ class DesktopWidget(qt_widgets.QWidget):
         self.CENTRAL_WIDGET.style().polish(self.CENTRAL_WIDGET)
         try:
             from ..window import main_window
-            self.APP_LANGUAGE = main_window.APP_LANGUAGE
+            self.APP_LANGUAGE = app_language[0]
 
             self.WEATHER_LOADER = WeatherLoader(
                 language = self.APP_LANGUAGE,

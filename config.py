@@ -6,6 +6,8 @@ dotenv.load_dotenv()
 
 API_KEY = os.getenv("API_KEY")
 
+app_language = ["uk"]
+
 path_to_image_list = ["media/weather_icons/set_1"]
 
 city_name_list = []

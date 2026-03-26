@@ -4,7 +4,7 @@ import PyQt6.QtGui as qt_gui
 import PyQt6.QtSvgWidgets as qt_svg
 
 from utils import *
-from config import cities_dict
+from config import cities_dict, app_language
 
 
 class SearchFrame(qt_widgets.QFrame):
@@ -69,7 +69,7 @@ class SearchFrame(qt_widgets.QFrame):
 
         self.ADD_CITY_BUTTON = self.parent().parent().ADD_CITY_BUTTON
 
-        self.change_language(self.window().APP_LANGUAGE)
+        self.change_language(app_language[0])
     
     def change_language(self, language):
         if language == "uk":

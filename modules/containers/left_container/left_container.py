@@ -2,7 +2,7 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from .components import InfoCard, LeftContainerHeader
-from config import city_name_list, API_KEY
+from config import city_name_list, API_KEY, app_language
 
 from utils import *
 
@@ -69,7 +69,7 @@ class LeftContainer(qt_widgets.QFrame):
             item = self.SCROLL_FRAME_LAYOUT.itemAt(index)
             widget = item.widget()
             if widget.CLICKED == True:
-                api_link = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={widget.SEARCH_NAME}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}"
+                api_link = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={widget.SEARCH_NAME}&appid={API_KEY}&lang={app_language[0]}"
                 api_link_message.message.emit(api_link)
                 break
 

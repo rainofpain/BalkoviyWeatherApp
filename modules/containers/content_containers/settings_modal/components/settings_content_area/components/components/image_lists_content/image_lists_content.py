@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
 from utils import *
-from config import path_to_image_list
+from config import path_to_image_list, app_language
 from .image_set import ImageSet
 
 class ImageListsContent(qt_widgets.QFrame):
@@ -84,7 +84,7 @@ class ImageListsContent(qt_widgets.QFrame):
             """
             )
         self.SAVE_BUTTON.clicked.connect(self.save_image_list)
-        self.change_language(language = self.window().APP_LANGUAGE)
+        self.change_language(language = app_language[0])
     
     def reset_card_click(self):
         for index in range(self.IMAGE_SELECTION_FRAME_LAYOUT.count()):

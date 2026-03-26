@@ -4,6 +4,7 @@ import PyQt6.QtGui as qt_gui
 
 from utils import *
 from .components import SettingsContentArea
+from config import app_language
 
 class SettingsFrame(qt_widgets.QFrame):
     def __init__(self, parent):
@@ -61,7 +62,7 @@ class SettingsFrame(qt_widgets.QFrame):
 
         self.SETTING_CONTENT_AREA = SettingsContentArea(parent = self)
         self.LAYOUT.addWidget(self.SETTING_CONTENT_AREA)
-        self.change_language(language = self.window().APP_LANGUAGE)
+        self.change_language(language = app_language[0])
     
     def change_language(self, language):
         if language == "uk":

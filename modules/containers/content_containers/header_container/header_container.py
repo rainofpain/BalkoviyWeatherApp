@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
 from utils import *
-from config import city_name_list, API_KEY
+from config import city_name_list, API_KEY, app_language
 from .components import SearchFrame
 from ...left_container import InfoCard
 
@@ -87,7 +87,7 @@ class HeaderContainer(qt_widgets.QFrame):
         self.SEARCH_INPUT_FRAME = SearchFrame(parent = self.SEARCH_GROUP_FRAME)
         self.SEARCH_GROUP_FRAME.layout().addWidget(self.SEARCH_INPUT_FRAME, alignment = core.Qt.AlignmentFlag.AlignRight)
 
-        self.change_language(language = self.window().APP_LANGUAGE)
+        self.change_language(language = app_language[0])
     
     def check_data(self, data):
         self.CHECK_RESULT = data
@@ -109,7 +109,7 @@ class HeaderContainer(qt_widgets.QFrame):
                 """
                 )
             self.LEFT_CONTAINER_SCROLL.layout().addWidget(self.CARD, alignment = core.Qt.AlignmentFlag.AlignRight)
-            api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["search_name"]}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}")
+            api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["search_name"]}&appid={API_KEY}&lang={app_language[0]}")
             city_name_message.message.emit(data["search_name"])
             update_content.update_settings_container.emit(True)
         self.SEARCH_INPUT_FRAME.SEARCH_FIELD.setText("")

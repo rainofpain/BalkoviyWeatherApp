@@ -3,6 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 
 from config import API_KEY
 from utils import *
+from config import app_language
 
 class SearchDropdownMenu(qt_widgets.QWidget):
 
@@ -10,6 +11,7 @@ class SearchDropdownMenu(qt_widgets.QWidget):
         super().__init__(parent = parent)
 
         self.MAIN_WINDOW = self.window()
+        language_change.message.connect(self.change_language)
 
         self.setObjectName("SearchDropdownMenu")
         self.setAttribute(core.Qt.WidgetAttribute.WA_StyledBackground)
@@ -23,7 +25,7 @@ class SearchDropdownMenu(qt_widgets.QWidget):
         )
         self.setLayout(self.LAYOUT)
 
-        self.LABEL = qt_widgets.QLabel("Результати пошуку", parent = self)
+        self.LABEL = qt_widgets.QLabel(parent = self)
         self.LAYOUT.addWidget(self.LABEL)
         self.LABEL.setFixedSize(261, 14)
         self.LABEL.setStyleSheet(
@@ -68,11 +70,20 @@ class SearchDropdownMenu(qt_widgets.QWidget):
         
         self.LIST_WIDGET.itemClicked.connect(self.item_clicked)
     
+        self.change_language(language = app_language[0])
+     
+    def change_language(self, language):
+       
+        if language == "uk":
+            self.LABEL.setText("Результати пошуку")
+        elif language == "en":
+            self.LABEL.setText("Search results")
+    
     def item_clicked(self, item):
         search_frame = self.window().findChild(qt_widgets.QFrame, "SearchFrame")
         city_name = item.text()
         search_frame.SEARCH_FIELD.setText(city_name)
-        api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={city_name}&appid={API_KEY}&lang={self.MAIN_WINDOW.APP_LANGUAGE}")
+        api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={city_name}&appid={API_KEY}&lang={app_language[0]}")
         city_name_message.message.emit(city_name)
         self.hide()
         self.LIST_WIDGET.clear()

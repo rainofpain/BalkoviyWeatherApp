@@ -2,6 +2,7 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
+from config import app_language
 
 class AppLanguageContent(qt_widgets.QFrame):
     def __init__(self, parent):
@@ -125,21 +126,21 @@ class AppLanguageContent(qt_widgets.QFrame):
 
     def save_app_language(self):
         if self.LANGUAGE_DROPDOWN.currentText() == "Українська" or self.LANGUAGE_DROPDOWN.currentText() == "Ukrainian":
-            self.window().APP_LANGUAGE = "uk"
+            app_language[0] = "uk"
         elif self.LANGUAGE_DROPDOWN.currentText() == "Англійська" or self.LANGUAGE_DROPDOWN.currentText() == "English":
-            self.window().APP_LANGUAGE = "en"
-        language_change.message.emit(self.window().APP_LANGUAGE)
+            app_language[0] = "en"
+        language_change.message.emit(app_language[0])
         self.change_language()
     
     def change_language(self):
-        if self.window().APP_LANGUAGE == "uk":
+        if app_language[0] == "uk":
             self.TITLE_LABEL.setText("Оберіть мову додатку")
             self.CHOOSE_LANGUAGE_LABEL.setText("Мова додатку")
             self.LANGUAGE_DROPDOWN.clear()
             self.LANGUAGE_DROPDOWN.addItems(["Українська", "Англійська"])
             self.LANGUAGE_DROPDOWN.setCurrentIndex(0)
             self.SAVE_BUTTON.setText("Зберегти")
-        elif self.window().APP_LANGUAGE == "en":
+        elif app_language[0] == "en":
                 self.TITLE_LABEL.setText("Choose app language")
                 self.CHOOSE_LANGUAGE_LABEL.setText("App language")
                 self.LANGUAGE_DROPDOWN.clear()

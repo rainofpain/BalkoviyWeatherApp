@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtGui as qt_gui
 
 from utils import *
-from config import city_name_list, API_KEY
+from config import city_name_list, API_KEY, app_language
 
 class CityCard(qt_widgets.QFrame):
     def __init__(self, parent, city_name: str):
@@ -51,8 +51,8 @@ class CityCard(qt_widgets.QFrame):
 
     def load_name(self):
         self.WEATHER_LOADER = WeatherLoader(
-            api_request_link = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.NAME}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}",
-            language = self.window().APP_LANGUAGE
+            api_request_link = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.NAME}&appid={API_KEY}&lang={app_language[0]}",
+            language = app_language[0]
         )
         self.WEATHER_LOADER.filtered_dict.connect(self.set_name)
         self.WEATHER_LOADER.start()

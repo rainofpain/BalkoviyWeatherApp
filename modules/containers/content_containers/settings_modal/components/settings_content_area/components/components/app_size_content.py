@@ -2,6 +2,7 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
+from config import app_language
 
 class AppSizeContent(qt_widgets.QFrame):
     def __init__(self, parent):
@@ -102,7 +103,7 @@ class AppSizeContent(qt_widgets.QFrame):
             """
             )
         self.SAVE_BUTTON.clicked.connect(self.save_resize)
-        self.change_language(language = self.MAIN_WINDOW.APP_LANGUAGE)
+        self.change_language(language = app_language[0])
     
     def change_language(self, language):
        

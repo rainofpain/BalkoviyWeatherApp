@@ -1,7 +1,7 @@
 import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
-from config import API_KEY
+from config import API_KEY, app_language
 
 
 from utils import *
@@ -126,7 +126,7 @@ class BottomFrame(qt_widgets.QFrame):
 
         self.GRAPH_FRAME_LAYOUT.addWidget(self.RIGHT_FRAME)
 
-        self.change_language(language = self.window().APP_LANGUAGE)
+        self.change_language(language = app_language[0])
     
     def change_language(self, language):
        
@@ -139,7 +139,7 @@ class BottomFrame(qt_widgets.QFrame):
         
         self.WEATHER_LOADER = WeatherLoader(
             api_request_link = f"https://api.openweathermap.org/data/2.5/forecast/hourly?units=metric&q={city_name}&&mode=json&appid={API_KEY}&cnt=12",
-            language = self.window().APP_LANGUAGE
+            language = app_language[0]
         )
         self.WEATHER_LOADER.received_dict.connect(self.build_graph) 
         self.WEATHER_LOADER.start()

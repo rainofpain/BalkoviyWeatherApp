@@ -2,7 +2,7 @@ import PyQt6.QtCore as core
 import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
-from config import countries_and_cities_dict, city_name_list, API_KEY
+from config import countries_and_cities_dict, city_name_list, API_KEY, app_language
 from .........left_container import InfoCard
 
 class CityInputFrame(qt_widgets.QFrame):
@@ -117,9 +117,9 @@ class CityInputFrame(qt_widgets.QFrame):
         self.COUNTRY_FRAME_DROPDOWN.view().window().setWindowFlags(core.Qt.WindowType.Popup | core.Qt.WindowType.FramelessWindowHint | core.Qt.WindowType.NoDropShadowWindowHint)
         self.COUNTRY_FRAME_DROPDOWN.view().window().setAttribute(core.Qt.WidgetAttribute.WA_TranslucentBackground)
 
-        if self.window().APP_LANGUAGE == "uk":
+        if app_language[0] == "uk":
             self.COUNTRY_FRAME_DROPDOWN.setPlaceholderText("Виберіть країну")
-        elif self.window().APP_LANGUAGE == "en":
+        elif app_language[0] == "en":
             self.COUNTRY_FRAME_DROPDOWN.setPlaceholderText("Select country")
          
     
@@ -204,7 +204,7 @@ class CityInputFrame(qt_widgets.QFrame):
             )
         self.SAVE_BUTTON.clicked.connect(self.save_city)
 
-        self.change_language(language = self.window().APP_LANGUAGE)
+        self.change_language(language = app_language[0])
     
     def set_property(self, property):
         self.INPUT_FIELDS_FRAME.setProperty("style", property)
@@ -231,8 +231,8 @@ class CityInputFrame(qt_widgets.QFrame):
             self.CITY_NAME = text
 
             self.WEATHER_LOADER = WeatherLoader(
-                api_request_link = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.CITY_NAME}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}",
-                language = self.window().APP_LANGUAGE
+                api_request_link = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.CITY_NAME}&appid={API_KEY}&lang={app_language[0]}",
+                language = app_language[0]
                 )
             self.WEATHER_LOADER.received_dict.connect(self.set_coords)
             self.WEATHER_LOADER.start()
@@ -278,7 +278,7 @@ class CityInputFrame(qt_widgets.QFrame):
                     """
                     )
                 self.LEFT_CONTAINER_SCROLL.layout().addWidget(self.CARD, alignment = core.Qt.AlignmentFlag.AlignRight)
-                api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["search_name"]}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}")
+                api_link_message.message.emit(f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={data["search_name"]}&appid={API_KEY}&lang={app_language[0]}")
                 city_name_message.message.emit(data["search_name"])
                 update_content.update_settings_container.emit(True)
         except Exception as error:

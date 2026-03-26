@@ -3,6 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 
 from utils import *
 from .components import MenuButton, SearchCityContent, AppSizeContent, AppLanguageContent, ImageListsContent
+from config import app_language
 
 class SettingsMenuContainer(qt_widgets.QFrame):
     def __init__(self, parent):
@@ -64,7 +65,7 @@ class SettingsMenuContainer(qt_widgets.QFrame):
             )   
         self.BUTTON_FRAME_LAYOUT.addWidget(self.IMAGE_LISTS_BUTTON) 
 
-        self.change_language(language = self.window().APP_LANGUAGE)
+        self.change_language(language = app_language[0])
 
     def change_language(self, language):
         if language == "uk":

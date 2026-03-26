@@ -6,14 +6,12 @@ from datetime import datetime, timezone, timedelta
 
 from .components import WeatherCard, TopFrameScroll
 
-from config import API_KEY
+from config import API_KEY, app_language
 from utils import *
 
 class TopFrame(qt_widgets.QFrame):
     def __init__(self, parent):
         super().__init__(parent = parent)
-
-        self.MAIN_WINDOW = self.window()
 
         language_change.message.connect(self.change_language)
         city_name_message.message.connect(self.request_by_name)
@@ -90,7 +88,7 @@ class TopFrame(qt_widgets.QFrame):
 
         self.SCROLL = self.SCROLL_CONTAINER.SCROLL_AREA.horizontalScrollBar()
 
-        self.change_language(language = self.window().APP_LANGUAGE)
+        self.change_language(language = app_language[0])
      
     def change_language(self, language):
        
@@ -131,7 +129,7 @@ class TopFrame(qt_widgets.QFrame):
     def request_by_name(self, city_name):
         self.HOURLY_FORECAST = WeatherLoader(
             api_request_link = f"https://api.openweathermap.org/data/2.5/forecast/hourly?units=metric&q={city_name}&mode=json&appid={API_KEY}&cnt=24",
-            language = self.MAIN_WINDOW.APP_LANGUAGE
+            language = app_language[0]
             )
         self.HOURLY_FORECAST.received_dict.connect(self.create_content) 
         self.HOURLY_FORECAST.start()

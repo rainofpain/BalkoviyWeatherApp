@@ -14,12 +14,10 @@ from .title_bar import TitleBar
 
 
 
+
 class MainWindow(qt_widgets.QMainWindow):
     def __init__(self, w, h):
         super().__init__()
-        
-        # 'uk' for Ukrainian, 'en' for English
-        self.APP_LANGUAGE = "uk"
 
         self.setWindowFlags(core.Qt.WindowType.FramelessWindowHint)
         self.setAttribute(core.Qt.WidgetAttribute.WA_TranslucentBackground)

@@ -3,7 +3,7 @@ import PyQt6.QtWidgets as qt_widgets
 import PyQt6.QtSvgWidgets as qt_svg
 import PyQt6.QtGui as qt_gui
 
-from config import API_KEY
+from config import API_KEY, app_language
 
 from utils import *
 
@@ -17,7 +17,7 @@ class InfoCard(qt_widgets.QFrame):
         self.LEFT_CONTAINER = self.parent().parent().parent().parent()
         self.CLICKED = False
         self.SEARCH_NAME = str(search_city_name)
-        self.API_LINK = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.SEARCH_NAME}&appid={API_KEY}&lang={self.window().APP_LANGUAGE}"
+        self.API_LINK = f"https://api.openweathermap.org/data/2.5/weather?units=metric&q={self.SEARCH_NAME}&appid={API_KEY}&lang={app_language[0]}"
         
         self.setObjectName("Card")
         self.setFixedSize(330, 90)
@@ -152,9 +152,9 @@ class InfoCard(qt_widgets.QFrame):
             self.CITY_TIME.setText(f"{new_data['time']}")
             self.CITY_TEMP_LABEL.setText(new_data["temp"])
             self.CITY_WEATHER.setText(new_data["weather"].capitalize())
-            if self.window().APP_LANGUAGE == "uk":
+            if app_language[0] == "uk":
                 self.MIN_AND_MAX_TEMP.setText(f"Макс.:{new_data['max_temp']}, мін.:{new_data['min_temp']}")
-            elif self.window().APP_LANGUAGE == "en":
+            elif app_language[0] == "en":
                 self.MIN_AND_MAX_TEMP.setText(f"Max.:{new_data['max_temp']}, min.:{new_data['min_temp']}")
         except:
             print(f"Немає данних для побудови картки {new_data['cod']}, {self.SEARCH_NAME}")
@@ -162,7 +162,7 @@ class InfoCard(qt_widgets.QFrame):
     def load_weather(self):
         self.WEATHER_LOADER = WeatherLoader(
             api_request_link = self.API_LINK,
-            language = self.window().APP_LANGUAGE
+            language = app_language[0]
             )
         
         self.WEATHER_LOADER.filtered_dict.connect(self.update_ui) 

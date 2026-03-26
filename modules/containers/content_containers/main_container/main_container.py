@@ -4,7 +4,7 @@ import PyQt6.QtSvgWidgets as qt_svg
 
 from .main_container_components.widget_base import WidgetBase
 from ....desktop_widget import desktop_widget
-from config import path_to_image_list
+from config import path_to_image_list, app_language
 
 from utils import *
 
@@ -173,7 +173,7 @@ class MainContainer(qt_widgets.QFrame):
 
         self.LAYOUT.addWidget(self.CLOCK_WIDGET)
 
-        self.change_language(language = self.window().APP_LANGUAGE)
+        self.change_language(language = app_language[0])
     
     def set_image_list(self, path_to_list):
         try:
@@ -196,10 +196,10 @@ class MainContainer(qt_widgets.QFrame):
             desktop_widget.WEATHER_ICON.load(f"{path_to_image_list[0]}/{self.TEMP_ICON_NAME}.svg")
             desktop_widget.WEATHER_DESCRIPTION_LABEL.setText(new_data["weather"].capitalize())
 
-            if self.window().APP_LANGUAGE == "uk":
+            if app_language[0] == "uk":
                 self.MIN_MAX_TEMP_LABEL.setText(f"Макс.:{new_data["max_temp"]}, мін.:{new_data["min_temp"]}")
                 desktop_widget.MAX_MIN_TEMP_LABEL.setText(f"Макс.:{new_data["max_temp"]}, мін.:{new_data["min_temp"]}")
-            elif self.window().APP_LANGUAGE == "en":
+            elif app_language[0] == "en":
                 self.MIN_MAX_TEMP_LABEL.setText(f"Max.:{new_data['max_temp']}, min.:{new_data['min_temp']}")
                 desktop_widget.MAX_MIN_TEMP_LABEL.setText(f"Max.:{new_data['max_temp']}, min.:{new_data['min_temp']}")
 
@@ -221,6 +221,6 @@ class MainContainer(qt_widgets.QFrame):
 
 
     def get_link(self, api_request_link):
-        self.WEATHER_LOADER = WeatherLoader(api_request_link = api_request_link, language = self.window().APP_LANGUAGE)
+        self.WEATHER_LOADER = WeatherLoader(api_request_link = api_request_link, language = app_language[0])
         self.WEATHER_LOADER.filtered_dict.connect(self.show_data) 
         self.WEATHER_LOADER.start()
